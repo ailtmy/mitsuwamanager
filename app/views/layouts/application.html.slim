@@ -2,7 +2,7 @@ doctype html
 html
   head
     title
-      |　みつわ管理
+      = page_title
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -11,4 +11,4 @@ html
     .app-title.navbar.navbar-expand-mb.navbar-light.bg-light
       .navbar-brand みつわ管理
     .container
-    = yield
+      = yield

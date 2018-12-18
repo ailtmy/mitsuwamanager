@@ -1,0 +1,7 @@
+- @page_title = "ユーザー新規作成"
+h3 = @page_title
+
+.nav.justify-content-end
+  = link_to 'ユーザー一覧へ', admin_users_path, class: 'nav-link btn btn-primary'
+
+= render 'form', user: @user

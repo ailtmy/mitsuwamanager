@@ -1,0 +1,29 @@
+- @page_title = "ユーザー詳細"
+h3 = @page_title
+
+.nav.justify-content-end
+  = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link btn btn-primary mb-3'
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = User.human_attribute_name(:id).upcase
+      td = @user.id
+    tr
+      th = User.human_attribute_name(:name)
+      td = @user.name
+    tr
+      th = User.human_attribute_name(:email)
+      td = @user.email
+    tr
+      th = User.human_attribute_name(:admin)
+      td = @user.admin? ? '〇' : 'ー'
+    tr
+      th = User.human_attribute_name(:created_at)
+      td = @user.created_at
+    tr
+      th = User.human_attribute_name(:updated_at)
+      td = @user.updated_at
+
+= link_to '編集', edit_admin_user_path, class: 'btn btn-primary mr-3'
+= link_to '削除', [:admin, @user], method: :delete, data: {confirm: "#{@user.name}を削除してよろしいですか？" }, class: 'btn btn-danger'
+    
