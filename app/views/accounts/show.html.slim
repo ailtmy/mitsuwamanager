@@ -1,0 +1,8 @@
+- @page_title = "マイアカウント"
+
+h3 = @page_title
+
+.nav.justify-content-end
+  = link_to "アカウント情報の編集", edit_account_path, class: 'btn btn-primary mb-3'
+
+= render "admin/users/body", user: @user

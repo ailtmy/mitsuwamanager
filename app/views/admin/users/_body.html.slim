@@ -1,0 +1,23 @@
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = User.human_attribute_name(:id).upcase
+      td = @user.id
+    tr
+      th = User.human_attribute_name(:name)
+      td = @user.name
+    tr
+      th = User.human_attribute_name(:email)
+      td = @user.email
+    tr
+      th = User.human_attribute_name(:admin)
+      td = @user.admin? ? '〇' : 'ー'
+    tr
+      th = User.human_attribute_name(:created_at)
+      td = @user.created_at
+    tr
+      th = User.human_attribute_name(:updated_at)
+      td = @user.updated_at
+
+
+    
