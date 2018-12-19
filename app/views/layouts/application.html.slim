@@ -8,7 +8,17 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .app-title.navbar.navbar-expand-mb.navbar-light.bg-light
+    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .navbar-brand みつわ管理
+
+      ul.navbar-nav.ml-auto
+        - if current_user
+          - if current_user.admin?
+            li.nav-item = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
+          li.nav-item = link_to '顧客一覧', "#", class: 'nav-link'
+          li.nav-item = link_to '事件簿一覧', "#", class: 'nav-link'
+          li.nav-item = link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+        - else
+          li.nav-item = link_to 'ログイン', login_path, class: 'nav-link'
     .container
       = yield
