@@ -1,0 +1,40 @@
+- @page_title = "法人顧客詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Company.human_attribute_name(:id).upcase
+      td = @company.id
+    tr
+      th = Company.human_attribute_name(:name)
+      td = @company.name
+    tr
+      th = Company.human_attribute_name(:kana)
+      td = @company.kana
+    tr
+      th = Company.human_attribute_name(:establishment)
+      td = @company.establishment.strftime('%Y/%m/%d')
+    tr
+      th = Company.human_attribute_name(:company_number)
+      td = @company.company_number
+    tr
+      th = Company.human_attribute_name(:fiscal_year)
+      td 
+        = @company.fiscal_year 
+        | 月
+    tr
+      th = Company.human_attribute_name(:next_application)
+      td = @company.next_application.strftime('%Y/%m/%d')
+    tr
+      th = Company.human_attribute_name(:created_at)
+      td = @company.created_at.strftime('%Y/%m/%d')
+    tr
+      th = Company.human_attribute_name(:updated_at)
+      td = @company.updated_at.strftime('%Y/%m/%d')
+
+= link_to '編集', edit_company_path, class: 'btn btn-primary mr-3'
+= link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger'

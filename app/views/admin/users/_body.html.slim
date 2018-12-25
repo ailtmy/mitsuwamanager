@@ -14,10 +14,10 @@ table.table.table-hover.table-bordered
       td = @user.admin? ? '〇' : 'ー'
     tr
       th = User.human_attribute_name(:created_at)
-      td = @user.created_at
+      td = @user.created_at.strftime('%Y/%m/%d')
     tr
       th = User.human_attribute_name(:updated_at)
-      td = @user.updated_at
+      td = @user.updated_at.strftime('%Y/%m/%d')
 
 
     

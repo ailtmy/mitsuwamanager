@@ -1,0 +1,26 @@
+- if company.errors.present?
+  ul#error_explanation
+    - company.errors.full_messages.each do |message|
+      li = message
+= form_with model: company, local: true do |f|
+  .form-group
+    = f.label :name, '商号'
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :kana, 'フリガナ'
+    = f.text_field :kana, class: 'form-control'
+  .form-group
+    = f.label :establishment, '設立年月日'
+    = f.date_field :establishment, class: 'form-control'
+  .form-group
+    = f.label :company_number, '会社法人等番号'
+    = f.text_field :company_number, class: 'form-control'
+  .form-group
+    = f.label :fiscal_year, '決算月'
+    = f.number_field :fiscal_year, class: 'form-control'
+  .form-group
+    = f.label :next_application, '次回申請期日'
+    = f.date_field :next_application, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary'
+    
+  

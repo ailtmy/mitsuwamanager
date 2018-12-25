@@ -1,0 +1,32 @@
+- @page_title = "法人顧客"
+h3.mb-3 = @page_title
+
+= link_to '法人顧客新規作成', new_company_path, class: 'btn btn-primary'
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-dafault
+    tr
+      th = Company.human_attribute_name(:id).upcase
+      th = Company.human_attribute_name(:name)
+      th = Company.human_attribute_name(:kana)
+      th = Company.human_attribute_name(:company_number)
+      th = Company.human_attribute_name(:next_application)
+      th = Company.human_attribute_name(:created_at)
+      th = Company.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @companies.each do | company |
+      tr
+        td = company.id
+        td = link_to company.name, company_path(company)
+        td = company.kana
+        td = company.company_number
+        td = company.next_application.strftime('%Y/%m/%d')
+        td = company.created_at.strftime('%Y/%m/%d')
+        td = company.updated_at.strftime('%Y/%m/%d')
+        td
+          = link_to '編集', edit_company_path(company), class: 'btn btn-primary mr-3'
+          - if current_user.admin?
+            = link_to '削除', company, method: :delete, data: { confirm: "#{company.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+

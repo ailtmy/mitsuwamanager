@@ -20,9 +20,9 @@ table.table.table-hover.table-bordered.text-center
         td = person.id
         td = link_to person.name, person_path(person)
         td = person.kana
-        td = person.birthday
-        td = person.created_at
-        td = person.updated_at
+        td = person.birthday.strftime('%Y/%m/%d')
+        td = person.created_at.strftime('%Y/%m/%d')
+        td = person.updated_at.strftime('%Y/%m/%d')
         td 
           = link_to '編集', edit_person_path(person), class: 'btn btn-primary mr-3'
           -if current_user.admin?

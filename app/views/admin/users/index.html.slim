@@ -19,8 +19,8 @@ table.table.table-hover.table-bordered.text-center
         td = link_to user.name, [:admin, user]
         td = user.email
         td = user.admin? ? '〇' : '―'
-        td = user.created_at
-        td = user.updated_at
+        td = user.created_at.strftime('%Y/%m/%d')
+        td = user.updated_at.strftime('%Y/%m/%d')
         td
           = link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary mr-3'
           = link_to '削除', [:admin, user], method: :delete,  data: { confirm: "#{user.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'

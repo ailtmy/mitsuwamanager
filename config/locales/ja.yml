@@ -10,6 +10,7 @@ ja:
     models:
       user: ユーザー
       person: 個人顧客
+      company: 法人顧客
     attributes:
       user:
         name: ユーザー名
@@ -28,7 +29,12 @@ ja:
       person:
         name: 氏名
         birthday: 生年月日
-
+      company:
+        name: 商号
+        establishment: 設立年月日
+        company_number: 会社法人等番号
+        fiscal_year: 決算月
+        next_application: 次回商業申請
   date:
     abbr_day_names:
     - 日

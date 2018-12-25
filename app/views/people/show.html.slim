@@ -17,13 +17,13 @@ table.table.table-hover.table-bordered
       td = @person.kana
     tr
       th = Person.human_attribute_name(:birthday)
-      td = @person.birthday
+      td = @person.birthday.strftime('%Y/%m/%d')
     tr
       th = Person.human_attribute_name(:created_at)
-      td = @person.created_at
+      td = @person.created_at.strftime('%Y/%m/%d')
     tr
       th = Person.human_attribute_name(:updated_at)
-      td = @person.updated_at
+      td = @person.updated_at.strftime('%Y/%m/%d')
 
 = link_to '編集', edit_person_path, class: 'btn btn-primary mr-3'
 = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger'

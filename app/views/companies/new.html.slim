@@ -1,0 +1,7 @@
+- @page_title = "法人顧客新規作成"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '法人顧客一覧へ', companies_path, class: 'nav-link btn btn-primary'
+
+= render 'form', company: @company
