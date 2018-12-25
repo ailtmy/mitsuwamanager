@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   resource :account, only: [:show, :edit, :update]
 
+  resources :people
+  resources :companies
+
+
   namespace :admin do
     resources :users
   end

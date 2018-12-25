@@ -1,0 +1,29 @@
+- @page_title = "個人顧客詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Person.human_attribute_name(:id).upcase
+      td = @person.id
+    tr
+      th = Person.human_attribute_name(:name)
+      td = @person.name
+    tr
+      th = Person.human_attribute_name(:kana)
+      td = @person.kana
+    tr
+      th = Person.human_attribute_name(:birthday)
+      td = @person.birthday
+    tr
+      th = Person.human_attribute_name(:created_at)
+      td = @person.created_at
+    tr
+      th = Person.human_attribute_name(:updated_at)
+      td = @person.updated_at
+
+= link_to '編集', edit_person_path, class: 'btn btn-primary mr-3'
+= link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger'

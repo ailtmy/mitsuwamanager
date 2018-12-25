@@ -1,0 +1,8 @@
+- @page_title = '個人顧客編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '個人顧客一覧へ', people_path, class: 'nav-link btn btn-primary'
+
+= render 'form', person: @person
+

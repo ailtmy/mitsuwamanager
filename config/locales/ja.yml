@@ -9,6 +9,7 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     models:
       user: ユーザー
+      person: 個人顧客
     attributes:
       user:
         name: ユーザー名
@@ -19,6 +20,15 @@ ja:
         password_confirmation: パスワード（確認）
         created_at: 登録日時
         updated_at: 更新日時
+      customer:
+        kana: フリガナ
+        type: 個人・法人の別
+        created_at: 登録日時
+        updated_at: 更新日時
+      person:
+        name: 氏名
+        birthday: 生年月日
+
   date:
     abbr_day_names:
     - 日

@@ -1,0 +1,32 @@
+- @page_title = "個人顧客"
+h3.mb-3 = @page_title
+
+= link_to '個人顧客新規作成', new_person_path, class: 'btn btn-primary'
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Person.human_attribute_name(:id).upcase
+      th = Person.human_attribute_name(:name)
+      th = Person.human_attribute_name(:kana)
+      th = Person.human_attribute_name(:birthday)
+      th = Person.human_attribute_name(:created_at)
+      th = Person.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @people.each do | person |
+      tr
+        td = person.id
+        td = link_to person.name, person_path(person)
+        td = person.kana
+        td = person.birthday
+        td = person.created_at
+        td = person.updated_at
+        td 
+          = link_to '編集', edit_person_path(person), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', person, method: :delete, data: { confirm: "#{person.name}を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+
+
