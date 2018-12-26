@@ -2,7 +2,8 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
   
   def index
-    @companies = Company.all
+    @q = Company.ransack(params[:q])
+    @companies = @q.result(distinct: true)
   end
 
   def show
@@ -35,7 +36,7 @@ class CompaniesController < ApplicationController
   
   def destroy
     @company.destroy
-    redirect_to company_path, notice: "#{@company.name}を削除しました。"
+    redirect_to companies_path, notice: "#{@company.name}を削除しました。"
   end
 
   private

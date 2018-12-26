@@ -2,7 +2,11 @@
 h3.mb-3.mt-3 = @page_title
 
 .nav.justify-content-end
-  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3'
+  = link_to '編集', edit_company_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
 table.table.table-hover.table-bordered
   tbody
@@ -17,7 +21,7 @@ table.table.table-hover.table-bordered
       td = @company.kana
     tr
       th = Company.human_attribute_name(:establishment)
-      td = @company.establishment.strftime('%Y/%m/%d')
+      td = @company.establishment.try(:strftime,'%Y/%m/%d')
     tr
       th = Company.human_attribute_name(:company_number)
       td = @company.company_number
@@ -28,13 +32,10 @@ table.table.table-hover.table-bordered
         | 月
     tr
       th = Company.human_attribute_name(:next_application)
-      td = @company.next_application.strftime('%Y/%m/%d')
+      td = @company.next_application.try(:strftime,'%Y/%m/%d')
     tr
       th = Company.human_attribute_name(:created_at)
-      td = @company.created_at.strftime('%Y/%m/%d')
+      td = @company.created_at.try(:strftime,'%Y/%m/%d')
     tr
       th = Company.human_attribute_name(:updated_at)
-      td = @company.updated_at.strftime('%Y/%m/%d')
-
-= link_to '編集', edit_company_path, class: 'btn btn-primary mr-3'
-= link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger'
+      td = @company.updated_at.try(:strftime,'%Y/%m/%d')

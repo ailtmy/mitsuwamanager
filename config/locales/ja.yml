@@ -22,8 +22,11 @@ ja:
         created_at: 登録日時
         updated_at: 更新日時
       customer:
+        name: 氏名・商号
         kana: フリガナ
         type: 個人・法人の別
+        Person: 個人
+        Company: 法人
         created_at: 登録日時
         updated_at: 更新日時
       person:

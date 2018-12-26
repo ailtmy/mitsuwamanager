@@ -2,7 +2,8 @@ class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   def index
-    @people = Person.all
+    @q = Person.ransack(params[:q])
+    @people = @q.result(distinct: true)
   end
 
   def show

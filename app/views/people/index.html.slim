@@ -1,7 +1,14 @@
 - @page_title = "個人顧客"
-h3.mb-3 = @page_title
+h3.mb-3.mt-3 = @page_title
 
-= link_to '個人顧客新規作成', new_person_path, class: 'btn btn-primary'
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '個人顧客新規作成', new_person_path, class: 'nav-link text-white'
+    li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link text-white'
+    li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link text-white'
+
+fieldset.border
+  = render 'shared/search'
 
 .mb-3
 table.table.table-hover.table-bordered.text-center
@@ -20,9 +27,9 @@ table.table.table-hover.table-bordered.text-center
         td = person.id
         td = link_to person.name, person_path(person)
         td = person.kana
-        td = person.birthday.strftime('%Y/%m/%d')
-        td = person.created_at.strftime('%Y/%m/%d')
-        td = person.updated_at.strftime('%Y/%m/%d')
+        td = person.birthday.try(:strftime,'%Y/%m/%d')
+        td = person.created_at.try(:strftime,'%Y/%m/%d')
+        td = person.updated_at.try(:strftime,'%Y/%m/%d')
         td 
           = link_to '編集', edit_person_path(person), class: 'btn btn-primary mr-3'
           -if current_user.admin?

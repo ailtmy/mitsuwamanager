@@ -1,0 +1,11 @@
+= search_form_for @q, class: 'mb-5' do |f|
+  .form-group.row
+    = f.label :name_cont, '氏名・商号', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-9
+      = f.search_field :name_cont, class: 'form-control mt-2'
+  .form-group.row
+    = f.label :kana_cont, 'フリガナ', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-9
+      = f.search_field :kana_cont, class: 'form-control mt-2'
+    .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'

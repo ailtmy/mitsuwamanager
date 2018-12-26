@@ -2,7 +2,11 @@
 h3.mb-3.mt-3 = @page_title
 
 .nav.justify-content-end
-  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3'
+  = link_to '編集', edit_person_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
 table.table.table-hover.table-bordered
   tbody
@@ -17,13 +21,10 @@ table.table.table-hover.table-bordered
       td = @person.kana
     tr
       th = Person.human_attribute_name(:birthday)
-      td = @person.birthday.strftime('%Y/%m/%d')
+      td = @person.birthday.try(:strftime,'%Y/%m/%d')
     tr
       th = Person.human_attribute_name(:created_at)
-      td = @person.created_at.strftime('%Y/%m/%d')
+      td = @person.created_at.try(:strftime,'%Y/%m/%d')
     tr
       th = Person.human_attribute_name(:updated_at)
-      td = @person.updated_at.strftime('%Y/%m/%d')
-
-= link_to '編集', edit_person_path, class: 'btn btn-primary mr-3'
-= link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger'
+      td = @person.updated_at.try(:strftime,'%Y/%m/%d')

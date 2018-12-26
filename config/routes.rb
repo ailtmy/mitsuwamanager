@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -16,5 +17,5 @@ Rails.application.routes.draw do
   # ---------------------------------
   # 仮のルートページ
   # ---------------------------------
-  root 'sessions#new'
+  root 'customers#index'
 end
