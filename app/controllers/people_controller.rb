@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
 
   def index
     @q = Person.ransack(params[:q])
-    @people = @q.result(distinct: true)
+    @people = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def show

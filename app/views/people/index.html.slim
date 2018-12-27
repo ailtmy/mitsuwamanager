@@ -7,8 +7,12 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link text-white'
     li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link text-white'
 
-fieldset.border
+fieldset.border.mb-3
   = render 'shared/search'
+
+.mb-3
+  = paginate @people
+  = page_entries_info @people
 
 .mb-3
 table.table.table-hover.table-bordered.text-center
@@ -16,7 +20,7 @@ table.table.table-hover.table-bordered.text-center
     tr
       th = Person.human_attribute_name(:id).upcase
       th = Person.human_attribute_name(:name)
-      th = Person.human_attribute_name(:kana)
+      th = sort_link(@q, :kana)
       th = Person.human_attribute_name(:birthday)
       th = Person.human_attribute_name(:created_at)
       th = Person.human_attribute_name(:updated_at)

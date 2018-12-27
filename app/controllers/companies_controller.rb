@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   
   def index
     @q = Company.ransack(params[:q])
-    @companies = @q.result(distinct: true)
+    @companies = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def show
