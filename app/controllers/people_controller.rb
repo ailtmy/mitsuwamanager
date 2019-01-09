@@ -7,17 +7,21 @@ class PeopleController < ApplicationController
   end
 
   def show
+    
   end
 
   def new
     @person = Person.new
+    @person.addresses.build
   end
 
   def edit
+    
   end
 
   def create
     @person = Person.new(person_params)
+    @person.addresses.build(address_params)
 
     if @person.save
       redirect_to person_path(@person), notice: "#{@person.name}を登録しました。" 
@@ -30,7 +34,7 @@ class PeopleController < ApplicationController
     if @person.update(person_params)
       redirect_to person_path(@person), notice: "#{@person.name}を更新しました。"
     else
-      render :new
+      render :edit
     end
   end
 
@@ -43,6 +47,10 @@ class PeopleController < ApplicationController
 
   def person_params
     params.require(:person).permit(:name, :kana, :type, :birthday)
+  end
+
+  def address_params
+    params.require(:address).permit(:zip, :address, :since_date)
   end
 
   def set_person

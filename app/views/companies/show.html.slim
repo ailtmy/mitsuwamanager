@@ -5,6 +5,7 @@ h3.mb-3.mt-3 = @page_title
   = link_to '編集', edit_company_path, class: 'btn btn-primary mb-3'
   - if current_user.admin?
     = link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
@@ -19,6 +20,21 @@ table.table.table-hover.table-bordered
     tr
       th = Company.human_attribute_name(:kana)
       td = @company.kana
+    - if @company.addresses.present?
+      - @company.addresses.order('since_date desc').each do |a|
+        tr
+          th = Company.human_attribute_name(:address)
+          td
+            .row
+              .col
+                = "本店を置いた日： #{a.since_date.try(:strftime, '%Y/%m/%d')}"
+            .row
+              .col-md-2
+                = "〒#{a.zip}" 
+              .col-md-8
+                = a.address
+              .col-md-2
+                = link_to "本店編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
     tr
       th = Company.human_attribute_name(:establishment)
       td = @company.establishment.try(:strftime,'%Y/%m/%d')

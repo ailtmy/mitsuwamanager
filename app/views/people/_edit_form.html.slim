@@ -12,13 +12,5 @@
   .form-group
     = f.label :birthday, '生年月日'
     = f.date_field :birthday, class: 'form-control'
-  .form-group
-    = fields_for :address do |a|
-      = a.label :zip, '郵便番号'
-      = a.text_field :zip, class: 'form-control'
-      = a.label :address, '住所'
-      = a.text_field :address, class: 'form-control'
-      = a.label :since_date, '住定日'
-      = a.date_field :since_date, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary mt-3'
   

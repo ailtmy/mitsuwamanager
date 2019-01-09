@@ -1,0 +1,19 @@
+- if address.errors.present?
+  ul#error_explanation
+    - address.errors.full_messages.each do |message|
+      li = message
+= form_with model: address, local: true do |f|
+  .form-group
+    = f.hidden_field :addressable_type, class: 'form-control'
+  .form-group
+    = f.hidden_field :addressable_id, class: 'form-control'
+  .form-group
+    = f.label :zip, '郵便番号'
+    = f.text_field :zip, class: 'form-control'
+  .form-group
+    = f.label :address, '住所'
+    = f.text_field :address, class: 'form-control'
+  .form-group
+    = f.label :since_date, '住定日'
+    = f.date_field :since_date, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3'

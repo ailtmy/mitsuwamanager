@@ -1,0 +1,27 @@
+- @page_title = "住所一覧"
+h3.mb-3.mt-3 = @page_title
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Address.human_attribute_name(:id).upcase
+      th = Address.human_attribute_name(:addressable_type)
+      th = Address.human_attribute_name(:addressable_id)
+      th = Address.human_attribute_name(:zip)
+      th = Address.human_attribute_name(:address)
+      th = Address.human_attribute_name(:since_date)
+      th
+  tbody
+    - @addresses.each do |address|
+      tr
+        td = address.id
+        td = address.addressable_type
+        td = address.addressable_id
+        td = address.zip
+        td = address.address
+        td = address.since_date.try(:strftime, '%Y/%m/%d')
+        td
+          = link_to '編集', edit_address_path(address), class: 'btn btn-primary mr-3'
+          = link_to '削除', address, method: :delete, data: {confirm: "#{address.address}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+        

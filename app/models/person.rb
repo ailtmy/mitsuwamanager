@@ -1,5 +1,8 @@
 class Person < Customer
 
+  has_many :addresses, :as => :addressable
+  accepts_nested_attributes_for :addresses
+
   # validateに定義したメソッドを設定
   validate :birthday_cannot_be_in_the_future
     

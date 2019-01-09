@@ -5,6 +5,7 @@ h3.mb-3.mt-3 = @page_title
   = link_to '編集', edit_person_path, class: 'btn btn-primary mb-3'
   - if current_user.admin?
     = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '住所追加', new_customer_address_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
@@ -22,6 +23,22 @@ table.table.table-hover.table-bordered
     tr
       th = Person.human_attribute_name(:birthday)
       td = @person.birthday.try(:strftime,'%Y/%m/%d')
+    - if @person.addresses.present?
+      - @person.addresses.order('since_date desc').each do |a|
+        tr
+          th = Person.human_attribute_name(:address)
+          td
+            .row
+              .col
+                = "住定日:  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+              
+            .row
+              .col-md-2
+                = "〒#{a.zip}"
+              .col-md-8
+                = a.address
+              .col-md-2
+                = link_to "住所編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
     tr
       th = Person.human_attribute_name(:created_at)
       td = @person.created_at.try(:strftime,'%Y/%m/%d')

@@ -11,6 +11,7 @@ class CompaniesController < ApplicationController
 
   def new
     @company = Company.new
+    @company.addresses.build
   end
 
   def edit
@@ -18,6 +19,7 @@ class CompaniesController < ApplicationController
 
   def create
     @company = Company.new(company_params)
+    @company.addresses.build(address_params)
 
     if @company.save
       redirect_to company_path(@company), notice: "#{@company.name}を登録しました。"
@@ -30,7 +32,7 @@ class CompaniesController < ApplicationController
     if @company.update(company_params)
       redirect_to company_path(@company), notice: "#{@company.name}を更新しました。"
     else
-      render :new
+      render :edit
     end
   end
   
@@ -43,6 +45,10 @@ class CompaniesController < ApplicationController
 
   def company_params
     params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application)
+  end
+
+  def address_params
+    params.require(:address).permit(:zip, :address, :since_date)
   end
 
   def set_company
