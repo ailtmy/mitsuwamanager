@@ -2,6 +2,8 @@ class Customer < ApplicationRecord
   
   has_many :addresses, :as => :addressable
   accepts_nested_attributes_for :addresses
+  has_many :customer_casefiles
+  has_many :casefiles, through: :customer_casefiles
 
   # 名前はスペースを含めない
   validates :name, presence: true, format: { with: /\A[[^ -~｡-ﾟ"　"" "]]+\z/, message: 'はスペース無しで入力して下さい。'}

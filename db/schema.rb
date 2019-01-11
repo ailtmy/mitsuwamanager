@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_07_031741) do
+ActiveRecord::Schema.define(version: 2019_01_10_042047) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -21,6 +21,29 @@ ActiveRecord::Schema.define(version: 2019_01_07_031741) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "casefiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "year"
+    t.integer "number"
+    t.date "date"
+    t.string "event_title"
+    t.integer "event_number"
+    t.integer "count"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_casefiles_on_project_id"
+  end
+
+  create_table "customer_casefiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "casefile_id"
+    t.string "applicant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["casefile_id"], name: "index_customer_casefiles_on_casefile_id"
+    t.index ["customer_id"], name: "index_customer_casefiles_on_customer_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -37,6 +60,15 @@ ActiveRecord::Schema.define(version: 2019_01_07_031741) do
     t.index ["type"], name: "index_customers_on_type"
   end
 
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "application_date"
+    t.string "place"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -47,4 +79,7 @@ ActiveRecord::Schema.define(version: 2019_01_07_031741) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "casefiles", "projects"
+  add_foreign_key "customer_casefiles", "casefiles"
+  add_foreign_key "customer_casefiles", "customers"
 end

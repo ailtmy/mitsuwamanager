@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   resource :account, only: [:show, :edit, :update]
 
+  resources :casefiles
+  resources :projects
+
   resources :addresses
 
   resources :people do

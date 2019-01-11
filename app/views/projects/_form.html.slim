@@ -1,0 +1,19 @@
+- if project.errors.present?
+  ul#error_explanation
+    - project.errors.full_messages.each do |message|
+      li = message
+= form_with model: project, local: true do |f|
+  .form-group
+    = f.label :name, '案件名'
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :application_date, '申請日'
+    = f.datetime_field :application_date, class: 'form-control'
+  .form-group
+    = f.label :place, '立会場所'
+    = f.text_field :place, class: 'form-control'
+  .form-group
+    = f.label :status, '進捗'
+    = f.text_field :status, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3'
+  

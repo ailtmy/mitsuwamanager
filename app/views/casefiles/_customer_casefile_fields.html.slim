@@ -1,0 +1,11 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.hidden_field :id
+    = f.label :customer_id, '依頼者氏名'
+    = f.collection_select :customer_id, f.object.selectable_customers, :id, :name, {}, class: 'form-control'
+    = f.label :applicant, '権利者・義務者・相続人・申請人'
+    .row
+      .col-sm-9
+        = f.text_field :applicant, class: 'form-control'
+      .col-sm-3
+        = link_to_remove_association '削除', f, class: 'btn btn-danger'

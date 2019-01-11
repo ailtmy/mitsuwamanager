@@ -1,0 +1,33 @@
+- if casefile.errors.present?
+   ul#error_explanation
+    - casefile.errors.full_messages.each do |message|
+      li = message
+= form_with(model: casefile, local: true) do |f|
+  .form-group
+    = f.label :year, '西暦（年）'
+    = f.number_field :year, value: Time.current.year, max: 3000, class: 'form-control'
+  .form-group
+    = f.label :number, '受任番号'
+    = f.number_field :number, class: 'form-control'
+  .form-group
+    = f.label :date, '受任年月日(委任状の日付）'
+    = f.date_field :date, value: Date.today, class: 'form-control'
+  .form-group
+    = f.label :event_title, '事件名・件名'
+    = f.text_field :event_title ,class: 'form-control'
+  #customer_casefiles
+    = f.fields_for :customer_casefiles do |customer_casefile|
+      = render 'customer_casefile_fields', f: customer_casefile
+    .links
+      = link_to_add_association '依頼者追加', f, :customer_casefiles, class: 'btn btn-primary'
+  .form-group
+    = f.label :event_number, '事件番号'
+    = f.number_field :event_number, class: 'form-control'
+  .form-group
+    = f.label :count, '別表による件数'
+    = f.number_field :count, class: 'form-control'
+  .form-group
+    = f.label :project_id, '案件'
+    br
+    = f.collection_select(:project_id, Project.all, :id, :name, :prompt => true)
+  = f.submit '登録する', class: 'btn btn-primary mt-3'

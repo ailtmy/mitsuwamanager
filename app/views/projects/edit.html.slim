@@ -1,0 +1,10 @@
+- @page_title = '案件編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '案件詳細へ', project_path, class: 'nav-link btn btn-primary'
+  = link_to '案件一覧へ', projects_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '工事中', "#", class: 'nav-link btn btn-primary ml-3'
+
+= render 'form', project: @project
+

@@ -1,0 +1,72 @@
+- @page_title = "事件簿"
+h3.mb-3.mt-3.d-print-none = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary.d-print-none
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link text-white'
+    li.nav-item = link_to '事件簿新規作成', new_casefile_path, class: 'nav-link text-white'
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+
+fieldset.border.mb-3.d-print-none
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :year_eq, class: 'form-control mt-2'
+      .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'
+
+.mb-3.d-print-none
+  = paginate @casefiles
+  = page_entries_info @casefiles
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th.d-print-none = Casefile.human_attribute_name(:id).upcase
+      th.d-print-none = Casefile.human_attribute_name(:year)
+      th
+        = sort_link(@q, :number)
+        br
+        = Casefile.human_attribute_name(:date)
+      th = Casefile.human_attribute_name(:event_title)
+      th = '依頼者の住所氏名'
+      th = Casefile.human_attribute_name(:event_number)
+      th = Casefile.human_attribute_name(:count)
+      th.d-print-none = Casefile.human_attribute_name(:project)
+      th.d-print-none
+  tbody
+    - @casefiles.each do |casefile|
+      tr
+        td.d-print-none = casefile.id
+        td.d-print-none = casefile.year
+        td
+          = "第#{casefile.number}号"
+          br
+          = casefile.date.try(:strftime, '%Y年%m月%d日')
+        td = casefile.event_title
+        td.text-left
+          - casefile.customer_casefiles.each do |customer_casefile|
+            - customer_casefile.customer.addresses.order('since_date desc').each do |addr|
+              - if addr == customer_casefile.customer.addresses.first
+                = addr.address
+            br
+            = "#{customer_casefile.applicant}" + " " + "#{customer_casefile.customer.name}"
+            br
+        td = casefile.event_number
+        td = casefile.count
+        td.d-print-none = casefile.project.name
+        td.d-print-none
+          = link_to '編集', edit_casefile_path(casefile), class: 'btn btn-primary mr-3'
+          - if current_user.admin?
+            = link_to '削除', casefile, method: :delete, data: { confirm: "#{casefile.id}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+
+
+
+
+
+
+

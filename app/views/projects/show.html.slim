@@ -1,0 +1,33 @@
+- @page_title = "案件詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_project_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :project, method: :delete, data: {confirm: "#{@project.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '工事中', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Project.human_attribute_name(:id).upcase
+      td = @project.id
+    tr
+      th = Project.human_attribute_name(:name)
+      td = @project.name
+    tr
+      th = Project.human_attribute_name(:application_date)
+      td = @project.application_date.try(:strftime, '%Y/%m/%d-%H:%M')
+    tr
+      th = Project.human_attribute_name(:place)
+      td = @project.place
+    tr
+      th = Project.human_attribute_name(:status)
+      td = @project.status
+    tr
+      th = Project.human_attribute_name(:created_at)
+      td = @project.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Project.human_attribute_name(:updated_at)
+      td = @project.updated_at.try(:strftime,'%Y/%m/%d')

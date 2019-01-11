@@ -13,6 +13,8 @@ ja:
       company: 法人顧客
       customer: 顧客
       address: 住所
+      project: 案件
+      casefile: 事件簿
     attributes:
       user:
         name: ユーザー名
@@ -57,6 +59,23 @@ ja:
         zip: 郵便番号
         address: 住所
         since_date: 住定日
+        created_at: 登録日
+        updated_at: 更新日
+      project:
+        name: 案件名
+        application_date: 申請日
+        place: 立会場所
+        status: 進捗
+        created_at: 登録日
+        updated_at: 更新日
+      casefile:
+        year: 西暦（年）
+        number: 受任番号
+        date: 受任年月日
+        event_title: 事件名・件名
+        event_number:  事件番号
+        count: 別表による件数
+        project: 案件
         created_at: 登録日
         updated_at: 更新日
   date:
