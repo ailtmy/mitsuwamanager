@@ -1,5 +1,9 @@
 class Company < Customer
 
+  has_many :customer_agents, foreign_key: :customer_id
+  has_many :agents, class_name: 'Customer', through: :customer_agents
+  accepts_nested_attributes_for :customer_agents, allow_destroy: true
+
   # 設立年月日validateに定義したメソッドを設定
   validate :establishment_cannot_be_in_the_future
   # 次回申請期日validateに定義したメソッドを設定

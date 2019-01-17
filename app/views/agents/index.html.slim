@@ -1,0 +1,46 @@
+- @page_title = "代理人・代表者"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '代理人・代表者新規作成', new_agent_path, class: 'nav-link text-white'
+    li.nav-item = link_to '個人顧客一覧', people_path, class: 'nav-link text-white'
+    li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link text-white'
+    li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link text-white'
+
+fieldset.border.mb-3
+  = render 'shared/search'
+
+.mb-3
+  = paginate @agents
+  = page_entries_info @agents
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Agent.human_attribute_name(:id).upcase
+      th = Agent.human_attribute_name(:name)
+      th = sort_link(@q, :kana)
+      th = Agent.human_attribute_name(:birthday)
+      th = Agent.human_attribute_name(:title)
+      th = Agent.human_attribute_name(:created_at)
+      th = Agent.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @agents.each do | agent |
+      tr
+        td = agent.id
+        td = link_to agent.name, agent_path(agent)
+        td = agent.kana
+        td = agent.birthday.try(:strftime,'%Y/%m/%d')
+        td = agent.title
+        td = agent.created_at.try(:strftime,'%Y/%m/%d')
+        td = agent.updated_at.try(:strftime,'%Y/%m/%d')
+        td 
+          = link_to '編集', edit_agent_path(agent), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', agent, method: :delete, data: { confirm: "#{agent.name}を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+
+

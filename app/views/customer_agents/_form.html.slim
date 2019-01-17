@@ -1,0 +1,23 @@
+- if customer_agent.errors.present?
+  ul#error_explanation
+    - customer_agent.errors.full_messages.each do |message|
+      li = message
+= form_with(model: customer_agent, local: true) do |f|
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :customer_id, '本人:'
+    .col-sm-11
+      = f.collection_select(:customer_id, Customer.all, :id, :name, :prompt => true)
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :agent_id, '代理人:'
+    .col-sm-11
+      = f.collection_select(:agent_id, Customer.all, :id, :name, :prompt => true)
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :title, '肩書:'
+    .col-sm-11
+      = f.text_field :title, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary'
+    
+  

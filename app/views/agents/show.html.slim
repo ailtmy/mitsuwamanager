@@ -1,0 +1,57 @@
+- @page_title = "代理人・代表者詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_agent_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :agent, method: :delete, data: {confirm: "#{@agent.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '住所追加', new_customer_address_path(@agent), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '代理人・代表者一覧', agents_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    - @agent.customers.each do |customer|
+      h5 
+        = "本人氏名： " 
+        = link_to customer.name, customer
+        - customer.customer_agents.each do |c|
+          = link_to '関連削除', customer_agent_path(c), method: :delete, data: {confirm: "#{customer.name}関連を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+
+    tr
+      th.w-25 = Agent.human_attribute_name(:id).upcase
+      td = @agent.id
+    tr
+      th = Agent.human_attribute_name(:name)
+      td = @agent.name
+    tr
+      th = Agent.human_attribute_name(:kana)
+      td = @agent.kana
+    tr
+      th = Agent.human_attribute_name(:birthday)
+      td = @agent.birthday.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Agent.human_attribute_name(:title)
+      td = @agent.title
+    - if @agent.addresses.present?
+      - @agent.addresses.order('since_date desc').each do |a|
+        tr
+          th = Agent.human_attribute_name(:address)
+          td
+            .row
+              .col
+                = "住定日:  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+              
+            .row
+              .col-md-2
+                = "〒#{a.zip}"
+              .col-md-8
+                = a.address
+              .col-md-2
+                = link_to "住所編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+    tr
+      th = Agent.human_attribute_name(:created_at)
+      td = @agent.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Agent.human_attribute_name(:updated_at)
+      td = @agent.updated_at.try(:strftime,'%Y/%m/%d')

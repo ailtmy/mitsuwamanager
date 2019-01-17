@@ -1,0 +1,9 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.hidden_field :id
+    = f.label :customer_id, '本人氏名'
+    .row
+      .col-sm-9
+        = f.collection_select :customer_id, f.object.selectable_customers, :id, :name, {}, class: 'form-control'
+      .col-sm-3
+        = link_to_remove_association '削除', f, class: 'btn btn-danger' 

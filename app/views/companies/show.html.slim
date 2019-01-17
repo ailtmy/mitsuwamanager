@@ -6,6 +6,7 @@ h3.mb-3.mt-3 = @page_title
   - if current_user.admin?
     = link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '代理人・代表者関係作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
@@ -26,14 +27,14 @@ table.table.table-hover.table-bordered
           th = Company.human_attribute_name(:address)
           td
             .row
-              .col
+              .col-sm-12
                 = "本店を置いた日： #{a.since_date.try(:strftime, '%Y/%m/%d')}"
             .row
-              .col-md-2
+              .col-sm-2
                 = "〒#{a.zip}" 
-              .col-md-8
+              .col-sm-8
                 = a.address
-              .col-md-2
+              .col-sm-2
                 = link_to "本店編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
     tr
       th = Company.human_attribute_name(:establishment)
@@ -41,6 +42,39 @@ table.table.table-hover.table-bordered
     tr
       th = Company.human_attribute_name(:company_number)
       td = @company.company_number
+    - @company.customer_agents.order("updated_at desc").each do |agent|
+      tr      
+        th = Company.human_attribute_name(:agent)
+        td.justify-content-end
+          .row.
+            .col-sm-4.text-right
+              = link_to agent.customer.name, agent.customer
+              |の
+              = agent.title
+            .col-sm-4
+              = link_to agent.agent.name, agent.agent
+            .col-sm-1
+              = link_to "編集", [:edit, @customer, agent], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", agent, method: :delete, data: {confirm: "#{agent.customer.name}の代理人を削除しますよろしいですか？"}, class: 'btn btn-danger'
+          .row
+            .col-sm-4.text-right
+              = Company.human_attribute_name(:updated_at)
+            .col-sm-6
+              = agent.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
+    - @agents.each do |customer|
+      tr
+        th = Company.human_attribute_name(:agent)
+        td
+          .row
+            .col-sm-6
+              = link_to customer.customer.name, customer.customer
+              |の
+              = customer.title
+            .col-sm-2
+              = Company.human_attribute_name(:updated_at)
+            .col-sm-4
+              = customer.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
     tr
       th = Company.human_attribute_name(:fiscal_year)
       td 

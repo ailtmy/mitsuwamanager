@@ -15,6 +15,7 @@ ja:
       address: 住所
       project: 案件
       casefile: 事件簿
+      agent: 代理人・代表者
     attributes:
       user:
         name: ユーザー名
@@ -31,27 +32,29 @@ ja:
         type: 個人・法人の別
         Person: 個人
         Company: 法人
+        Agent: 代理人・代表者
         zip: 郵便番号
         address: 本店
         since_date: 本店を置いた日
         created_at: 登録日
         updated_at: 更新日
-        created_at: 登録日時
-        updated_at: 更新日時
       person:
         name: 氏名
         birthday: 生年月日
         zip: 郵便番号
         address: 住所
         since_date: 住定日
-        created_at: 登録日
-        updated_at: 更新日
+        agent: 代理人・代表者
       company:
         name: 商号
         establishment: 設立年月日
         company_number: 会社法人等番号
         fiscal_year: 決算月
         next_application: 次回商業申請
+        agent: 代理人・代表者	
+      agent:
+        birthday: 生年月日
+        title: 肩書
       address:
         addressable_type: 種別
         addressable_id: 種別ID

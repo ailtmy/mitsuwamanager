@@ -1,0 +1,22 @@
+- if agent.errors.present?
+  ul#error_explanation
+    - agent.errors.full_messages.each do |message|
+      li = message
+= form_with model: agent, local: true do |f|
+  .form-group
+    = f.label :name, '氏名'
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :kana, 'フリガナ'
+    = f.text_field :kana, class: 'form-control'
+  .form-group
+    = f.label :birthday, '生年月日'
+    = f.date_field :birthday, class: 'form-control'
+  .form-group
+    = f.label :title, '肩書'
+    = f.text_field :title, class: 'form-control'
+  #customer_agents
+    .links
+      = link_to_add_association '本人追加', f, :customer_agents, class: 'btn btn-primary'
+  = f.submit '登録する', class: 'btn btn-primary mt-3 mb-3'
+  

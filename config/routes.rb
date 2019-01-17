@@ -8,15 +8,20 @@ Rails.application.routes.draw do
   resource :account, only: [:show, :edit, :update]
 
   resources :casefiles
-  resources :projects
+  resources :projects	
 
   resources :addresses
+  resources :customer_agents
 
   resources :people do
     resources :addresses
   end
 
   resources :companies do
+    resources :addresses
+  end
+
+  resources :agents do
     resources :addresses
   end
 

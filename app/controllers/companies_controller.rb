@@ -7,6 +7,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
+    @agents = CustomerAgent.where(agent_id: params[:id]).order("updated_at desc")
   end
 
   def new

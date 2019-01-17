@@ -1,5 +1,7 @@
 class Person < Customer
-
+  has_many :customer_agents, foreign_key: :customer_id
+  has_many :agents, class_name: 'Customer', through: :customer_agents
+  accepts_nested_attributes_for :customer_agents, allow_destroy: true
   has_many :addresses, :as => :addressable
   accepts_nested_attributes_for :addresses
 

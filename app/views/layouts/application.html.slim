@@ -18,6 +18,7 @@ html
             li.nav-item = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
           li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link'
           li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link'
+          li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link'
           li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
           li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'
         - else

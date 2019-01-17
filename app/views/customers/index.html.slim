@@ -7,6 +7,7 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link  text-white'
     li.nav-item = link_to '個人顧客新規作成', new_person_path, class: 'nav-link  text-white'
     li.nav-item = link_to '法人顧客新規作成', new_company_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '代理人・代表者関連作成', new_customer_agent_path, class: 'nav-link  text-white'
 
 fieldset.border.mb-3
   = render 'shared/search'
@@ -30,12 +31,12 @@ table.table.table-hover.table-bordered.text-center
     - @customers.each do |customer|
       tr
         td = customer.id
-        td = link_to customer.name, show_model_path(customer.type, customer)
+        td = link_to customer.name, customer
         td = customer.kana
         td = Customer.human_attribute_name(customer.type)
         td = customer.created_at.try(:strftime,'%Y/%m/%d')
         td = customer.updated_at.try(:strftime,'%Y/%m/%d')
         td
-          = link_to '編集', edit_model_path(customer.type, customer), class: 'btn btn-primary mr-3'
+          = link_to '編集', [:edit, customer], class: 'btn btn-primary mr-3'
           - if current_user.admin?
             = link_to '削除', customer, method: :delete, data: { confirm: "#{customer.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
