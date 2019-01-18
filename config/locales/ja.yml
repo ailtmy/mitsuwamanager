@@ -16,6 +16,7 @@ ja:
       project: 案件
       casefile: 事件簿
       agent: 代理人・代表者
+      identify: 本人確認記録
     attributes:
       user:
         name: ユーザー名
@@ -24,8 +25,8 @@ ja:
         password: パスワード
         current_password: 現在のパスワード
         password_confirmation: パスワード（確認）
-        created_at: 登録日時
-        updated_at: 更新日時
+        created_at: 登録日
+        updated_at: 更新日
       customer:
         name: 氏名・商号
         kana: フリガナ
@@ -45,6 +46,7 @@ ja:
         address: 住所
         since_date: 住定日
         agent: 代理人・代表者
+        identify: 本人確認記録
       company:
         name: 商号
         establishment: 設立年月日
@@ -52,6 +54,7 @@ ja:
         fiscal_year: 決算月
         next_application: 次回商業申請
         agent: 代理人・代表者	
+        identify: 本人確認記録
       agent:
         birthday: 生年月日
         title: 肩書
@@ -79,6 +82,25 @@ ja:
         event_number:  事件番号
         count: 別表による件数
         project: 案件
+        created_at: 登録日
+        updated_at: 更新日
+      identify:
+        user: 確認者
+        customer: 顧客
+        ident_method: 確認方法
+        date_time: 確認日時
+        place: 確認場所
+        item: 確認書類
+        photo: 写真
+        number: 記号番号
+        issuance_date: 交付日
+        expiration_date: 有効期限
+        publisher: 発行者
+        ident_receipt: 確認書類受領日
+        original_copy: 原本・写し
+        send_date: 関係書類送付日
+        document_receipt: 関係書類受領日
+        remarks: 備考
         created_at: 登録日
         updated_at: 更新日
   date:

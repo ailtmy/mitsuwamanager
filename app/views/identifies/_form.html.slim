@@ -1,0 +1,94 @@
+- if identify.errors.present?
+   ul#error_explanation
+    - identify.errors.full_messages.each do |message|
+      li = message
+.mb-3
+= form_with(model: identify, local: true) do |f|
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :user_id, '確認者'
+    .col-sm-11
+      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user}, {class: 'form-control'})
+  .form-group.row
+    .col-sm-1.text-right
+     
+    .col-sm-11
+      = f.hidden_field :customer_id, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :ident_method, '確認方法'
+    .col-sm-11
+      = f.select :ident_method, ["対面", "非対面"], {}, {class: 'form-control'}
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :date_time, '確認日時'
+    .col-sm-11
+      = f.datetime_select :date_time, default: Time.current, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :place, '確認場所'
+    .col-sm-11
+      = f.text_field :place, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :item, '確認書類'
+    .col-sm-11
+      = f.text_field :item, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :photo, '写真'
+    .col-sm-11
+      = f.select :photo, ["一致", "不一致", "写真無"], {}, {class: 'form-control'}
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :number, '記号番号'
+    .col-sm-11
+      = f.text_field :number, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :issuance_date, '交付日'
+    .col-sm-11
+      = f.date_field :issuance_date, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :expiration_date, '有効期限'
+    .col-sm-11
+      = f.date_field :expiration_date, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :publisher, '発行者'
+    .col-sm-11
+      = f.text_field :publisher, class: 'form-control'
+  fieldset.border.mb-3
+    legend.p-2 = "非対面の場合"
+    .p-3
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :ident_receipt, '確認書類受領日'
+        .col-sm-10
+          = f.date_field :ident_receipt, class: 'form-control'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :original_copy, '受領確認書類'
+        .col-sm-3
+          = f.radio_button :original_copy, true 
+          = f.label :original_copy_true, "原本" 
+        .col-sm-3
+          = f.radio_button :original_copy, false    
+          = f.label :original_copy_false, "写し"
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :send_date, '関係書類送付日'
+        .col-sm-10
+          = f.date_field :send_date, class: 'form-control'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :document_receipt, '関係書類受領日'
+        .col-sm-10
+          = f.date_field :document_receipt, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :remarks, '備考'
+    .col-sm-11
+      = f.text_area :remarks, rows: 10, placeholder: "電話での意思確認日時や、追加処置、居所、または、顧客注意事項（トラブル）等",class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'

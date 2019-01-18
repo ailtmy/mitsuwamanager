@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_020117) do
+ActiveRecord::Schema.define(version: 2019_01_17_051447) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -70,6 +70,29 @@ ActiveRecord::Schema.define(version: 2019_01_15_020117) do
     t.index ["type"], name: "index_customers_on_type"
   end
 
+  create_table "identifies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "customer_id"
+    t.string "ident_method"
+    t.datetime "date_time"
+    t.string "place"
+    t.string "item"
+    t.string "photo"
+    t.string "number"
+    t.date "issuance_date"
+    t.date "expiration_date"
+    t.string "publisher"
+    t.date "ident_receipt"
+    t.boolean "original_copy"
+    t.date "send_date"
+    t.date "document_receipt"
+    t.text "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_identifies_on_customer_id"
+    t.index ["user_id"], name: "index_identifies_on_user_id"
+  end
+
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "application_date"
@@ -92,4 +115,6 @@ ActiveRecord::Schema.define(version: 2019_01_15_020117) do
   add_foreign_key "casefiles", "projects"
   add_foreign_key "customer_casefiles", "casefiles"
   add_foreign_key "customer_casefiles", "customers"
+  add_foreign_key "identifies", "customers"
+  add_foreign_key "identifies", "users"
 end

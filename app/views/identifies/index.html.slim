@@ -1,0 +1,48 @@
+- @page_title = "本人確認記録"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '個人顧客一覧', people_path, class: 'nav-link text-white'
+    li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '個人顧客新規作成', new_person_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '法人顧客新規作成', new_company_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '代理人・代表者関連作成', new_customer_agent_path, class: 'nav-link  text-white'
+
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .from-group.row
+      = f.label :user_name_cont, 'ユーザー', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :user_name_cont, class: 'form-control mt-2'
+      .form-group
+        = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+
+.mb-3
+  = paginate @identifies
+  = page_entries_info @identifies
+
+.mb-3
+table.table.table-hpver.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Identify.human_attribute_name(:id).upcase
+      th = Identify.human_attribute_name(:user)
+      th = Identify.human_attribute_name(:customer)
+      th = Identify.human_attribute_name(:ident_method)
+      th = Identify.human_attribute_name(:date_time)
+      th
+  tbody
+    - @identifies.each do |identify|
+      tr
+        td = identify.id
+        td = identify.user.name
+        td = identify.customer.name
+        td = identify.ident_method
+        td = identify.date_time.try(:strftime, '%Y/%m/%d-%H:%M')
+        td
+          = link_to '編集', edit_identify_path(identify), class: 'btn btn-primary mr-3'
+          - if current_user.admin?
+            = link_to '削除', identify, method: :delete, data: { confirm: "#{identify.id}を削除します。よろしいですか？"}, class: 'btn btn-danger' 
+

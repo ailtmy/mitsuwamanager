@@ -34,7 +34,6 @@ class CustomerAgentsController < ApplicationController
   end
 
   def destroy
-    @customeragent = CustomerAgent.find(params[:id])
     @customeragent.destroy
     redirect_to @customeragent.customer, notice: "#{@customeragent.customer.name}の代理人を削除しました。"
   end

@@ -5,6 +5,7 @@ h3.mb-3.mt-3 = @page_title
   = link_to '編集', edit_person_path, class: 'btn btn-primary mb-3'
   - if current_user.admin?
     = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '本人確認記録作成', new_customer_identify_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '住所追加', new_customer_address_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '代理人・代表者関係作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -29,7 +30,7 @@ table.table.table-hover.table-bordered
         tr
           th = Person.human_attribute_name(:address)
           td
-            .row
+            card.row
               .col
                 = "住定日:  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
               
@@ -71,6 +72,19 @@ table.table.table-hover.table-bordered
               = Person.human_attribute_name(:updated_at)
             .col-sm-4
               = customer.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
+    - @person.identifies.each do |identify|
+      tr
+        th = Person.human_attribute_name(:identify)
+        td
+          .row
+            .col-sm-2
+              = identify.ident_method
+              |:
+            .col-sm-2
+              = link_to identify.date_time.try(:strftime, "%Y/%m/%d"), identify
+            .col-sm-2
+              |確認者：
+              = identify.user.name
     tr
       th = Person.human_attribute_name(:created_at)
       td = @person.created_at.try(:strftime,'%Y/%m/%d')

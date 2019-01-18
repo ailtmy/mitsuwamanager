@@ -12,13 +12,16 @@ Rails.application.routes.draw do
 
   resources :addresses
   resources :customer_agents
+  resources :identifies
 
   resources :people do
     resources :addresses
+    resources :identifies
   end
 
   resources :companies do
     resources :addresses
+    resources :identifies
   end
 
   resources :agents do
@@ -27,6 +30,7 @@ Rails.application.routes.draw do
 
   resources :customers do
     resources :addresses
+    resources :identifies
   end
 
 

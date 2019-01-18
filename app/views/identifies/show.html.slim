@@ -1,0 +1,70 @@
+- @page_title = "本人確認記録詳細"
+h3.mb-3mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_identify_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :identify, method: :delete, data: {confirm: "#{@identify.customer.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Identify.human_attribute_name(:id).upcase
+      td = @identify.id
+    tr
+      th = Identify.human_attribute_name(:user)
+      td = @identify.user.name
+    tr
+      th = Identify.human_attribute_name(:customer)
+      td = link_to @identify.customer.name, @identify.customer
+    tr
+      th = Identify.human_attribute_name(:ident_method)
+      td = @identify.ident_method
+    tr
+      th = Identify.human_attribute_name(:date_time)
+      td = @identify.date_time.try(:strftime, "%Y/%m/%d-%H:%M")
+    tr
+      th = Identify.human_attribute_name(:place)
+      td = @identify.place
+    tr
+      th = Identify.human_attribute_name(:item)
+      td = @identify.item
+    tr
+      th = Identify.human_attribute_name(:photo)
+      td = @identify.photo
+    tr
+      th = Identify.human_attribute_name(:number)
+      td = @identify.number
+    tr
+      th = Identify.human_attribute_name(:issuance_date)
+      td = @identify.issuance_date.try(:strftime, "%Y/%m/%d")
+    tr
+      th = Identify.human_attribute_name(:expiration_date)
+      td = @identify.expiration_date.try(:strftime, "%Y/%m/%d")
+    tr
+      th = Identify.human_attribute_name(:publisher)
+      td = @identify.publisher
+    - if @identify.ident_method == "非対面"
+      tr.bg-light.text-center
+        th colspan="2" = "非対面の場合" 
+      tr.bg-light
+        th = Identify.human_attribute_name(:ident_receipt)
+        td = @identify.ident_receipt
+      tr.bg-light
+        th = Identify.human_attribute_name(:original_copy)
+        td = "#{ @identify.original_copy == true ? '原本' : '写し' }"
+      tr.bg-light
+        th = Identify.human_attribute_name(:send_date)
+        td = @identify.send_date.try(:strftime, '%Y/%m/%d')
+      tr.bg-light
+        th = Identify.human_attribute_name(:document_receipt)
+        td = @identify.document_receipt.try(:strftime, '%Y/%m/%d')
+    tr
+      th = Identify.human_attribute_name(:remarks)
+      td = simple_format(@identify.remarks)
+
+
+  
