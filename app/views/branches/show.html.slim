@@ -1,0 +1,56 @@
+- @page_title = "支店詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_branch_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :branch, method: :delete, data: {confirm: "#{@branch.branch_name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to 'スタッフ登録', new_branch_branch_staff_path(@branch), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Branch.human_attribute_name(:id).upcase
+      td = @branch.id
+    tr
+      th = Branch.human_attribute_name(:company)
+      td = link_to @branch.company.name, @branch.company
+    tr
+      th = Branch.human_attribute_name(:branch_name)
+      td 
+        = @branch.branch_name
+    - if @branch.addresses.present?
+      - @branch.addresses.order('since_date desc').each do |addr|
+        tr
+           th = Branch.human_attribute_name(:address)
+           td
+            .row
+              .col-sm-12
+                = "支店設置日： #{addr.since_date.try(:strftime, '%Y/%m/%d')}"
+            .row
+              .col-sm-2
+                = "〒#{addr.zip}" 
+              .col-sm-7
+                = addr.address
+              .col-sm-3
+                = link_to "支店所在編集", [:edit, @branch.company, addr], class: 'btn btn-primary pull-right'
+    tr
+      th = Branch.human_attribute_name(:staff)
+      td
+        - if @branch.branch_staffs.present?
+          - @branch.branch_staffs.each do |staff| 
+            .row.mb-2
+              .col-sm-2
+                = staff.title
+              .col-sm-3
+                = link_to staff.staff.name, staff.staff
+              .col-sm-3
+                |配属日：
+                = staff.assigned_date.try(:strftime, "%Y/%m/%d")
+              .col-sm-1
+                = link_to "編集", [:edit, @branch, staff], class: 'btn btn-primary pull-right'
+              .col-sm-1
+               = link_to "削除", staff, method: :delete, data: {confirm: "#{staff.staff.name}を削除しますよろしいですか？"}, class: 'btn btn-danger'
+              br

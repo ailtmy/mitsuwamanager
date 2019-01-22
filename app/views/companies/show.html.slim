@@ -7,6 +7,7 @@ h3.mb-3.mt-3 = @page_title
     = link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '本人確認記録作成', new_customer_identify_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '支店追加', new_company_branch_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '代理人・代表者関係作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -89,6 +90,18 @@ table.table.table-hover.table-bordered
             .col-sm-2
               |確認者：
               = identify.user.name
+    - @company.branches.each do |branch|
+      tr
+        th = Company.human_attribute_name(:branch)
+        td
+          .row
+            .col-sm-8
+              = link_to branch.branch_name, branch
+            .col-sm-1
+              = link_to "編集", [:edit, @company, branch], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", branch, method: :delete, data: {confirm: "#{branch.branch_name}を削除しますよろしいですか？"}, class: 'btn btn-danger'
+
     tr
       th = Company.human_attribute_name(:fiscal_year)
       td 

@@ -17,6 +17,8 @@ ja:
       casefile: 事件簿
       agent: 代理人・代表者
       identify: 本人確認記録
+      branch: 本支店・部署
+      branch_staff: 所属スタッフ
     attributes:
       user:
         name: ユーザー名
@@ -55,6 +57,7 @@ ja:
         next_application: 次回商業申請
         agent: 代理人・代表者	
         identify: 本人確認記録
+        branch: 支店
       agent:
         birthday: 生年月日
         title: 肩書
@@ -103,6 +106,16 @@ ja:
         remarks: 備考
         created_at: 登録日
         updated_at: 更新日
+      branch:
+        customer: 顧客
+        company: 法人顧客
+        branch_name: 支店名
+        address: 住所
+        zip: 郵便番号
+        staff: スタッフ
+      branch_staff:
+        title: 肩書
+        assigned_date: 配属日
   date:
     abbr_day_names:
     - 日

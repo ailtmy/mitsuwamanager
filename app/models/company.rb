@@ -6,6 +6,7 @@ class Company < Customer
   has_many :addresses, :as => :addressable, dependent: :destroy
   accepts_nested_attributes_for :addresses
   has_many :identifies,  foreign_key: :customer_id, dependent: :destroy
+  has_many :branches, foreign_key: :customer_id
 
   # 設立年月日validateに定義したメソッドを設定
   validate :establishment_cannot_be_in_the_future

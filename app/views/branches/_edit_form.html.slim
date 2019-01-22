@@ -1,0 +1,15 @@
+- if branch.errors.present?
+  ul#error_explanation
+    - branch.errors.full_messages.each do |message|
+      li = message
+.mb-3
+= form_with(model: branch, local: true) do |f|
+  .form-group
+    = f.hidden_field :customer_id, class: 'form-control'
+  .form-group
+    = f.label :branch_name, '支店名'
+    = f.text_field :branch_name, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary'
+  
+  
+      

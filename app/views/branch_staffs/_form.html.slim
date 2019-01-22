@@ -1,0 +1,19 @@
+- if branch_staff.errors.present?
+  ul#error_explanation
+    - branch_staff.errors.full_messages.each do |message|
+      li = message
+= form_with(model: branch_staff, local: true) do |f|
+  .form-group
+    = f.hidden_field :branch_id, class: 'form-control'
+  .form-group
+    = f.label :staff_id, 'スタッフ:'
+    = f.collection_select(:staff_id, Person.all, :id, :name, {:prompt => true}, {class: 'form-control'})
+  .form-group
+    = f.label :title, '肩書:'
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :assigned_date
+    = f.date_field :assigned_date, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary'
+    
+  

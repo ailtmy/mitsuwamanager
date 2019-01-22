@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_051447) do
+ActiveRecord::Schema.define(version: 2019_01_22_023412) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -21,6 +21,25 @@ ActiveRecord::Schema.define(version: 2019_01_17_051447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "branch_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "staff_id"
+    t.bigint "branch_id"
+    t.string "title"
+    t.date "assigned_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_branch_staffs_on_branch_id"
+    t.index ["staff_id"], name: "index_branch_staffs_on_staff_id"
+  end
+
+  create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.string "branch_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_branches_on_customer_id"
   end
 
   create_table "casefiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -112,6 +131,7 @@ ActiveRecord::Schema.define(version: 2019_01_17_051447) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "branches", "customers"
   add_foreign_key "casefiles", "projects"
   add_foreign_key "customer_casefiles", "casefiles"
   add_foreign_key "customer_casefiles", "customers"
