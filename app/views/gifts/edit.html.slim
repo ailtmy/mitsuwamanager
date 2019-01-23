@@ -1,0 +1,12 @@
+- @page_title = '贈答品編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '贈答品詳細へ', @gift, class: 'nav-link btn btn-primary'
+  = link_to '個人顧客一覧へ', people_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to ' 法人顧客一覧へ', companies_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '顧客一覧へ', customers_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary ml-3'
+  
+= render 'edit_form', gift: @gift
+

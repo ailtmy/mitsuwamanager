@@ -19,6 +19,7 @@ ja:
       identify: 本人確認記録
       branch: 本支店・部署
       branch_staff: 所属スタッフ
+      gift: 贈答品
     attributes:
       user:
         name: ユーザー名
@@ -48,7 +49,10 @@ ja:
         address: 住所
         since_date: 住定日
         agent: 代理人・代表者
+        agent_customer: 代理人・代表者本人
         identify: 本人確認記録
+        gift: 贈答品等
+        branch: 所属
       company:
         name: 商号
         establishment: 設立年月日
@@ -56,8 +60,9 @@ ja:
         fiscal_year: 決算月
         next_application: 次回商業申請
         agent: 代理人・代表者	
+        agent_customer: 代理人・代表者本人
         identify: 本人確認記録
-        branch: 支店
+        branch: 本支店・部署
       agent:
         birthday: 生年月日
         title: 肩書
@@ -116,6 +121,15 @@ ja:
       branch_staff:
         title: 肩書
         assigned_date: 配属日
+      gift:
+        gift_year: 年
+        customer: 顧客
+        send_receive: 送付・受領
+        gift_kind: 種別
+        gift_address: 送付先
+        gift_remark: 備考
+        created_at: 登録日
+        updated_at: 更新日
   date:
     abbr_day_names:
     - 日

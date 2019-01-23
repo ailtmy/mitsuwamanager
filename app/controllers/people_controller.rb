@@ -8,6 +8,7 @@ class PeopleController < ApplicationController
 
   def show
     @agents = CustomerAgent.where(agent_id: params[:id]).order("updated_at desc")
+    @staff = BranchStaff.where(staff_id: params[:id]).order("updated_at desc")
   end
 
   def new

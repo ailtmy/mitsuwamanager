@@ -1,0 +1,27 @@
+- if gift.errors.present?
+  ul#error_explanation
+    - gift.errors.full_messages.each do |message|
+      li = message
+= form_with(model: gift, local: true) do |f|
+  .form-group
+    = f.hidden_field :customer_id, class: 'form-control'
+  .form-group
+    = f.label :gift_year, '西暦（年）'
+    = f.number_field :gift_year, value: Time.current.year, max: 3000, class: 'form-control'
+  .form-group
+    = f.label :send_receive, '送付・受領'
+    = f.select :send_receive, Gift.selectable_send_receive, { include_blank: true}, {class: 'form-control'}
+  .form-group
+    = f.label :gift_kind, '種別'
+    = f.select :gift_kind, Gift.selectable_gift_kind, { include_blank: true}, {class: 'form-control'}
+  .form-group
+    = f.label :gift_address, '送付先'
+    = f.select :gift_address, Gift.selectable_gift_address, {include_blank: true}, {class: 'form-control'}
+  .form-group
+    .row.ml-1
+      = f.label :gift_remark, '備考'
+    .row.ml-1
+      = f.text_area :gift_remark, rows: 10, cols: 145,placeholder: "その他を選択した場合の詳細や、送付・受領の品物等",　class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'
+    
+  

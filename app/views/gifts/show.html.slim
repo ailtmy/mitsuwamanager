@@ -1,0 +1,40 @@
+- @page_title = "贈答品詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_gift_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :gift, method: :delete, data: {confirm: "#{@gift.customer.name}の贈答品を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Gift.human_attribute_name(:id).upcase
+      td = @gift.id
+    tr
+      th = Gift.human_attribute_name(:gift_year)
+      td = @gift.gift_year
+    tr
+      th = Gift.human_attribute_name(:customer)
+      td = link_to @gift.customer.name, @gift.customer  
+    tr
+      th = Gift.human_attribute_name(:send_receive)
+      td = @gift.send_receive
+    tr
+      th = Gift.human_attribute_name(:gift_kind)
+      td = @gift.gift_kind
+    tr
+      th = Gift.human_attribute_name(:gift_address)
+      td = @gift.gift_address
+    tr
+      th = Gift.human_attribute_name(:gift_remark)
+      td = simple_format(@gift.gift_remark)
+    tr
+      th = Gift.human_attribute_name(:created_at)
+      td = @gift.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Gift.human_attribute_name(:updated_at)
+      td = @gift.updated_at.try(:strftime,'%Y/%m/%d')

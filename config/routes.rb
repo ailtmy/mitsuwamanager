@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
   
-  get 'branch_staffs/index'
-  get 'branch_staffs/show'
-  get 'branch_staffs/new'
-  get 'branch_staffs/edit'
   get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -13,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :casefiles
   resources :projects	
-
+  resources :gifts
   resources :addresses
   resources :customer_agents
   resources :branch_staffs
@@ -40,6 +36,7 @@ Rails.application.routes.draw do
   resources :customers do
     resources :addresses
     resources :identifies
+    resources :gifts
   end
 
 

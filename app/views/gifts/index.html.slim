@@ -1,0 +1,62 @@
+- @page_title = "贈答品等一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '贈答品一覧', gifts_path, class: 'nav-link text-white'
+    li.nav-item = link_to '個人顧客一覧', people_path, class: 'nav-link text-white'
+    li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link text-white'
+    li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link text-white'
+    
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :gift_year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :gift_year_eq, class: 'form-control mt-2'
+    .form-group.row
+      = f.label :send_receive_eq, '送付・受領', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.select :send_receive_eq, Gift.selectable_send_receive, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
+    .form-group.row
+      = f.label :gift_kind_eq, '種別', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.select :gift_kind_eq, Gift.selectable_gift_kind, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
+    .form-group.row
+      = f.label :gift_address_eq, '送付先', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.select :gift_address_eq, Gift.selectable_gift_address, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
+      .form-group
+        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+.mb-3
+  = paginate @gifts
+  = page_entries_info @gifts
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Gift.human_attribute_name(:id).upcase
+      th = Gift.human_attribute_name(:gift_year)
+      th = Gift.human_attribute_name(:customer)
+      th = Gift.human_attribute_name(:send_receive)
+      th = Gift.human_attribute_name(:gift_kind)
+      th = Gift.human_attribute_name(:gift_address)
+      th
+  tbody
+    - @gifts.each do | gift |
+      tr
+        td = gift.id
+        td = gift.gift_year
+        td = link_to gift.customer.name, gift.customer
+        td = gift.send_receive
+        td = gift.gift_kind
+        td = gift.gift_address
+        td 
+          = link_to '編集', edit_gift_path(gift), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', gift, method: :delete, data: { confirm: "#{gift.customer.name}の贈答品を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+
+

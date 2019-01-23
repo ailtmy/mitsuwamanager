@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_22_023412) do
+ActiveRecord::Schema.define(version: 2019_01_22_062159) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 2019_01_22_023412) do
     t.index ["type"], name: "index_customers_on_type"
   end
 
+  create_table "gifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.string "send_receive"
+    t.string "gift_kind"
+    t.integer "gift_year"
+    t.string "gift_address"
+    t.text "gift_remark"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_gifts_on_customer_id"
+  end
+
   create_table "identifies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "customer_id"
@@ -135,6 +147,7 @@ ActiveRecord::Schema.define(version: 2019_01_22_023412) do
   add_foreign_key "casefiles", "projects"
   add_foreign_key "customer_casefiles", "casefiles"
   add_foreign_key "customer_casefiles", "customers"
+  add_foreign_key "gifts", "customers"
   add_foreign_key "identifies", "customers"
   add_foreign_key "identifies", "users"
 end

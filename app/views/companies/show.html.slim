@@ -8,8 +8,9 @@ h3.mb-3.mt-3 = @page_title
   = link_to '本人確認記録作成', new_customer_identify_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '支店追加', new_company_branch_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '代理人・代表者関係作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '法人顧客一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '代表者等作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '贈答品登録', new_customer_gift_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '法人一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
 table.table.table-hover.table-bordered
@@ -23,11 +24,11 @@ table.table.table-hover.table-bordered
     tr
       th = Company.human_attribute_name(:kana)
       td = @company.kana
-    - if @company.addresses.present?
-      - @company.addresses.order('since_date desc').each do |a|
-        tr
-          th = Company.human_attribute_name(:address)
-          td
+    tr
+      th = Company.human_attribute_name(:address)
+      td
+        - if @company.addresses.present?
+          - @company.addresses.order('since_date desc').each do |a|
             .row
               .col-sm-12
                 = "本店を置いた日： #{a.since_date.try(:strftime, '%Y/%m/%d')}"
@@ -44,11 +45,11 @@ table.table.table-hover.table-bordered
     tr
       th = Company.human_attribute_name(:company_number)
       td = @company.company_number
-    - @company.customer_agents.order("updated_at desc").each do |agent|
-      tr      
-        th = Company.human_attribute_name(:agent)
-        td.justify-content-end
-          .row.
+    tr      
+      th = Company.human_attribute_name(:agent)
+      td.justify-content-end
+        - @company.customer_agents.order("updated_at desc").each do |agent|
+          .row
             .col-sm-4.text-right
               = link_to agent.customer.name, agent.customer
               |の
@@ -59,15 +60,15 @@ table.table.table-hover.table-bordered
               = link_to "編集", [:edit, @customer, agent], class: 'btn btn-primary pull-right'
             .col-sm-1
               = link_to "削除", agent, method: :delete, data: {confirm: "#{agent.customer.name}の代理人を削除しますよろしいですか？"}, class: 'btn btn-danger'
-          .row
+          .row.mb-2
             .col-sm-4.text-right
               = Company.human_attribute_name(:updated_at)
             .col-sm-6
               = agent.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
-    - @agents.each do |customer|
-      tr
-        th = Company.human_attribute_name(:agent)
-        td
+    tr
+      th = Company.human_attribute_name(:agent_customer)
+      td
+        - @agents.each do |customer|
           .row
             .col-sm-6
               = link_to customer.customer.name, customer.customer
@@ -77,10 +78,10 @@ table.table.table-hover.table-bordered
               = Company.human_attribute_name(:updated_at)
             .col-sm-4
               = customer.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
-    - @company.identifies.each do |identify|
-      tr
-        th = Company.human_attribute_name(:identify)
-        td
+    tr
+      th = Company.human_attribute_name(:identify)
+      td
+        - @company.identifies.each do |identify|
           .row
             .col-sm-2
               = identify.ident_method
@@ -90,11 +91,11 @@ table.table.table-hover.table-bordered
             .col-sm-2
               |確認者：
               = identify.user.name
-    - @company.branches.each do |branch|
-      tr
-        th = Company.human_attribute_name(:branch)
-        td
-          .row
+    tr
+      th = Company.human_attribute_name(:branch)
+      td
+        - @company.branches.each do |branch|
+          .row.mb-2
             .col-sm-8
               = link_to branch.branch_name, branch
             .col-sm-1
@@ -107,6 +108,23 @@ table.table.table-hover.table-bordered
       td 
         = @company.fiscal_year 
         | 月
+    tr
+      th = Company.human_attribute_name(:gift)
+      td
+        - @company.gifts.each do |gift|
+          .row.m-2
+            .col-sm-3
+              = link_to "#{gift.gift_year}年：", gift
+              = gift.gift_kind
+              = gift.send_receive
+            .col-sm-2
+              = gift.gift_address
+            .col-sm-2
+              = gift.gift_remark.truncate(8)
+            .col-sm-1
+              = link_to "編集", [:edit, gift], class: 'btn btn-primary'
+            .col-sm-1
+              = link_to "削除", gift, method: :delete, data: {confirm: "#{gift.gift_year}年#{gift.gift_kind}を削除しますよろしいですか？"}, class: 'btn btn-danger'
     tr
       th = Company.human_attribute_name(:next_application)
       td = @company.next_application.try(:strftime,'%Y/%m/%d')

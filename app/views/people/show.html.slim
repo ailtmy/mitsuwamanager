@@ -7,13 +7,14 @@ h3.mb-3.mt-3 = @page_title
     = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '本人確認記録作成', new_customer_identify_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '住所追加', new_customer_address_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '代理人・代表者関係作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '個人顧客一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '代理人等作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '贈答品登録', new_customer_gift_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '個人一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
 
 table.table.table-hover.table-bordered
   tbody
-    tr
+    trz
       th.w-25 = Person.human_attribute_name(:id).upcase
       td = @person.id
     tr
@@ -25,14 +26,14 @@ table.table.table-hover.table-bordered
     tr
       th = Person.human_attribute_name(:birthday)
       td = @person.birthday.try(:strftime,'%Y/%m/%d')
-    - if @person.addresses.present?
-      - @person.addresses.order('since_date desc').each do |a|
-        tr
-          th = Person.human_attribute_name(:address)
-          td
+    tr
+      th = Person.human_attribute_name(:address)
+      td
+        - if @person.addresses.present?
+          - @person.addresses.order('since_date desc').each do |a|
             card.row
               .col
-                = "住定日:  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+                = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
               
             .row
               .col-md-2
@@ -41,10 +42,18 @@ table.table.table-hover.table-bordered
                 = a.address
               .col-md-2
                 = link_to "住所編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
-    - @person.customer_agents.order("updated_at desc").each do |agent|
-      tr      
-        th = Person.human_attribute_name(:agent)
-        td.justify-content-end
+    tr
+      th = Person.human_attribute_name(:branch)
+      td
+        - @staff.each do |staff|
+          = link_to staff.branch.company.name, staff.branch.company
+          |  
+          = link_to staff.branch.branch_name, staff.branch
+          br
+    tr      
+      th = Person.human_attribute_name(:agent)
+      td.justify-content-end
+        - @person.customer_agents.order("updated_at desc").each do |agent|
           .row.
             .col-sm-3.text-right
               = agent.title
@@ -59,10 +68,10 @@ table.table.table-hover.table-bordered
               = Person.human_attribute_name(:updated_at)
             .col-sm-6
               = agent.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
-    - @agents.each do |customer|
-      tr
-        th = Person.human_attribute_name(:agent)
-        td 
+    tr
+      th = Person.human_attribute_name(:agent_customer)
+      td
+        - @agents.each do |customer| 
           .row
             .col-sm-6
               = link_to customer.customer.name, customer.customer
@@ -72,10 +81,10 @@ table.table.table-hover.table-bordered
               = Person.human_attribute_name(:updated_at)
             .col-sm-4
               = customer.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
-    - @person.identifies.each do |identify|
-      tr
-        th = Person.human_attribute_name(:identify)
-        td
+    tr
+      th = Person.human_attribute_name(:identify)
+      td
+        - @person.identifies.each do |identify|
           .row
             .col-sm-2
               = identify.ident_method
@@ -85,6 +94,23 @@ table.table.table-hover.table-bordered
             .col-sm-2
               |確認者：
               = identify.user.name
+    tr
+      th = Person.human_attribute_name(:gift)
+      td
+        - @person.gifts.each do |gift|
+          .row.m-2
+            .col-sm-3
+              = link_to "#{gift.gift_year}年：", gift
+              = gift.gift_kind
+              = gift.send_receive
+            .col-sm-2
+              = gift.gift_address
+            .col-sm-2
+              = gift.gift_remark.truncate(8)
+            .col-sm-1
+              = link_to "編集", [:edit, gift], class: 'btn btn-primary'
+            .col-sm-1
+              = link_to "削除", gift, method: :delete, data: {confirm: "#{gift.gift_year}年#{gift.gift_kind}を削除しますよろしいですか？"}, class: 'btn btn-danger'
     tr
       th = Person.human_attribute_name(:created_at)
       td = @person.created_at.try(:strftime,'%Y/%m/%d')
