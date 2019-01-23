@@ -38,13 +38,13 @@ class AddressesController < ApplicationController
 
   def destroy
     @address.destroy
-    redirect_to addresses_path, notice: "#{@address.address}を削除しました。"
+    redirect_to customers_path, notice: "#{@address.address}を削除しました。"
   end
 
   private
 
   def address_params
-    params.require(:address).permit(:addressable_type, :addressable_id, :zip, :address, :since_date)
+    params.require(:address).permit(:addressable_type, :addressable_id, :zip, :address, :since_date, :address_kind, :address_closure)
   end
 
   def set_address

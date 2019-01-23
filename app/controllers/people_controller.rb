@@ -51,7 +51,7 @@ class PeopleController < ApplicationController
   end
 
   def address_params
-    params.require(:address).permit(:zip, :address, :since_date)
+    params.require(:address).permit(:zip, :address, :since_date, :address_kind, :address_closure)
   end
 
   def set_person

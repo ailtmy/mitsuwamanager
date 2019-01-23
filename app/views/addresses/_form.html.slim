@@ -14,6 +14,12 @@
     = f.label :address, '住所'
     = f.text_field :address, class: 'form-control'
   .form-group
-    = f.label :since_date, '住定日'
+    = f.label :since_date, '住定日(or確認日）'
     = f.date_field :since_date, class: 'form-control'
+  .form-group
+    = f.label :address_kind, '種別（住所・セカンドハウス等）'
+    = f.text_field :address_kind, class: 'form-control'
+  .form-group
+    = f.label :address_closure, '旧住所（過去の住所）'
+    = f.check_box :address_closure, class: 'form-check-input, ml-auto'
   = f.submit '登録する', class: 'btn btn-primary mt-3'

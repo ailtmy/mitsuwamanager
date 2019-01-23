@@ -11,6 +11,8 @@ table.table.table-hover.table-bordered.text-center
       th = Address.human_attribute_name(:zip)
       th = Address.human_attribute_name(:address)
       th = Address.human_attribute_name(:since_date)
+      th = Address.human_attribute_name(:address_kind)
+      th = Address.human_attribute_name(:address_closure)
       th
   tbody
     - @addresses.each do |address|
@@ -21,6 +23,8 @@ table.table.table-hover.table-bordered.text-center
         td = address.zip
         td = address.address
         td = address.since_date.try(:strftime, '%Y/%m/%d')
+        td = address.address_kind
+        td = address.address_closure
         td
           = link_to '編集', edit_address_path(address), class: 'btn btn-primary mr-3'
           = link_to '削除', address, method: :delete, data: {confirm: "#{address.address}を削除します。よろしいですか？"}, class: 'btn btn-danger'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_22_062159) do
+ActiveRecord::Schema.define(version: 2019_01_23_043915) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2019_01_22_062159) do
     t.date "since_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "address_kind"
+    t.boolean "address_closure"
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 

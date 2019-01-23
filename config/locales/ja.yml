@@ -47,6 +47,7 @@ ja:
         birthday: 生年月日
         zip: 郵便番号
         address: 住所
+        old_address: 旧住所
         since_date: 住定日
         agent: 代理人・代表者
         agent_customer: 代理人・代表者本人
@@ -63,6 +64,8 @@ ja:
         agent_customer: 代理人・代表者本人
         identify: 本人確認記録
         branch: 本支店・部署
+        gift: 贈答品等
+        old_address: 旧本店
       agent:
         birthday: 生年月日
         title: 肩書

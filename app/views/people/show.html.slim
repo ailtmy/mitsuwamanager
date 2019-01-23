@@ -31,17 +31,22 @@ table.table.table-hover.table-bordered
       td
         - if @person.addresses.present?
           - @person.addresses.order('since_date desc').each do |a|
-            card.row
-              .col
-                = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
-              
-            .row
-              .col-md-2
-                = "〒#{a.zip}"
-              .col-md-8
-                = a.address
-              .col-md-2
-                = link_to "住所編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+            - if a.address_closure == false
+              card.row              
+                .col-sm-4
+                  = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+                .col-sm-5
+                  |　住所の種類：
+                  = a.address_kind
+              .row.mb-2
+                .col-md-2
+                  = "〒#{a.zip}"
+                .col-md-7
+                  = a.address
+                .col-md-1
+                  = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+                .col-md-1
+                  = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:branch)
       td
@@ -111,6 +116,27 @@ table.table.table-hover.table-bordered
               = link_to "編集", [:edit, gift], class: 'btn btn-primary'
             .col-sm-1
               = link_to "削除", gift, method: :delete, data: {confirm: "#{gift.gift_year}年#{gift.gift_kind}を削除しますよろしいですか？"}, class: 'btn btn-danger'
+    tr
+      th = Person.human_attribute_name(:old_address)
+      td
+        - if @person.addresses.present?
+          - @person.addresses.order('since_date desc').each do |a|
+            - if a.address_closure == true
+              card.row              
+                .col-sm-4
+                  = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+                .col-sm-5
+                  |　住所の種類：
+                  = a.address_kind
+              .row.mb-2
+                .col-sm-2
+                  = "〒#{a.zip}"
+                .col-sm-7
+                  = a.address
+                .col-sm-1
+                  = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+                .col-sm-1
+                  = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:created_at)
       td = @person.created_at.try(:strftime,'%Y/%m/%d')

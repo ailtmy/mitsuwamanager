@@ -7,7 +7,7 @@ h3.mb-3.mt-3 = @page_title
     = link_to '削除', :company, method: :delete, data: {confirm: "#{@company.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '本人確認記録作成', new_customer_identify_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '支店追加', new_company_branch_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '本支店追加', new_company_branch_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '代表者等作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '贈答品登録', new_customer_gift_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '法人一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -29,16 +29,22 @@ table.table.table-hover.table-bordered
       td
         - if @company.addresses.present?
           - @company.addresses.order('since_date desc').each do |a|
-            .row
-              .col-sm-12
-                = "本店を置いた日： #{a.since_date.try(:strftime, '%Y/%m/%d')}"
-            .row
-              .col-sm-2
-                = "〒#{a.zip}" 
-              .col-sm-8
-                = a.address
-              .col-sm-2
-                = link_to "本店編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+            - if a.address_closure == false
+              .row
+                .col-sm-6
+                  = "本店を置いた日： #{a.since_date.try(:strftime, '%Y/%m/%d')}"
+                .col-sm-5
+                  |　住所の種類:　
+                  = a.address_kind
+              .row.mb-2
+                .col-sm-2
+                  = "〒#{a.zip}" 
+                .col-sm-7
+                  = a.address
+                .col-sm-1
+                  = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+                .col-sm-1
+                  = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Company.human_attribute_name(:establishment)
       td = @company.establishment.try(:strftime,'%Y/%m/%d')
@@ -128,6 +134,27 @@ table.table.table-hover.table-bordered
     tr
       th = Company.human_attribute_name(:next_application)
       td = @company.next_application.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Company.human_attribute_name(:old_address)
+      td
+        - if @company.addresses.present?
+          - @company.addresses.order('since_date desc').each do |a|
+            - if a.address_closure == true
+              card.row              
+                .col-sm-6
+                  = "本店を置いた日：  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+                .col-sm-5
+                  |　住所の種類：
+                  = a.address_kind
+              .row.mb-2
+                .col-sm-2
+                  = "〒#{a.zip}"
+                .col-sm-7
+                  = a.address
+                .col-sm-1
+                  = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
+                .col-sm-1
+                  = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Company.human_attribute_name(:created_at)
       td = @company.created_at.try(:strftime,'%Y/%m/%d')
