@@ -1,0 +1,57 @@
+- @page_title = "リハウス案件一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    li.nav-item = link_to 'リハウス案件新規作成', new_rehouse_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link  text-white'
+
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :name_cont, '案件名', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :name_cont, class: 'form-control mt-2' 
+      .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'
+
+.mb-3
+  = paginate @rehouses
+  = page_entries_info @rehouses
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Rehouse.human_attribute_name(:id).upcase
+      th = Rehouse.human_attribute_name(:name)
+      th = sort_link(@q, :place_date)
+      th = Rehouse.human_attribute_name(:place)
+      th = Rehouse.human_attribute_name(:tax_reduction)
+      th = Rehouse.human_attribute_name(:loan)
+      th = Rehouse.human_attribute_name(:change_name)
+      th = Rehouse.human_attribute_name(:erasure)
+      th = Rehouse.human_attribute_name(:status)
+      th = Rehouse.human_attribute_name(:user)
+      th = Rehouse.human_attribute_name(:report)
+      th
+  tbody
+    - @rehouses.each do |rehouse|
+      tr
+        td = rehouse.id
+        td = link_to rehouse.name, rehouse
+        td = rehouse.place_date.try(:strftime, '%Y/%m/%d-%H:%M')
+        td = rehouse.place
+        td = rehouse.tax_reduction? ? "有" : "無"
+        td = rehouse.loan? ? "有" : "無"
+        td = rehouse.change_name? ? "有" : "無"
+        td = rehouse.erasure? ? "有" : "無"
+        td = rehouse.status
+        td = rehouse.user.name
+        td = rehouse.report? ? "要" : "不"
+        td
+          = link_to '編集', [:edit, rehouse], class: 'btn btn-primary m-1'
+          - if current_user.admin?
+            = link_to '削除', rehouse, method: :delete, data: { confirm: "#{rehouse.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'

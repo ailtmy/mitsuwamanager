@@ -6,7 +6,7 @@ h3.mb-3.mt-3 = @page_title
   - if current_user.admin?
     = link_to '削除', :project, method: :delete, data: {confirm: "#{@project.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '工事中', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
 
 table.table.table-hover.table-bordered
   tbody

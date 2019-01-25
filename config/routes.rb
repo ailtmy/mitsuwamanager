@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :casefiles
   resources :projects	
+  resources :rehouses	
+  
   resources :gifts
   resources :addresses
   resources :customer_agents

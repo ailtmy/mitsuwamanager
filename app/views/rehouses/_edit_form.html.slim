@@ -1,0 +1,75 @@
+- if rehouse.errors.present?
+  ul#error_explanation
+    - rehouse.errors.full_messages.each do |message|
+      li = message
+= form_with model: rehouse, local: true do |f|
+  .form-group
+    = f.label :name, '案件名'
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :status, '進捗状況'
+    = f.text_field :status, class: 'form-control'
+  .form-group.row
+    .col-sm-3
+      = f.label :place_date, '立会日時'
+      = f.datetime_field :place_date, class: 'form-control'
+    .col-sm-6
+      = f.label :place, '立会場所'
+      = f.text_field :place, class: 'form-control'
+    .col-sm-3
+      = f.label :user_id, '事務所担当者'
+      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user}, {class: 'form-control'} )
+  .form-group.row
+    .col-sm-1
+      = f.label :tax_reduction, '減税有'
+      = f.check_box :tax_reduction, class: 'form-check-input m-2'
+    .col-sm-1
+      = f.label :tax_document, '減税書類'
+    .col-sm-10
+      = f.text_field :tax_document, class: 'form-control'
+  .form-group.row
+    .col-sm-1
+      = f.label :loan, '融資有'
+      = f.check_box :loan, class: 'form-check-input m-2'
+    .col-sm-1
+      = f.label :loan_price, '融資金額(万円）'
+    .col-sm-2
+      = f.number_field :loan_price, class: 'form-control'
+    .col-sm-1
+      = f.label :loan_agree, '金消日'
+    .col-sm-3
+      = f.datetime_field :loan_agree, class: 'form-control'
+    .col-sm-2.text-right
+      = f.label :loan_document, '設定書類受取'
+    .col-sm-2
+      = f.check_box :loan_document, class: 'form-check-input'
+  .form-group.row
+    .col-sm-1
+      = f.label :change_name, '名変有'
+      = f.check_box :change_name, class: 'form-check-input m-2'
+    .col-sm-1
+      = f.label :chnage_name_doc, '名変書類'
+    .col-sm-10
+      = f.text_field :change_name_doc, class: 'form-control'
+  .form-group.row
+    .col-sm-1
+      = f.label :erasure, '抹消有'
+      = f.check_box :erasure, class: 'form-check-input m-2'
+    .col-sm-2
+      = f.label :erasure_confirm, '抹消確認'
+      = f.check_box :erasure_confirm, class: 'form-check-input ml-2'
+  .form-group
+    = f.label :report, 'リハウス買主担当報告要'
+    = f.check_box :report, class: 'form-check-input m-2	'
+  .form-group.row
+    .col-sm-6
+      = f.label :application_date, '申請日'
+      = f.date_field :application_date, class: 'form-control'
+    .col-sm-6
+      = f.label :complete_date, '完了日'
+      = f.date_field :complete_date, class: 'form-control'
+  .form-group
+    = f.label :remarks, '備考'
+    = f.text_area :remarks, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'
+  

@@ -1,0 +1,176 @@
+- @page_title = "リハウス案件詳細"
+h3.mb-3.mt-3.d-print-none 
+  = @page_title
+  = "-#{@rehouse.name}"
+.d-print-none
+  |進捗状況：
+  = @rehouse.status
+  br
+  |当事者：
+  - @rehouse.project_customers.each do |customer|
+    = "#{customer.position}:"
+    = link_to customer.customer.name, customer.customer
+    |  
+.nav.justify-content-end.d-print-none
+  = link_to '編集', edit_rehouse_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :rehouse, method: :delete, data: {confirm: "#{@rehouse.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to 'リハウス案件一覧', rehouses_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+h4.container.m-2
+  .row
+    #estate.col-sm-8.border.border-dark style="min-height: 80px;"
+      = "不動産の表示"
+    #manage.col-sm-4.border.border-dark
+      = @rehouse.report? ? "R報告: 要 " : "R報告: 不 "
+      = "No."
+      br
+      .text-right
+        = "買いのみ・売りのみ・識別"
+  .row
+    #introduce.col-sm-6.border.border-dark.p-2 style="min-height: 80px;"
+      = "リハウス"
+      br
+      = "担当者"
+    #place.col-sm-6.border.border-dark.p-2
+      = "日時: "
+      = @rehouse.place_date.try(:strftime, "%Y/%m/%d-%H:%M")
+      br
+      = "場所: "  
+      = @rehouse.place
+  .row
+    #buyer.col-sm-6.border.border-dark style="min-height: 80px;"
+      .row
+        .col-sm-2
+          = "買主:" 
+        .col-sm-10
+          - @rehouse.project_customers.each do |customer|
+            = simple_format(ProjectCustomer.buyer_select(customer))
+    #control.col-sm-6.border.border-dark
+      = "管轄"
+  .row.border.border-dark
+    #buyer-info.col-sm-12.p-2 style="min-height: 110px;"
+      .row
+        .col-sm-2
+          = "減税: "
+          = @rehouse.tax_reduction? ? "有" : "無"
+        .col-sm-10 
+          = "(#{@rehouse.tax_document})"
+      .row
+        .col-sm-2
+          = "融資: "
+          = @rehouse.loan? ? "有" : "無"
+        .col-sm-10
+          = "融資先"
+      .row
+        .col-sm-3
+          = "融資金額: "
+          = "#{@rehouse.loan_price}万円"
+        .col-sm-5
+          = "連絡先"
+      .row
+        .col-sm-4
+          = "金消日: "
+          = @rehouse.loan_agree.try(:strftime, "%Y/%m/%d-%H:%M")
+        .col-sm-4
+          = "設定書類受取: "
+          = @rehouse.loan_document? ? "受領済" : "未受領"
+  .row
+    #seller.col-sm-6.border.border-dark.p-2 style="min-height: 80px;"
+      .row
+        .col-sm-2
+          = "売主:" 
+        .col-sm-10
+          - @rehouse.project_customers.each do |customer|
+            = simple_format(ProjectCustomer.seller_select(customer)) 
+    #seller-info.col-sm-6.border.border-dark.p-2
+      .row
+        .col-sm-3
+          = @rehouse.change_name? ? "名変：有" : "名変：無"
+        .col-sm-3
+          = @rehouse.change_name_doc  
+      .row
+        .col-sm-3
+          = @rehouse.erasure? ? "抹消：有" : "抹消：無"
+        .col-sm-3
+          = @rehouse.erasure_confirm? ? "確認済" : "未確認"
+
+  .row
+    #seller-ensure.col-sm-12.border.border-dark style="min-height: 80px;"
+      = "抹消先"
+      br/
+      = "担当連絡先等"
+  .row
+    #seller-ensure.col-sm-12.border.border-dark style="min-height: 80px;"
+      = "抹消先"
+      br/
+      = "担当連絡先等"  
+  .row
+    #other-party.col-sm-12
+      .row.border.border-dark
+        .col-sm-3 style="min-height: 30px;"
+          = "その他仲介"
+        .col-sm-3
+          = "担当"
+        .col-sm-3
+          = "電話"
+        .col-sm-3
+          = "Fax"
+      .row.border.border-dark
+        .col-sm-3 style="min-height: 30px;"
+          = "その他司法書士"
+        .col-sm-3
+          = "担当"
+        .col-sm-3
+          = "電話"
+        .col-sm-3
+          = "Fax"
+  .row style="min-height: 80px;"
+    #remark.col-sm-12.border.border-dark
+      = "備考：　"
+      = simple_format(@rehouse.remarks)
+  #buyer-destinate.row style="min-height: 130px;"
+    .col-sm-4.border.border-dark 
+      = "買主送付物"
+    .col-sm-5.border.border-dark
+      = "買主送付先"
+    .col-sm-3.border.border-dark
+      = "買主処理"
+  #loan-destinate.row style="min-height: 130px;"
+    .col-sm-4.border.border-dark
+      = "融資先送付物"
+    .col-sm-5.border.border-dark
+      = "融資先送付先"
+    .col-sm-3.border.border-dark
+      = "融資先処理"
+  #seller-destinate.row style="min-height: 130px;"
+    .col-sm-4.border.border-dark
+      = "売主送付物"
+    .col-sm-5.border.border-dark
+      = "売主送付先"
+    .col-sm-3.border.border-dark
+      = "売主処理" 
+  #ensure-destinate.row style="min-height: 130px;"
+    .col-sm-4.border.border-dark
+      = "抹消先送付物"
+    .col-sm-5.border.border-dark
+      = "抹消先送付先"
+    .col-sm-3.border.border-dark
+      = "抹消先処理"     
+  #office-only.row style="min-height: 80px;"
+    .col-sm-3.border.border-dark.text-center.p-3
+      = "申請日：　"
+      = @rehouse.application_date.present? ? @rehouse.application_date.try(:strftime, "%m/%d") : "　/　"
+    .col-sm-3.border.border-dark.text-center.p-3
+      = "補正日：　"
+      = @rehouse.complete_date.present? ? @rehouse.complete_date.try(:strftime, "%m/%d") : "　/　"
+    .col-sm-3.border.border-dark.text-center.p-3
+      = "謄本"
+    .col-sm-3.border.border-dark.text-center.p-3
+      = "事務所担当者:"
+      = @rehouse.user.name
+  . style="page-break-before: always;"
+  = "本人確認記録"  
+    
+= render 'shared/title_back', rehouse: @rehouse 

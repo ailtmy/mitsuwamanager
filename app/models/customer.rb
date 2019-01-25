@@ -12,6 +12,10 @@ class Customer < ApplicationRecord
   has_many :identifies, dependent: :destroy
   has_many :branches, foreign_key: :customer_id
   has_many :gifts
+  has_many :project_customers
+  has_many :rehouses, class_name: 'Project', foreign_key: 'customer_id', through: :project_customers
+  has_many :projects, through: :project_customers
+  accepts_nested_attributes_for :project_customers
 
   # 名前はスペースを含めない
   validates :name, presence: true, format: { with: /\A[[^ -~｡-ﾟ"　"" "]]+\z/, message: 'はスペース無しで入力して下さい。'}

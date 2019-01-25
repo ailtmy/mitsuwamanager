@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_23_043915) do
+ActiveRecord::Schema.define(version: 2019_01_24_033428) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "addressable_type"
@@ -57,6 +57,23 @@ ActiveRecord::Schema.define(version: 2019_01_23_043915) do
     t.index ["project_id"], name: "index_casefiles_on_project_id"
   end
 
+  create_table "certificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "cert_kind"
+    t.integer "number_sheet"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_certificates_on_project_id"
+  end
+
+  create_table "controls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "number"
+    t.string "name"
+    t.text "remark"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "customer_agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "customer_id"
     t.bigint "agent_id"
@@ -89,6 +106,37 @@ ActiveRecord::Schema.define(version: 2019_01_23_043915) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_customers_on_type"
+  end
+
+  create_table "destinates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "project_id"
+    t.date "send_date"
+    t.string "send_addr"
+    t.string "send_number"
+    t.boolean "receive_doc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_destinates_on_project_id"
+  end
+
+  create_table "estates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "type"
+    t.integer "estate_number"
+    t.string "address"
+    t.string "number"
+    t.string "estate_kind"
+    t.text "area"
+    t.string "structure"
+    t.string "apart_name"
+    t.string "apart_structure"
+    t.text "apart_area"
+    t.integer "sign"
+    t.string "land_kind"
+    t.string "land_percent"
+    t.text "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_estates_on_type"
   end
 
   create_table "gifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -126,13 +174,63 @@ ActiveRecord::Schema.define(version: 2019_01_23_043915) do
     t.index ["user_id"], name: "index_identifies_on_user_id"
   end
 
+  create_table "prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "year"
+    t.integer "price"
+    t.bigint "estate_id"
+    t.string "price_kind"
+    t.text "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estate_id"], name: "index_prices_on_estate_id"
+  end
+
+  create_table "project_customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "customer_id"
+    t.string "position"
+    t.string "equity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_project_customers_on_customer_id"
+    t.index ["project_id"], name: "index_project_customers_on_project_id"
+  end
+
+  create_table "project_estates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "estate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estate_id"], name: "index_project_estates_on_estate_id"
+    t.index ["project_id"], name: "index_project_estates_on_project_id"
+  end
+
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "application_date"
     t.string "place"
     t.string "status"
+    t.datetime "place_date"
+    t.boolean "tax_reduction"
+    t.string "tax_document"
+    t.boolean "loan"
+    t.integer "loan_price"
+    t.datetime "loan_agree"
+    t.boolean "loan_document"
+    t.boolean "change_name"
+    t.string "change_name_doc"
+    t.boolean "erasure"
+    t.boolean "erasure_confirm"
+    t.date "complete_date"
+    t.bigint "user_id"
+    t.boolean "report"
+    t.text "request_content"
+    t.text "remarks"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_projects_on_type"
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -147,9 +245,16 @@ ActiveRecord::Schema.define(version: 2019_01_23_043915) do
 
   add_foreign_key "branches", "customers"
   add_foreign_key "casefiles", "projects"
+  add_foreign_key "certificates", "projects"
   add_foreign_key "customer_casefiles", "casefiles"
   add_foreign_key "customer_casefiles", "customers"
+  add_foreign_key "destinates", "projects"
   add_foreign_key "gifts", "customers"
   add_foreign_key "identifies", "customers"
   add_foreign_key "identifies", "users"
+  add_foreign_key "prices", "estates"
+  add_foreign_key "project_customers", "customers"
+  add_foreign_key "project_customers", "projects"
+  add_foreign_key "project_estates", "estates"
+  add_foreign_key "project_estates", "projects"
 end

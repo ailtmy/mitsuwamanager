@@ -83,6 +83,13 @@ ja:
         application_date: 申請日
         place: 立会場所
         status: 進捗
+        place_date: 立会日時
+        tax_reduction: 減税
+        loan: 融資
+        change_name: 名変
+        erasure: 抹消
+        user: 担当
+        report: R報告
         created_at: 登録日
         updated_at: 更新日
       casefile:
