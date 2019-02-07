@@ -4,6 +4,12 @@ class CasefilesController < ApplicationController
   def index
     @q = Casefile.ransack(params[:q])
     @casefiles = @q.result.page(params[:page]).per(10)
+    @casefile = @q.result
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @casefile.generate_csv, filename: "casefile-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+    end
   end
 
   def show
@@ -38,6 +44,11 @@ class CasefilesController < ApplicationController
   def destroy
     @casefile.destroy
     redirect_to casefiles_path, notice: "#{@casefile.id}を削除しました。"
+  end
+
+  def import
+    Casefile.import(params[:file])
+    redirect_to casefiles_path, notice: '事件簿をファイルから追加しました。'
   end
 
   private

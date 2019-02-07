@@ -21,6 +21,13 @@ table.table.table-hover.table-bordered
       th = Identify.human_attribute_name(:customer)
       td = link_to @identify.customer.name, @identify.customer
     tr
+      th = Identify.human_attribute_name(:image)
+      td
+        - if @identify.images.attached?
+          - @identify.images.each do |image|
+            span.mr-5
+              = link_to image.filename, image
+    tr
       th = Identify.human_attribute_name(:ident_method)
       td = @identify.ident_method
     tr

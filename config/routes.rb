@@ -7,12 +7,16 @@ Rails.application.routes.draw do
 
   resource :account, only: [:show, :edit, :update]
 
-  resources :casefiles
+  resources :casefiles do
+    post :import, on: :collection
+  end
   resources :projects	
   resources :rehouses	
   
   resources :gifts
   resources :addresses
+  resources :tels
+  resources :mails
   resources :customer_agents
   resources :branch_staffs
   resources :identifies
@@ -20,15 +24,28 @@ Rails.application.routes.draw do
     resources :branch_staffs
   end
 
+  resources :controls do
+    resources :addresses
+    resource :tels
+    resources :mails
+    post :import, on: :collection
+  end
+
   resources :people do
     resources :addresses
+    resources :tels
+    resources :mails
     resources :identifies
+    post :import, on: :collection
   end
 
   resources :companies do
     resources :addresses
     resources :identifies
     resources :branches
+    resources :tels
+    resources :mails
+    post :import, on: :collection
   end
 
   resources :agents do
@@ -37,8 +54,11 @@ Rails.application.routes.draw do
 
   resources :customers do
     resources :addresses
+    resources :tels
+    resources :mails
     resources :identifies
     resources :gifts
+    resources :customer_agents
   end
 
 

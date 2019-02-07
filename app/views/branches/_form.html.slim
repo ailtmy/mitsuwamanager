@@ -7,16 +7,19 @@
   .form-group
     = f.hidden_field :customer_id, class: 'form-control'
   .form-group
-    = f.label :branch_name, '支店名'
+    = f.label :branch_name, '本支店、部署名'
     = f.text_field :branch_name, class: 'form-control'
   .form-group
     = fields_for :address do |a|
       = label :zip, '郵便番号'
       = a.text_field :zip, class: 'form-control'
-      = a.label :address, '支店所在地'
+      = a.label :address, '本支店・部署所在地'
       = a.text_field :address, class: 'form-control'
-      = a.label :since_date, '支店設置日'
+      = a.label :since_date, '本支店・部署設置日'
       = a.date_field :since_date, class: 'form-control'
+      = a.label :address_kind, '住所種類'
+      = a.text_field :address_kind, class: 'form-control'
+      = a.hidden_field :address_closure, value: false, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary'
   
   

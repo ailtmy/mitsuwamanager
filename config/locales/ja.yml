@@ -12,6 +12,7 @@ ja:
       person: 個人顧客
       company: 法人顧客
       customer: 顧客
+      control: 登記所
       address: 住所
       project: 案件
       casefile: 事件簿
@@ -54,6 +55,8 @@ ja:
         identify: 本人確認記録
         gift: 贈答品等
         branch: 所属
+        tel: 電話番号
+        mail: メールアドレス
       company:
         name: 商号
         establishment: 設立年月日
@@ -66,6 +69,8 @@ ja:
         branch: 本支店・部署
         gift: 贈答品等
         old_address: 旧本店
+        tel: 電話番号
+        mail: メールアドレス
       agent:
         birthday: 生年月日
         title: 肩書
@@ -100,6 +105,7 @@ ja:
         event_number:  事件番号
         count: 別表による件数
         project: 案件
+        customer: 依頼者の住所氏名
         created_at: 登録日
         updated_at: 更新日
       identify:
@@ -119,6 +125,7 @@ ja:
         send_date: 関係書類送付日
         document_receipt: 関係書類受領日
         remarks: 備考
+        image: ファイル
         created_at: 登録日
         updated_at: 更新日
       branch:
@@ -140,6 +147,15 @@ ja:
         gift_remark: 備考
         created_at: 登録日
         updated_at: 更新日
+      control:
+        number: 登記所ID
+        name: 登記所
+        remark: 備考
+        created_at: 登録日
+        updated_at: 更新日
+        address: 住所
+        tel: 電話番号
+        mail: メールアドレス
   date:
     abbr_day_names:
     - 日

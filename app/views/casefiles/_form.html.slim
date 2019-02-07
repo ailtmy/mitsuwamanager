@@ -18,6 +18,7 @@
   #customer_casefiles
     = f.fields_for :customer_casefiles do |customer_casefile|
       = render 'customer_casefile_fields', f: customer_casefile
+    / select2発火しない！！
     .links
       = link_to_add_association '依頼者追加', f, :customer_casefiles, class: 'btn btn-primary'
   .form-group
@@ -29,5 +30,5 @@
   .form-group
     = f.label :project_id, '案件'
     br
-    = f.collection_select(:project_id, Project.all, :id, :name, :prompt => true)
+    = f.collection_select(:project_id, Project.all, :id, :view_project_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
   = f.submit '登録する', class: 'btn btn-primary mt-3'

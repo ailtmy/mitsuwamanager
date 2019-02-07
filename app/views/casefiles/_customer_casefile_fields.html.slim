@@ -1,8 +1,8 @@
 .nested-fields.well.well-compact
   .form-group
     = f.hidden_field :id
-    = f.label :customer_id, '依頼者氏名'
-    = f.collection_select :customer_id, f.object.selectable_customers, :id, :name, {}, class: 'form-control'
+    = f.label :customer_id, '依頼者氏名', class: 'teacher'
+    = f.collection_select(:customer_id, f.object.selectable_customers, :id, :view_name_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
     = f.label :applicant, '権利者・義務者・相続人・申請人'
     .row
       .col-sm-9

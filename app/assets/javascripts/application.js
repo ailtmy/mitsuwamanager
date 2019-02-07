@@ -13,6 +13,31 @@
 //= require jquery
 //= require rails-ujs
 //= require activestorage
+//= require jquery.turbolinks
 //= require turbolinks
 //= require cocoon
+//= require select2
+//= require select2_locale_ja
 //= require_tree .
+
+$(document).on('turbolinks:load',function() {
+  $('.select2').select2({
+      language: "ja",
+      allowClear :true
+    });
+
+  $('form').on('cocoon:after-insert', function(){
+    $('.select2').select2({
+      language: "ja",
+      allowClear :true
+    })
+  });
+});
+
+// $(document).on('turbolinks:load',function() {
+//   $('form').on('cocoon:after-insert', function(){
+//     $('.select2').select2({
+//       allowClear :true
+//     })
+//   })
+// });

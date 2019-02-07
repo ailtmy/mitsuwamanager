@@ -1,0 +1,48 @@
+- @page_title = "登記所"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '登記所新規作成', new_control_path, class: 'nav-link text-white'
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    li.nav-item = link_to '事件簿', casefiles_path, class: 'nav-link text-white'
+    li.nav-item = link_to '不動産一覧', "#", class: 'nav-link text-white'
+
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+
+.mb-3
+  = paginate @controls
+  = page_entries_info @controls
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Control.human_attribute_name(:id).upcase
+      th = sort_link(@q, :number)
+      th = Control.human_attribute_name(:name)
+      th = Control.human_attribute_name(:created_at)
+      th = Control.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @controls.each do | control |
+      tr
+        td = control.id
+        td = control.number
+        td = link_to control.name, control_path(control)
+        td = control.created_at.try(:strftime,'%Y/%m/%d')
+        td = control.updated_at.try(:strftime,'%Y/%m/%d')
+        td 
+          = link_to '編集', edit_control_path(control), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', control, method: :delete, data: { confirm: "#{control.name}を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+= link_to 'エクスポート', controls_path(format: :csv), class: 'btn btn-primary mb-3'
+
+= form_tag import_controls_path, multipart: true, class: 'mb-3' do
+  = file_field_tag :file
+  = submit_tag 'インポート', class: 'btn btn-primary'
+
+
+

@@ -15,15 +15,25 @@ class ProjectCustomer < ApplicationRecord
   def self.buyer_select(customer)
     if customer.position == "買主"
       return "持分：#{customer.equity}　#{customer.customer.name}"
-    else
     end
   end
 
   def self.seller_select(customer)
     if customer.position == '売主'
-      return "#{customer.customer.name}"
-    else
+      customer.customer.name
     end 
-    
+  end
+
+  def self.rehouse_select(customer)
+    if customer.position == 'リハウス'
+      customer.customer.name
+    end 
+  end
+
+  def self.erase_select(customer)
+    if customer.position == '抹消先'
+      return "#{customer.customer.name}"
+      
+    end 
   end
 end

@@ -1,0 +1,12 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.hidden_field :id
+    .row
+      .col-sm-3
+        = f.label :tel_kind, '電話種類'
+        = f.text_field :tel_kind, class: 'form-control'
+      .col-sm-6
+        = f.label :tel_number, '電話番号'
+        = f.text_field :tel_number, class:  'form-control'
+      .col-sm-3
+        = link_to_remove_association '削除', f, class: 'btn btn-danger mt-4'

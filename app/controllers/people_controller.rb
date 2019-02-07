@@ -3,7 +3,13 @@ class PeopleController < ApplicationController
 
   def index
     @q = Person.ransack(params[:q])
-    @people = @q.result(distinct: true).page(params[:page]).per(10)
+    @people = @q.result.page(params[:page]).per(10)
+    @peoples = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @peoples.generate_csv, filename: "people-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+    end
   end
 
   def show
@@ -44,10 +50,15 @@ class PeopleController < ApplicationController
     redirect_to people_path, notice: "#{@person.name}を削除しました。"
   end
 
+  def import
+    Person.import(params[:file])
+    redirect_to people_path, notice: '個人顧客をファイルから追加しました。'
+  end
+
   private
 
   def person_params
-    params.require(:person).permit(:name, :kana, :type, :birthday)
+    params.require(:person).permit(:name, :kana, :type, :birthday, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy])
   end
 
   def address_params

@@ -7,12 +7,12 @@
     .col-sm-1.text-right
       = f.label :customer_id, '本人:'
     .col-sm-11
-      = f.collection_select(:customer_id, Customer.all, :id, :name, :prompt => true)
+      = f.collection_select(:customer_id, Customer.all, :id, :view_name_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
   .form-group.row
     .col-sm-1.text-right
       = f.label :agent_id, '代理人:'
     .col-sm-11
-      = f.collection_select(:agent_id, Customer.all, :id, :name, :prompt => true)
+      = f.collection_select(:agent_id, Customer.all, :id, :view_name_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
   .form-group.row
     .col-sm-1.text-right
       = f.label :title, '肩書:'

@@ -1,0 +1,79 @@
+- @page_title = "登記所詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_control_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :control, method: :delete, data: {confirm: "#{@control.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '電話追加', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to 'メール追加', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '登記所一覧', controls_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '不動産一覧', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Control.human_attribute_name(:id).upcase
+      td = @control.id
+    tr
+      th = Control.human_attribute_name(:number)
+      td = @control.number
+    tr
+      th = Control.human_attribute_name(:name)
+      td = @control.name  
+    tr
+      th = Control.human_attribute_name(:address)
+      td
+        - if @control.addresses.present?
+          - @control.addresses.order('since_date desc').each do |a|
+            - if a.address_closure == false
+              card.row              
+                .col-sm-4
+                  = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
+                .col-sm-5
+                  |　住所の種類：
+                  = a.address_kind
+              .row.mb-2
+                .col-sm-2
+                  = "〒#{a.zip}"
+                .col-sm-7
+                  = a.address
+                .col-sm-1
+                  = link_to "編集", [:edit, @control, a], class: 'btn btn-primary pull-right'
+                .col-sm-1
+                  = link_to "削除", [@control, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Control.human_attribute_name(:tel)
+      td
+        - @control.tels.each do |tel|
+          .row.mb-2
+            .col-sm-3
+              = tel.tel_kind
+            .col-sm-3
+              = tel.tel_number
+            .col-sm-1
+              = link_to "編集", [:edit, @control, tel], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@control, tel], method: :delete, data: {confirm: "#{tel.tel_number}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Control.human_attribute_name(:mail)
+      td
+        - @control.mails.each do |mail|
+          .row.mb-2
+            .col-sm-3
+              = mail.mail_kind
+            .col-sm-3
+              = mail_to mail.mail_address
+            .col-sm-1
+              = link_to "編集", [:edit, @control, mail], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@control, mail], method: :delete, data: {confirm: "#{mail.mail_address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Control.human_attribute_name(:remark)
+      td = simple_format(@control.remark)
+    tr
+      th = Control.human_attribute_name(:created_at)
+      td = @control.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Control.human_attribute_name(:updated_at)
+      td = @control.updated_at.try(:strftime,'%Y/%m/%d')

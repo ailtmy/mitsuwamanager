@@ -1,0 +1,12 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.hidden_field :id
+    .row
+      .col-sm-3
+        = f.label :mail_kind, 'メール種類'
+        = f.text_field :mail_kind, class: 'form-control'
+      .col-sm-6
+        = f.label :mail_address, 'メールアドレス'
+        = f.text_field :mail_address, class:  'form-control'
+      .col-sm-3
+        = link_to_remove_association '削除', f, class: 'btn btn-danger mt-4'

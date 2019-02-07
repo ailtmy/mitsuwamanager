@@ -20,5 +20,18 @@
       = a.text_field :address, class: 'form-control'
       = a.label :since_date, '住定日'
       = a.date_field :since_date, class: 'form-control'
+      = a.label :address_kind, '住所の種類'
+      = a.text_field  :address_kind, class: 'form-control'
+      = a.hidden_field :address_closure, value: false, class: 'form-control'
+  #tels.mb-2
+    = f.fields_for :tels do |tel|
+      = render 'tel_fields', f: tel
+    .links
+      = link_to_add_association '電話番号追加', f, :tels, class: 'btn btn-primary'
+  #mails.mb-2
+    = f.fields_for :mails do |tel|
+      = render 'mail_fields', f: tel
+    .links
+      = link_to_add_association 'メールアドレス追加', f, :mails, class: 'btn btn-primary'
   = f.submit '登録する', class: 'btn btn-primary mt-3'
   

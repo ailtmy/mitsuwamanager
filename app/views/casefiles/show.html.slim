@@ -1,0 +1,50 @@
+- @page_title = "事件簿詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_casefile_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :casefile, method: :delete, data: {confirm: "#{@casefile.id}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '事件簿TOP', casefiles_path, class: 'btn btn-primary mb-3 ml-3' 
+  = link_to '戻る', :back, class: 'btn btn-primary mb-3 ml-3' 
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Casefile.human_attribute_name(:id).upcase
+      td = @casefile.id
+    tr
+      th = Casefile.human_attribute_name(:year)
+      td = @casefile.year
+    tr
+      th = Casefile.human_attribute_name(:number)
+      td = @casefile.number
+    tr
+      th = Casefile.human_attribute_name(:date)
+      td = @casefile.date.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Casefile.human_attribute_name(:event_title)
+      td = @casefile.event_title
+    tr
+      th = Casefile.human_attribute_name(:customer)
+      /  事件当時の住所氏名を返す
+      td
+        - Casefile.returnaddr(@casefile).each do |customer|
+          = customer[:address]
+          = customer[:cust]
+          br
+    tr
+      th = Casefile.human_attribute_name(:event_number)
+      td = @casefile.event_number
+    tr
+      th = Casefile.human_attribute_name(:count)
+      td = @casefile.count
+    tr
+      th = Casefile.human_attribute_name(:project)
+      td = link_to @casefile.project.name,  @casefile.project
+    tr
+      th = Casefile.human_attribute_name(:created_at)
+      td = @casefile.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Casefile.human_attribute_name(:updated_at)
+      td = @casefile.updated_at.try(:strftime,'%Y/%m/%d')

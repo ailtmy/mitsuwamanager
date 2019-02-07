@@ -1,0 +1,7 @@
+- @page_title = '電話番号新規作成'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '戻る', :back, class: 'btn btn-primary'
+
+= render 'form', tel: @tel

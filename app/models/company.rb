@@ -7,6 +7,10 @@ class Company < Customer
   accepts_nested_attributes_for :addresses
   has_many :identifies,  foreign_key: :customer_id, dependent: :destroy
   has_many :branches, foreign_key: :customer_id
+  has_many :tels, :as => :telable, dependent: :destroy
+  accepts_nested_attributes_for :tels
+  has_many :mails, :as => :mailable, dependent: :destroy
+  accepts_nested_attributes_for :mails
 
   # 設立年月日validateに定義したメソッドを設定
   validate :establishment_cannot_be_in_the_future
@@ -17,6 +21,27 @@ class Company < Customer
   # 決算期は　1~12のみ
   validates :fiscal_year, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12, message: '１～１２の範囲で指定してください' }, allow_blank: true
   
+  def self.csv_attributes
+    ["id", "name", "kana", "establishment", "company_number", "fiscal_year", "next_application", "type", "created_at", "updated_at"]
+  end
+
+  def self.generate_csv
+    CSV.generate(headers: true) do |csv|
+      csv << csv_attributes
+      all.each do |company|
+        csv << csv_attributes.map{|attr| company.send(attr)}
+      end
+    end
+  end
+
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      company = new
+      company.attributes = row.to_hash.slice(*csv_attributes)
+      company.save!
+    end
+  end
+
 
   private
   # 設立年月日の未来日のチェックメソッド

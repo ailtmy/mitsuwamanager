@@ -14,13 +14,14 @@
       = render 'project_customer_fields', f: project_customer
     .links
       = link_to_add_association '顧客追加', f, :project_customers, class: 'btn btn-primary'
+
   .form-group.row
     .col-sm-3
       = f.label :place_date, '立会日時'
       = f.datetime_field :place_date, class: 'form-control'
     .col-sm-6
       = f.label :place, '立会場所'
-      = f.text_field :place_date, class: 'form-control'
+      = f.text_field :place, class: 'form-control'
     .col-sm-3
       = f.label :user_id, '事務所担当者'
       = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user}, {class: 'form-control'} )

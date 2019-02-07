@@ -91,4 +91,7 @@
       = f.label :remarks, '備考'
     .col-sm-11
       = f.text_area :remarks, rows: 10, placeholder: "電話での意思確認日時や、追加処置、居所、または、顧客注意事項（トラブル）等",class: 'form-control'
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary m-3'

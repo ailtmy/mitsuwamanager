@@ -30,9 +30,12 @@ h4.container.m-2
         = "買いのみ・売りのみ・識別"
   .row
     #introduce.col-sm-6.border.border-dark.p-2 style="min-height: 80px;"
-      = "リハウス"
-      br
-      = "担当者"
+      .row
+        .col-sm-3
+          = "リハウス"
+        .col-sm-9
+          - @rehouse.project_customers.each do |customer|
+            = simple_format(ProjectCustomer.rehouse_select(customer))
     #place.col-sm-6.border.border-dark.p-2
       = "日時: "
       = @rehouse.place_date.try(:strftime, "%Y/%m/%d-%H:%M")
@@ -96,16 +99,16 @@ h4.container.m-2
         .col-sm-3
           = @rehouse.erasure_confirm? ? "確認済" : "未確認"
 
+  
   .row
     #seller-ensure.col-sm-12.border.border-dark style="min-height: 80px;"
-      = "抹消先"
-      br/
-      = "担当連絡先等"
-  .row
-    #seller-ensure.col-sm-12.border.border-dark style="min-height: 80px;"
-      = "抹消先"
-      br/
-      = "担当連絡先等"  
+      .col-sm-3
+        = "抹消先"
+      .col-sm-9
+        - @rehouse.project_customers.each do |customer|
+          .mb-5
+            = simple_format(ProjectCustomer.erase_select(customer)) 
+    
   .row
     #other-party.col-sm-12
       .row.border.border-dark

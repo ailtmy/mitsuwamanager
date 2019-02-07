@@ -1,0 +1,16 @@
+- if tel.errors.present?
+  ul#error_explanation
+    - tel.errors.full_messages.each do |message|
+      li = message
+= form_with model: tel, local: true do |f|
+  .form-group
+    = f.hidden_field :telable_type, class: 'form-control'
+  .form-group
+    = f.hidden_field :telable_id, class: 'form-control'
+  .form-group
+    = f.label :tel_kind, '電話種類'
+    = f.text_field :tel_kind, class: 'form-control'
+  .form-group
+    = f.label :tel_number, '電話番号'
+    = f.text_field :tel_number, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3'

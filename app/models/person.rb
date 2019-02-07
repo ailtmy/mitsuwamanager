@@ -5,11 +5,40 @@ class Person < Customer
   has_many :addresses, :as => :addressable, dependent: :destroy
   accepts_nested_attributes_for :addresses
   has_many :identifies, foreign_key: :customer_id, dependent: :destroy
+  has_many :tels, :as => :telable, dependent: :destroy
+  accepts_nested_attributes_for :tels
+  has_many :mails, :as => :mailable, dependent: :destroy
+  accepts_nested_attributes_for :mails
+
 
   # validateに定義したメソッドを設定
   validate :birthday_cannot_be_in_the_future
-    
 
+  def self.csv_attributes
+    ["id", "name", "kana", "birthday", "type", "created_at", "updated_at"]
+  end
+
+  def self.generate_csv
+    CSV.generate(headers: true) do |csv|
+      csv << csv_attributes
+      all.each do |person|
+        csv << csv_attributes.map{|attr| person.send(attr)}
+      end
+    end
+  end
+
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      person = new
+      person.attributes = row.to_hash.slice(*csv_attributes)
+      person.save!
+    end
+  end
+    
+  def view_name_select
+    self.name + '(ID:' + self.id.to_s + ')'
+  end
+  
   private
   # 生年月日の未来日のチェックメソッド
   def birthday_cannot_be_in_the_future

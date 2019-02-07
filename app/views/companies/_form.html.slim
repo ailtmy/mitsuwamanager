@@ -17,12 +17,25 @@
       = a.text_field :address, class: 'form-control'
       = a.label :since_date, '本店を置いた日'
       = a.date_field :since_date, class: 'form-control'
+      = a.label :address_kind, '本店の種類'
+      = a.text_field :address_kind, class: 'form-control'
+      = a.hidden_field :address_closure, value: false, class: 'form-control'
   .form-group
     = f.label :establishment, '設立年月日'
     = f.date_field :establishment, class: 'form-control'
   .form-group
     = f.label :company_number, '会社法人等番号'
     = f.text_field :company_number, class: 'form-control'
+  #tels.mb-2
+    = f.fields_for :tels do |tel|
+      = render 'tel_fields', f: tel
+    .links
+      = link_to_add_association '電話番号追加', f, :tels, class: 'btn btn-primary'
+  #mails.mb-2
+    = f.fields_for :mails do |tel|
+      = render 'mail_fields', f: tel
+    .links
+      = link_to_add_association 'メールアドレス追加', f, :mails, class: 'btn btn-primary'
   .form-group
     = f.label :fiscal_year, '決算月'
     = f.number_field :fiscal_year, class: 'form-control'

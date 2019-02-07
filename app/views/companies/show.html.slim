@@ -8,7 +8,9 @@ h3.mb-3.mt-3 = @page_title
   = link_to '本人確認記録作成', new_customer_identify_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '本店追加', new_customer_address_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '本支店追加', new_company_branch_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to '代表者等作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '電話追加', new_customer_tel_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to 'メール追加', new_customer_mail_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '代表者等作成', new_customer_customer_agent_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '贈答品登録', new_customer_gift_path(@company), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '法人一覧', companies_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '顧客一覧', customers_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -71,6 +73,32 @@ table.table.table-hover.table-bordered
               = Company.human_attribute_name(:updated_at)
             .col-sm-6
               = agent.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
+    tr
+      th = Company.human_attribute_name(:tel)
+      td
+        - @company.tels.each do |tel|
+          .row.mb-2
+            .col-sm-3
+              = tel.tel_kind
+            .col-sm-3
+              = tel.tel_number
+            .col-sm-1
+              = link_to "編集", [:edit, @customer, tel], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@customer, tel], method: :delete, data: {confirm: "#{tel.tel_number}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Company.human_attribute_name(:mail)
+      td
+        - @company.mails.each do |mail|
+          .row.mb-2
+            .col-sm-3
+              = mail.mail_kind
+            .col-sm-3
+              = mail_to mail.mail_address
+            .col-sm-1
+              = link_to "編集", [:edit, @customer, mail], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@customer, mail], method: :delete, data: {confirm: "#{mail.mail_address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Company.human_attribute_name(:agent_customer)
       td

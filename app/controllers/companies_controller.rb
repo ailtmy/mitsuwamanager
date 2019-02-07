@@ -3,7 +3,13 @@ class CompaniesController < ApplicationController
   
   def index
     @q = Company.ransack(params[:q])
-    @companies = @q.result(distinct: true).page(params[:page]).per(10)
+    @companies = @q.result.page(params[:page]).per(10)
+    @companys = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @companys.generate_csv, filename: "companies-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+    end
   end
 
   def show
@@ -42,10 +48,15 @@ class CompaniesController < ApplicationController
     redirect_to companies_path, notice: "#{@company.name}を削除しました。"
   end
 
+  def import
+    Company.import(params[:file])
+    redirect_to companies_path, notice: '法人顧客をファイルから追加しました。'
+  end
+
   private
 
   def company_params
-    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application)
+    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy])
   end
 
   def address_params

@@ -71,4 +71,5 @@ gem 'ransack'
 gem 'kaminari'
 gem 'cocoon'
 gem 'jquery-rails'
-
+gem 'select2-rails'
+gem 'jquery-turbolinks'

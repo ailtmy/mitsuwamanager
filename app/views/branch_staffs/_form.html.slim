@@ -7,12 +7,12 @@
     = f.hidden_field :branch_id, class: 'form-control'
   .form-group
     = f.label :staff_id, 'スタッフ:'
-    = f.collection_select(:staff_id, Person.all, :id, :name, {:prompt => true}, {class: 'form-control'})
+    = f.collection_select(:staff_id, Person.all, :id, :view_name_select, {:prompt => true}, {class: 'form-control select2'})
   .form-group
     = f.label :title, '肩書:'
     = f.text_field :title, class: 'form-control'
   .form-group
-    = f.label :assigned_date
+    = f.label :assigned_date, '配属日'
     = f.date_field :assigned_date, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary'
     

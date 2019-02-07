@@ -1,0 +1,16 @@
+- if mail.errors.present?
+  ul#error_explanation
+    - mail.errors.full_messages.each do |message|
+      li = message
+= form_with model: mail, local: true do |f|
+  .form-group
+    = f.hidden_field :mailable_type, class: 'form-control'
+  .form-group
+    = f.hidden_field :mailable_id, class: 'form-control'
+  .form-group
+    = f.label :mail_kind, 'メール種類'
+    = f.text_field :mail_kind, class: 'form-control'
+  .form-group
+    = f.label :mail_address, 'メールアドレス'
+    = f.text_field :mail_address, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3'

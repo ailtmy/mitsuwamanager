@@ -4,6 +4,6 @@
     = f.label :customer_id, '本人氏名'
     .row
       .col-sm-9
-        = f.collection_select :customer_id, f.object.selectable_customers, :id, :name, {}, class: 'form-control'
+        = f.collection_select :customer_id, f.object.selectable_customers, :id, :view_name_select, {}, class: 'form-control select2'
       .col-sm-3
         = link_to_remove_association '削除', f, class: 'btn btn-danger' 

@@ -7,6 +7,8 @@ h3.mb-3.mt-3 = @page_title
     = link_to '削除', :person, method: :delete, data: {confirm: "#{@person.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
   = link_to '本人確認記録作成', new_customer_identify_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '住所追加', new_customer_address_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '電話追加', new_customer_tel_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to 'メール追加', new_customer_mail_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '代理人等作成', new_customer_agent_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '贈答品登録', new_customer_gift_path(@person), class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '個人一覧', people_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -14,7 +16,7 @@ h3.mb-3.mt-3 = @page_title
 
 table.table.table-hover.table-bordered
   tbody
-    trz
+    tr
       th.w-25 = Person.human_attribute_name(:id).upcase
       td = @person.id
     tr
@@ -39,14 +41,40 @@ table.table.table-hover.table-bordered
                   |　住所の種類：
                   = a.address_kind
               .row.mb-2
-                .col-md-2
+                .col-sm-2
                   = "〒#{a.zip}"
-                .col-md-7
+                .col-sm-7
                   = a.address
-                .col-md-1
+                .col-sm-1
                   = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
-                .col-md-1
+                .col-sm-1
                   = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Person.human_attribute_name(:tel)
+      td
+        - @person.tels.each do |tel|
+          .row.mb-2
+            .col-sm-3
+              = tel.tel_kind
+            .col-sm-3
+              = tel.tel_number
+            .col-sm-1
+              = link_to "編集", [:edit, @customer, tel], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@customer, tel], method: :delete, data: {confirm: "#{tel.tel_number}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
+    tr
+      th = Person.human_attribute_name(:mail)
+      td
+        - @person.mails.each do |mail|
+          .row.mb-2
+            .col-sm-3
+              = mail.mail_kind
+            .col-sm-3
+              = mail_to mail.mail_address
+            .col-sm-1
+              = link_to "編集", [:edit, @customer, mail], class: 'btn btn-primary pull-right'
+            .col-sm-1
+              = link_to "削除", [@customer, mail], method: :delete, data: {confirm: "#{mail.mail_address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:branch)
       td

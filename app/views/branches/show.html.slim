@@ -1,4 +1,4 @@
-- @page_title = "支店詳細"
+- @page_title = "本支店詳細"
 h3.mb-3.mt-3 = @page_title
 
 .nav.justify-content-end
@@ -27,15 +27,18 @@ table.table.table-hover.table-bordered
            th = Branch.human_attribute_name(:address)
            td
             .row
-              .col-sm-12
-                = "支店設置日： #{addr.since_date.try(:strftime, '%Y/%m/%d')}"
+              .col-sm-6
+                = "本支店、部署設置日： #{addr.since_date.try(:strftime, '%Y/%m/%d')}"
+              .col-sm-5
+                | 住所の種類：
+                =addr.address_kind
             .row
               .col-sm-2
                 = "〒#{addr.zip}" 
               .col-sm-7
                 = addr.address
               .col-sm-3
-                = link_to "支店所在編集", [:edit, @branch.company, addr], class: 'btn btn-primary pull-right'
+                = link_to "所在編集", [:edit, @branch.company, addr], class: 'btn btn-primary pull-right'
     tr
       th = Branch.human_attribute_name(:staff)
       td
