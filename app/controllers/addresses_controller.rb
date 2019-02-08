@@ -14,6 +14,12 @@ class AddressesController < ApplicationController
     @address = @customer.addresses.build
   end
 
+  def addaddr
+    @control = Control.find(params[:control_id])
+    @address = @control.addresses.build
+    render :new
+  end
+
   def edit
 
   end

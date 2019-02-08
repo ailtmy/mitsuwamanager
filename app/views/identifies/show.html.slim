@@ -26,7 +26,7 @@ table.table.table-hover.table-bordered
         - if @identify.images.attached?
           - @identify.images.each do |image|
             span.mr-5
-              = link_to image.filename, image
+              = link_to image.filename, image,:target => "_blank"
     tr
       th = Identify.human_attribute_name(:ident_method)
       td = @identify.ident_method

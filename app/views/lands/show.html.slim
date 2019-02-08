@@ -1,0 +1,59 @@
+- @page_title = "土地詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集・評価登録', edit_land_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :land, method: :delete, data: {confirm: "#{@land.address}#{@land.number}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '土地一覧', lands_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '不動産一覧', estates_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Land.human_attribute_name(:id).upcase
+      td = @land.id
+    tr
+      th = Land.human_attribute_name(:estate_number)
+      td = @land.estate_number
+    tr
+      th = Land.human_attribute_name(:address)
+      td = @land.address  
+    tr
+      th = Land.human_attribute_name(:number)
+      td = @land.number
+    tr
+      th = Land.human_attribute_name(:estate_kind)
+      td = @land.estate_kind
+    tr
+      th = Land.human_attribute_name(:area)
+      td = @land.area
+    tr
+      th = Land.human_attribute_name(:control)
+      td = link_to @land.control.name, @land.control
+    tr
+      th = "評価" 
+      td 
+        - @land.prices.each do |price|
+          .row
+            .col-sm-4
+              = "評価年度：#{price.year}年度"
+            .col-sm-4
+              = "価格：#{price.price}円"
+            .col-sm-4
+              = "評価地目：#{price.price_kind}"
+          .row.mb-3
+            .col-sm-12
+              = "備考：#{price.remarks}"
+    tr
+      th = Land.human_attribute_name(:remarks)
+      td = simple_format(@land.remarks)
+    
+    tr
+      th = Land.human_attribute_name(:created_at)
+      td = @land.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Land.human_attribute_name(:updated_at)
+      td = @land.updated_at.try(:strftime,'%Y/%m/%d')
+    

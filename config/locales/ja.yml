@@ -21,6 +21,8 @@ ja:
       branch: 本支店・部署
       branch_staff: 所属スタッフ
       gift: 贈答品
+      estate: 不動産
+      land: 土地
     attributes:
       user:
         name: ユーザー名
@@ -156,6 +158,26 @@ ja:
         address: 住所
         tel: 電話番号
         mail: メールアドレス
+      estate:
+        estate_number: 不動産番号
+        address: 所在
+        number: 地番／家屋番号
+        control: 管轄登記所
+        estate_kind: 地目／種類
+        area: 地積／床面積
+        structure: 構造
+        apart_name: 建物の名称（一棟）
+        apart_structure: 構造（一棟）
+        sign: 符号
+        land_kind: 敷地権の種類
+        land_percent: 敷地権の割合
+        remarks: 備考
+        type: 不動産の種類
+        Land: 土地
+      land:
+        created_at: 登録日
+        updated_at: 更新日
+
   date:
     abbr_day_names:
     - 日

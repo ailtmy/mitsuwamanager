@@ -5,8 +5,9 @@ h3.mb-3.mt-3 = @page_title
   = link_to '編集', edit_control_path, class: 'btn btn-primary mb-3'
   - if current_user.admin?
     = link_to '削除', :control, method: :delete, data: {confirm: "#{@control.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
-  = link_to '電話追加', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
-  = link_to 'メール追加', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '住所追加', addaddr_control_addresses_path(@control), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '電話追加', addcontrol_control_tels_path(@control), class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to 'メール追加', addcontrol_control_mails_path(@control) , class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '登記所一覧', controls_path, class: 'nav-link btn btn-primary mb-3 ml-3'
   = link_to '不動産一覧', "#", class: 'nav-link btn btn-primary mb-3 ml-3'
 
@@ -51,10 +52,6 @@ table.table.table-hover.table-bordered
               = tel.tel_kind
             .col-sm-3
               = tel.tel_number
-            .col-sm-1
-              = link_to "編集", [:edit, @control, tel], class: 'btn btn-primary pull-right'
-            .col-sm-1
-              = link_to "削除", [@control, tel], method: :delete, data: {confirm: "#{tel.tel_number}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Control.human_attribute_name(:mail)
       td
@@ -64,10 +61,6 @@ table.table.table-hover.table-bordered
               = mail.mail_kind
             .col-sm-3
               = mail_to mail.mail_address
-            .col-sm-1
-              = link_to "編集", [:edit, @control, mail], class: 'btn btn-primary pull-right'
-            .col-sm-1
-              = link_to "削除", [@control, mail], method: :delete, data: {confirm: "#{mail.mail_address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Control.human_attribute_name(:remark)
       td = simple_format(@control.remark)

@@ -6,6 +6,12 @@ class TelsController < ApplicationController
     @tel = @customer.tels.build
   end
 
+  def addcontrol
+    @control = Control.find(params[:control_id])
+    @tel = @control.tels.build
+    render :new
+  end
+
   def edit
   end
 

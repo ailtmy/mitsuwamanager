@@ -1,0 +1,26 @@
+- if control.errors.present?
+  ul#error_explanation
+    - control.errors.full_messages.each do |message|
+      li = message
+= form_with model: control, local: true do |f|
+  .form-group
+    = f.label :number, '登記所ID'
+    = f.text_field :number, class: 'form-control'
+  .form-group
+    = f.label :name, '登記所名'
+    = f.text_field :name, class: 'form-control'
+  #tels.mb-2
+    = f.fields_for :tels do |tel|
+      = render 'tel_fields', f: tel
+    .links
+      = link_to_add_association '電話番号追加', f, :tels, class: 'btn btn-primary'
+  #mails.mb-2
+    = f.fields_for :mails do |tel|
+      = render 'mail_fields', f: tel
+    .links
+      = link_to_add_association 'メールアドレス追加', f, :mails, class: 'btn btn-primary'
+  .form-group
+    = f.label :remark, '備考'
+    = f.text_area :remark, rows: 10, placeholder: "登記識別情報開始日等",class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3 mb-3	'
+

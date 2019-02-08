@@ -1,0 +1,56 @@
+- @page_title = "土地一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '土地新規作成', new_land_path, class: 'nav-link text-white'
+    li.nav-item = link_to '不動産一覧', estates_path, class: 'nav-link text-white'
+    li.nav-item = link_to '建物一覧', "#", class: 'nav-link text-white'
+    li.nav-item = link_to '区分建物一覧', "#", class: 'nav-link text-white'
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :address_cont, '所在', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :address_cont, class: 'form-control mt-2'
+    .form-group.row
+      = f.label :number_cont, '地番／家屋番号', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :number_cont, class: 'form-control mt-2'
+      .form-group
+        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+.mb-3
+  = paginate @lands
+  = page_entries_info @lands
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Land.human_attribute_name(:id).upcase
+      th = Land.human_attribute_name(:estate_number)
+      th = Land.human_attribute_name(:address)
+      th = Land.human_attribute_name(:number)
+      th = Land.human_attribute_name(:control)
+      th
+      
+     
+  tbody
+    - @lands.each do | land |
+      tr
+        td = land.id
+        td = link_to land.estate_number, land
+        td = land.address
+        td = land.number
+        td = link_to land.control.name, land.control
+        td
+          = link_to '編集', edit_land_path(land), class: 'btn btn-primary mr-3'
+          - if current_user.admin?
+            = link_to '削除', land, method: :delete, data: { confirm: "#{land.address}#{land.number}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+
+
+

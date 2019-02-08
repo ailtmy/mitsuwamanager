@@ -6,6 +6,12 @@ class MailsController < ApplicationController
     @mail = @customer.mails.build
   end
 
+  def addcontrol
+    @control = Control.find(params[:control_id])
+    @mail = @control.mails.build
+    render :new
+  end
+
   def edit
 
   end

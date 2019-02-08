@@ -8,7 +8,7 @@ class ControlsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data @ex_controls_csv, filename: "control-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @ex_controls.generate_csv, filename: "control-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
     end
   end
 

@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   end
   resources :projects	
   resources :rehouses	
+
+  resources :estates, only: :index	
+  resources :lands
   
   resources :gifts
   resources :addresses
@@ -25,9 +28,15 @@ Rails.application.routes.draw do
   end
 
   resources :controls do
-    resources :addresses
-    resource :tels
-    resources :mails
+    resources :addresses do
+      get :addaddr, on: :collection
+    end
+    resource :tels do
+      get :addcontrol, on: :collection
+    end
+    resources :mails do
+      get :addcontrol, on: :collection
+    end
     post :import, on: :collection
   end
 

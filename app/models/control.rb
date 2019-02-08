@@ -6,6 +6,7 @@ class Control < ApplicationRecord
   accepts_nested_attributes_for :tels
   has_many :mails, :as => :mailable, dependent: :destroy
   accepts_nested_attributes_for :mails
+  has_many :lands
 
   def self.csv_attributes
     ["id", "number", "name", "remark", "created_at", "updated_at"]
