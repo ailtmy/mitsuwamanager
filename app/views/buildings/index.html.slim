@@ -1,0 +1,64 @@
+- @page_title = "建物一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '建物新規作成', new_building_path, class: 'nav-link text-white'
+    li.nav-item = link_to '不動産一覧', estates_path, class: 'nav-link text-white'
+    li.nav-item = link_to '土地一覧', lands_path, class: 'nav-link text-white'
+    li.nav-item = link_to '一棟建物一覧', aparts_path, class: 'nav-link text-white'
+    li.nav-item = link_to '専有部分建物一覧', rooms_path, class: 'nav-link text-white'
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :address_cont, '所在', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :address_cont, class: 'form-control mt-2'
+    .form-group.row
+      = f.label :number_cont, '地番／家屋番号', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :number_cont, class: 'form-control mt-2'
+      .form-group
+        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+.mb-3
+  = paginate @buildings
+  = page_entries_info @buildings
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Building.human_attribute_name(:id).upcase
+      th = Building.human_attribute_name(:estate_number)
+      th = Building.human_attribute_name(:address)
+      th = Building.human_attribute_name(:number)
+      th = Building.human_attribute_name(:control)
+      th
+      
+     
+  tbody
+    - @buildings.each do | building |
+      tr
+        td = building.id
+        td = link_to building.estate_number, building
+        td = building.address
+        td = building.number
+        td = link_to building.control.name, building.control
+        td
+          = link_to '編集', edit_building_path(building), class: 'btn btn-primary mr-3'
+          - if current_user.admin?
+            = link_to '削除', building, method: :delete, data: { confirm: "#{building.address}#{building.number}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+= link_to 'エクスポート', buildings_path(format: :csv), class: 'mb-3 btn btn-primary mb-3'
+
+= form_tag import_buildings_path, multipart: :true, class: 'mb-3' do
+  = file_field_tag :file
+  = submit_tag 'インポート', class: 'btn btn-primary'
+
+
+
+
+

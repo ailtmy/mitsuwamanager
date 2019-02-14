@@ -1,0 +1,25 @@
+- if apart.errors.present?
+  ul#error_explanation
+    - apart.errors.full_messages.each do |message|
+      li = message
+= form_with model: apart, local: true do |f|
+  .form-group
+    = f.label :address, '所在'
+    = f.text_field :address, class: 'form-control'
+  .form-group
+    = f.label :apart_name, '建物の名称'
+    = f.text_field :apart_name, class: 'form-control'
+  .form-group
+    = f.label :apart_structure, '構造'
+    = f.text_field :apart_structure, class: 'form-control'
+  .form-group
+    = f.label :apart_area, '床面積'
+    = f.text_area :apart_area, rows: 5, class: 'form-control'
+  .form-group
+    = f.label :control_id, '管轄'
+    = f.collection_select(:control_id, Control.all, :id, :name, {prompt: "選択してください"}, class: 'form-control select2')
+  .form-group
+    = f.label :remarks, '備考'
+    = f.text_area :remarks, rows: 5, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'
+  

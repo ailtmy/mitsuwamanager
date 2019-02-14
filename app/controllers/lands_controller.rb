@@ -8,7 +8,7 @@ class LandsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_date @ex_land.generate_csv, filename: "lands-#{Time.zone.now.strftime('%Y5m%d%S')}.csv"}
+      format.csv { send_data @ex_land.generate_csv, filename: "lands-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
     end
   end
 

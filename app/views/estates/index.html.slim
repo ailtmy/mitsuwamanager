@@ -5,7 +5,8 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
   ul.navbar-nav.mr-auto
     li.nav-item = link_to '土地一覧', lands_path, class: 'nav-link text-white'
     li.nav-item = link_to '建物一覧', "#", class: 'nav-link text-white'
-    li.nav-item = link_to '区分建物一覧', "#", class: 'nav-link text-white'
+    li.nav-item = link_to '一棟の建物一覧', aparts_path, class: 'nav-link text-white'
+    li.nav-item = link_to '専有部分建物一覧', rooms_path, class: 'nav-link text-white'
     li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
     
 fieldset.border.mb-3
@@ -41,11 +42,11 @@ table.table.table-hover.table-bordered.text-center
     - @estates.each do | estate |
       tr
         td = estate.id
-        td = Estate.human_attribute_name(estate.type)
-        td = link_to estate.estate_number, estate
-        td = estate.address
-        td = estate.number
-        td = estate.control.name
+        td = Estate.human_attribute_name(estate.type) if estate.type != nil
+        td = estate.estate_number
+        td =estate.address
+        td = link_to estate.number, estate if estate.number != nil
+        td = link_to estate.control.name, estate.control if estate.control_id != nil
 
 
 

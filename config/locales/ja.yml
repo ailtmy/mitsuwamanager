@@ -23,6 +23,11 @@ ja:
       gift: 贈答品
       estate: 不動産
       land: 土地
+      building: 建物
+      apart: 一棟の建物
+      room: 専有部分の建物
+      site: 敷地権
+      price: 評価
     attributes:
       user:
         name: ユーザー名
@@ -166,7 +171,7 @@ ja:
         estate_kind: 地目／種類
         area: 地積／床面積
         structure: 構造
-        apart_name: 建物の名称（一棟）
+        apart_name: 建物の名称
         apart_structure: 構造（一棟）
         sign: 符号
         land_kind: 敷地権の種類
@@ -174,9 +179,26 @@ ja:
         remarks: 備考
         type: 不動産の種類
         Land: 土地
-      land:
+        Building: 建物
+        apart: 一棟の建物
+        room: 専有部分の建物
+        site: 敷地権
+        price: 評価
         created_at: 登録日
         updated_at: 更新日
+      land:
+      building:
+        unit: 附属建物
+      apart:
+        apart_area: 床面積（一棟）
+        room: 専有部分の建物
+      room:
+        apart: 一棟の建物
+        unit: 附属建物
+        price: 評価
+        site: 敷地権
+      site:
+
 
   date:
     abbr_day_names:

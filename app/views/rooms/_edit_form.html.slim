@@ -1,0 +1,53 @@
+- if room.errors.present?
+  ul#error_explanation
+    - room.errors.full_messages.each do |message|
+      li = message
+= form_with model: room, local: true do |f|
+  .form-group
+    = f.fields_for :apart_room do |apart|
+      = apart.label :apart_id, '一棟の建物の名称'
+      = apart.collection_select(:apart_id, Apart.all, :id, :apart_name, {prompt: "選択してください"}, class: 'form-control select2')
+  .form-group
+    = f.label :estate_number, '不動産番号'
+    = f.text_field :estate_number, class: 'form-control'
+  .form-group
+    = f.label :number, '家屋番号'
+    = f.text_field :number, class: 'form-control'
+  .form-group
+    = f.label :apart_name, '建物の名称'
+    = f.text_field :apart_name, class: 'form-control'
+  .form-group
+    = f.label :estate_kind, '種類'
+    = f.text_field :estate_kind, class: 'form-control'
+  .form-group
+    = f.label :structure, '構造'
+    = f.text_field :structure, class: 'form-control'
+  .form-group
+    = f.label :area, '床面積'
+    = f.text_area :area, rows: 5, class: 'form-control'
+  . 
+    = "附属建物"
+  #units.mb-2
+    = f.fields_for :units do |unit|
+      = render 'unit_fields', f: unit
+    .links
+      = link_to_add_association '附属建物の追加', f, :units, class: 'btn btn-primary'
+  #prices.mb-2
+    = f.fields_for :prices do |price|
+      = render 'price_fields', f: price
+    .links
+      = link_to_add_association '評価追加', f, :prices, class: 'btn btn-primary'
+  .
+    = "敷地権"
+  #sites.mb-2
+    = f.fields_for :sites do |site|
+      = render 'site_fields', f: site
+    .links
+      = link_to_add_association '敷地権の追加', f, :sites, class: 'btn btn-primary'
+  .form-group
+    = f.label :remarks, '備考'
+    = f.text_area :remarks, rows: 5, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'
+  
+  
+  

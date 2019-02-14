@@ -5,7 +5,7 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
   ul.navbar-nav.mr-auto
     li.nav-item = link_to '土地新規作成', new_land_path, class: 'nav-link text-white'
     li.nav-item = link_to '不動産一覧', estates_path, class: 'nav-link text-white'
-    li.nav-item = link_to '建物一覧', "#", class: 'nav-link text-white'
+    li.nav-item = link_to '建物一覧', buildings_path, class: 'nav-link text-white'
     li.nav-item = link_to '区分建物一覧', "#", class: 'nav-link text-white'
     li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
     
@@ -50,6 +50,13 @@ table.table.table-hover.table-bordered.text-center
           = link_to '編集', edit_land_path(land), class: 'btn btn-primary mr-3'
           - if current_user.admin?
             = link_to '削除', land, method: :delete, data: { confirm: "#{land.address}#{land.number}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+= link_to 'エクスポート', lands_path(format: :csv), class: 'mb-3 btn btn-primary mb-3'
+
+= form_tag import_lands_path, multipart: :true, class: 'mb-3' do
+  = file_field_tag :file
+  = submit_tag 'インポート', class: 'btn btn-primary'
+
 
 
 

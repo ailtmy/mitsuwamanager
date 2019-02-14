@@ -1,0 +1,14 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.label :sign, '符号'
+    = f.number_field :sign,   class: 'form-control'
+  .form-group
+    = f.label :land_id, '土地'
+    = f.collection_select(:land_id, Land.all, :id, :view_name_select, {prompt: "選択してください"}, class: 'form-control select2')
+  .form-group
+    = f.label :land_kind, '敷地権の種類'
+    = f.text_field :land_kind, class:  'form-control'
+  .form-group
+    = f.label :land_percent, '敷地権の割合'
+    = f.text_field :land_percent, class: 'form-control'
+    = link_to_remove_association '削除', f, class: 'btn btn-danger mt-4'

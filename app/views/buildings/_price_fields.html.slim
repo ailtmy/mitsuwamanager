@@ -1,0 +1,18 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.hidden_field :id
+    = f.hidden_field :estate_id
+  .form-group
+    = f.label :year, '評価年度'
+    = f.number_field :year,   class: 'form-control'
+  .form-group
+    = f.label :price, '価格(１００億以上は備考へ記載）'
+    = f.number_field :price, class:  'form-control'
+  .form-group
+    = f.label :price_kind, '評価地目／種類'
+    = f.text_field :price_kind, class:  'form-control'
+  .form-group
+    = f.label :remarks, '評価備考'
+    = f.text_area :remarks, rows:5, placeholder: "評価地積／床面積や、近傍地等について記載", class: 'form-control'
+  .form-group
+    = link_to_remove_association '削除', f, class: 'btn btn-danger mt-4'

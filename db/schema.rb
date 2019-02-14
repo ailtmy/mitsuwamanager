@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_08_063055) do
+ActiveRecord::Schema.define(version: 2019_02_14_020114) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2019_02_08_063055) do
     t.string "address_kind"
     t.boolean "address_closure"
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "apart_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "apart_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apart_id"], name: "index_apart_rooms_on_apart_id"
+    t.index ["room_id"], name: "index_apart_rooms_on_room_id"
   end
 
   create_table "branch_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -140,6 +149,15 @@ ActiveRecord::Schema.define(version: 2019_02_08_063055) do
     t.index ["project_id"], name: "index_destinates_on_project_id"
   end
 
+  create_table "estate_units", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "estate_id"
+    t.bigint "unit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estate_id"], name: "index_estate_units_on_estate_id"
+    t.index ["unit_id"], name: "index_estate_units_on_unit_id"
+  end
+
   create_table "estates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "type"
     t.string "estate_number"
@@ -152,7 +170,6 @@ ActiveRecord::Schema.define(version: 2019_02_08_063055) do
     t.string "apart_structure"
     t.text "apart_area"
     t.integer "sign"
-    t.string "land_kind"
     t.string "land_percent"
     t.text "remarks"
     t.datetime "created_at", null: false
@@ -264,6 +281,18 @@ ActiveRecord::Schema.define(version: 2019_02_08_063055) do
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_projects_on_type"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "sites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "room_id"
+    t.bigint "land_id"
+    t.string "land_kind"
+    t.string "land_percent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sign"
+    t.index ["land_id"], name: "index_sites_on_land_id"
+    t.index ["room_id"], name: "index_sites_on_room_id"
   end
 
   create_table "tels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

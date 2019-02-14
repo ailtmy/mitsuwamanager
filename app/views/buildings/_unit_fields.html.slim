@@ -1,0 +1,14 @@
+.nested-fields.well.well-compact
+  .form-group
+    = f.label :sign, '符号'
+    = f.number_field :sign,   class: 'form-control'
+  .form-group
+    = f.label :estate_kind, '種類'
+    = f.text_field :estate_kind, class:  'form-control'
+  .form-group
+    = f.label :structure, '構造'
+    = f.text_field :structure, class:  'form-control'
+  .form-group
+    = f.label :area, '床面積'
+    = f.text_area :area, rows:5, placeholder: "床面積", class: 'form-control'
+    = link_to_remove_association '削除', f, class: 'btn btn-danger mt-4'

@@ -1,0 +1,9 @@
+- @page_title = "一棟の建物新規作成"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '一棟の建物一覧へ', aparts_path, class: 'nav-link btn btn-primary'
+  = link_to '不動産一覧へ', estates_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary ml-3'
+
+= render 'form', apart: @apart

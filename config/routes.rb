@@ -14,8 +14,19 @@ Rails.application.routes.draw do
   resources :rehouses	
 
   resources :estates, only: :index	
-  resources :lands
-  
+  resources :lands do 
+    post :import, on: :collection
+  end
+  resources :buildings do
+    post :import, on: :collection
+  end
+  resources :aparts do
+    post :import, on: :collection
+  end
+  resources :rooms do
+    post :import, on: :collection
+  end
+
   resources :gifts
   resources :addresses
   resources :tels

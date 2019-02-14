@@ -18,7 +18,6 @@
   #customer_casefiles
     = f.fields_for :customer_casefiles do |customer_casefile|
       = render 'customer_casefile_fields', f: customer_casefile
-    / select2発火しない！！
     .links
       = link_to_add_association '依頼者追加', f, :customer_casefiles, class: 'btn btn-primary'
   .form-group

@@ -1,0 +1,78 @@
+- @page_title = "建物詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集・評価登録', edit_building_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :building, method: :delete, data: {confirm: "#{@building.address}#{@building.number}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '建物一覧', buildings_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '不動産一覧', estates_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Building.human_attribute_name(:id).upcase
+      td = @building.id
+    tr
+      th = Building.human_attribute_name(:estate_number)
+      td = @building.estate_number
+    tr
+      th = Building.human_attribute_name(:address)
+      td = @building.address  
+    tr
+      th = Building.human_attribute_name(:number)
+      td = @building.number
+    tr
+      th = Building.human_attribute_name(:estate_kind)
+      td = @building.estate_kind
+    tr
+      th = Building.human_attribute_name(:structure)
+      td = @building.structure
+    tr
+      th = Building.human_attribute_name(:area)
+      td = @building.area
+    tr
+      th = Building.human_attribute_name(:unit)
+      td
+        - @building.units.each do |unit|
+          .row
+            .col-sm-2
+              = unit.sign
+              |．　
+              = unit.estate_kind
+            .col-sm-4
+              = unit.structure
+            .col-sm-4
+              = unit.area
+            br
+
+          
+    tr
+      th = Building.human_attribute_name(:control)
+      td = link_to @building.control.name, @building.control
+    tr
+      th = "評価" 
+      td 
+        - @building.prices.each do |price|
+          .row
+            .col-sm-4
+              = "評価年度：#{price.year}年度"
+            .col-sm-4
+              = "価格：#{price.price}円"
+            .col-sm-4
+              = "評価地目：#{price.price_kind}"
+          .row.mb-3
+            .col-sm-12
+              = "備考：#{price.remarks}"
+    tr
+      th = Building.human_attribute_name(:remarks)
+      td = simple_format(@building.remarks)
+    
+    tr
+      th = Building.human_attribute_name(:created_at)
+      td = @building.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Building.human_attribute_name(:updated_at)
+      td = @building.updated_at.try(:strftime,'%Y/%m/%d')
+    

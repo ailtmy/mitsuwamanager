@@ -1,0 +1,48 @@
+- @page_title = "一棟の建物詳細"
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集登録', edit_apart_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to '削除', :apart, method: :delete, data: {confirm: "#{@apart.apart_name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '一棟の建物一覧', aparts_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '専有部分建物一覧', rooms_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '不動産一覧', estates_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Apart.human_attribute_name(:id).upcase
+      td = @apart.id
+    tr
+      th = Apart.human_attribute_name(:address)
+      td = @apart.address
+    tr
+      th = Apart.human_attribute_name(:apart_name)
+      td = @apart.apart_name  
+    tr
+      th = Apart.human_attribute_name(:apart_structure)
+      td = @apart.apart_structure
+    tr
+      th = Apart.human_attribute_name(:apart_area)
+      td = @apart.apart_area
+    tr
+      th = Apart.human_attribute_name(:room)
+      td
+        - @apart.rooms.each do |room|
+          = link_to room.number, room
+          br
+    tr
+      th = Apart.human_attribute_name(:control)
+      td = link_to @apart.control.name, @apart.control
+    tr
+      th = Apart.human_attribute_name(:remarks)
+      td = simple_format(@apart.remarks)
+    tr
+      th = Apart.human_attribute_name(:created_at)
+      td = @apart.created_at.try(:strftime,'%Y/%m/%d')
+    tr
+      th = Apart.human_attribute_name(:updated_at)
+      td = @apart.updated_at.try(:strftime,'%Y/%m/%d')
+    
