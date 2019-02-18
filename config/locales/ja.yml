@@ -98,8 +98,10 @@ ja:
         place_date: 立会日時
         tax_reduction: 減税
         loan: 融資
+        loan_agree: 金消契約日
         change_name: 名変
         erasure: 抹消
+        erasure_confirm: 抹消確認
         user: 担当
         report: R報告
         created_at: 登録日

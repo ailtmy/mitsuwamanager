@@ -1,0 +1,55 @@
+- @page_title = "Ｌ＆Ｆ案件一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    li.nav-item = link_to 'Ｌ＆Ｆ案件新規作成', new_landf_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link  text-white'
+
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :name_cont, '案件名', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :name_cont, class: 'form-control mt-2' 
+      .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'
+
+.mb-3
+  = paginate @landfs
+  = page_entries_info @landfs
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Landf.human_attribute_name(:id).upcase
+      th = Landf.human_attribute_name(:name)
+      th = sort_link(@q, :place_date)
+      th = Landf.human_attribute_name(:place)
+      th = sort_link(@q, :loan_agree)
+      th = Landf.human_attribute_name(:change_name)
+      th = Landf.human_attribute_name(:erasure)
+      th = Landf.human_attribute_name(:erasure_confirm)
+      th = Landf.human_attribute_name(:status)
+      th = Landf.human_attribute_name(:user)
+      th
+  tbody
+    - @landfs.each do |landf|
+      tr
+        td = landf.id
+        td = link_to landf.name, landf
+        td = landf.place_date.try(:strftime, '%Y/%m/%d-%H:%M')
+        td = landf.place
+        td = landf.loan_agree.try(:strftime, '%Y/%m/%d-%H:%M')
+        td = landf.change_name? ? "有" : "無"
+        td = landf.erasure? ? "有" : "無"
+        td = landf.erasure_confirm? ? "有" : "無"
+        td = landf.status
+        td = landf.user.name
+        td
+          = link_to '編集', [:edit, landf], class: 'btn btn-primary m-1'
+          - if current_user.admin?
+            = link_to '削除', landf, method: :delete, data: { confirm: "#{landf.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'

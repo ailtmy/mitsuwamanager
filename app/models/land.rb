@@ -4,7 +4,7 @@ class Land < Estate
   accepts_nested_attributes_for :prices, allow_destroy: true
 
   has_many :sites, dependent: :destroy
-  has_many :rooms, through: :sites, dependent: :destroy
+  has_many :rooms, through: :sites, source: :estate, dependent: :destroy
   accepts_nested_attributes_for :sites, allow_destroy: true
 
   def self.csv_attributes

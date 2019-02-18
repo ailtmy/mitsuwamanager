@@ -5,15 +5,17 @@ class Customer < ApplicationRecord
   has_many :customer_casefiles
   has_many :casefiles, through: :customer_casefiles
   has_many :customer_agents, foreign_key: 'agent_id'
-  has_many :agents,  class_name: 'Customer', through: :customer_agents
   has_many :customer_agents, foreign_key: 'customer_id'
+
+  has_many :agents,  class_name: 'Customer', through: :customer_agents
   has_many :customers, class_name: 'Customer', through: :customer_agents
   accepts_nested_attributes_for :customer_agents, allow_destroy: true
   has_many :identifies, dependent: :destroy
   has_many :branches, foreign_key: :customer_id
   has_many :gifts
   has_many :project_customers
-  has_many :rehouses, class_name: 'Project', foreign_key: 'customer_id', through: :project_customers
+  has_many :rehouses, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :landfs, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :projects, through: :project_customers
   accepts_nested_attributes_for :project_customers
   has_many :tels, :as => :telable, dependent: :destroy

@@ -5,6 +5,7 @@ h3.mb-3.mt-3 = @page_title
   = link_to '案件詳細へ', rehouse_path, class: 'nav-link btn btn-primary'
   = link_to 'リハウス案件一覧へ', rehouses_path, class: 'nav-link btn btn-primary ml-3'
   = link_to '案件一覧へ', projects_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary ml-3'
 
 = render 'form', rehouse: @rehouse
 

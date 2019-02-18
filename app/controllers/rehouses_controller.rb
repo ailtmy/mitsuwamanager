@@ -7,7 +7,6 @@ class RehousesController < ApplicationController
   end
 
   def show
-    
   end
 
   def new
@@ -39,7 +38,7 @@ class RehousesController < ApplicationController
 
   def destroy
     @rehouse.destroy
-    redirec t_to rehouses_path, notice: "#{@rehouse.name}を削除しました。"
+    redirect_to rehouses_path, notice: "#{@rehouse.name}を削除しました。"
   end
 
   private

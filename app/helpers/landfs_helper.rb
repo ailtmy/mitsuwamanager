@@ -1,0 +1,2 @@
+module LandfsHelper
+end

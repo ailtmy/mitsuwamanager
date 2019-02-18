@@ -1,5 +1,6 @@
 class Casefile < ApplicationRecord
   belongs_to :project
+  belongs_to :rehouse, foreign_key: :project_id
   has_many :customer_casefiles, dependent: :destroy
   has_many :customers, through: :customer_casefiles
   accepts_nested_attributes_for :customer_casefiles, allow_destroy: true
