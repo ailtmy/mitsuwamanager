@@ -18,7 +18,7 @@ class BuildingsController < ApplicationController
   def new
     @building = Building.new
     @building.prices.build
-    @building.units.build
+    # @building.units.build
   end
 
   def edit
@@ -27,7 +27,6 @@ class BuildingsController < ApplicationController
 
   def create
     @building = Building.new(building_params) 
-    
 
     if @building.save
       redirect_to building_path(@building), notice: "#{@building.address}#{@building. number}を登録しました。" 
@@ -57,7 +56,7 @@ class BuildingsController < ApplicationController
   private
 
   def building_params
-    params.require(:building).permit(:estate_number, :address, :number, :estate_kind, :structure, :area, :remarks, :control_id, :type, prices_attributes: [:id, :year, :price, :estate_id, :price_kind, :remarks, :_destroy], estate_units_attributes: [:id, :estate_id, :unit_id, :_destroy], units_attributes: [:id, :type, :sign, :estate_kind, :structure, :area, :_destroy])
+    params.require(:building).permit(:estate_number, :address, :number, :estate_kind, :structure, :area, :remarks, :control_id, :type, prices_attributes: [:id, :year, :price, :estate_id, :price_kind, :remarks, :_destroy], units_attributes: [:id, :type, :sign, :estate_kind, :structure, :area, :_destroy])
   end
 
   def set_building

@@ -41,7 +41,7 @@ table.table.table-hover.table-bordered.text-center
     - @rooms.each do | room |
       tr
         td = room.id
-        td = link_to room.apart_room.apart_id, apart_path(room.apart_room.apart_id)
+        td = link_to room.apart.apart_name, apart_path(room.apart)
         td = link_to room.number, room
         td = room.apart_name
         td

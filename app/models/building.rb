@@ -4,7 +4,8 @@ class Building < Estate
   accepts_nested_attributes_for :prices, allow_destroy: true
   
   has_many :estate_units, foreign_key: :estate_id, dependent: :destroy
-  has_many :units, class_name: 'Estate', through: :estate_units, source: :estate, dependent: :destroy
+  has_many :units, class_name: 'Estate', through: :estate_units, source: :unit, dependent: :destroy
+  accepts_nested_attributes_for :estate_units, allow_destroy: true
   accepts_nested_attributes_for :units, allow_destroy: true
 
   def self.csv_attributes

@@ -1,4 +1,4 @@
 class EstateUnit < ApplicationRecord
-  belongs_to :estate
-  belongs_to :estate, class_name: 'Unit', foreign_key: 'unit_id'
+  belongs_to :building, class_name: 'Estate', foreign_key: :estate_id
+  belongs_to :unit, class_name: 'Estate', foreign_key: :unit_id
 end

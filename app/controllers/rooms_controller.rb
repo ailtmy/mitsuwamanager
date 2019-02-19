@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @apart = Apart.find_by(id: "#{@room.apart_room.apart_id}")
+    
   end
 
   def new
@@ -29,6 +29,7 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params)
+    
     if @room.save
       redirect_to room_path(@room), notice: "#{@room.apart_name}を登録しました。"
     else

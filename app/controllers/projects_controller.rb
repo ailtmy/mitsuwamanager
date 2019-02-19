@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   def index
     @q = Project.ransack(params[:q])
-    @projects = @q.result(distinct: true).page(params[:page]).per(10)
+    @projects = @q.result(distinct: true).order("created_at desc").page(params[:page]).per(10)
   end
 
   def show

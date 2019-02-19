@@ -16,16 +16,16 @@ table.table.table-hover.table-bordered
       td = @room.id
     tr
       th = Room.human_attribute_name(:address)
-      td = @apart.address
+      td = @room.apart.address
     tr
       th = Room.human_attribute_name(:apart_name)
-      td = link_to @apart.apart_name, @apart
+      td = link_to @room.apart.apart_name, @room.apart
     tr
       th = Room.human_attribute_name(:apart_structure)
-      td = @apart.apart_structure
+      td = @room.apart.apart_structure
     tr
       th = Room.human_attribute_name(:area)
-      td = @apart.area
+      td = @room.apart.area
     tr
       th = Room.human_attribute_name(:estate_number)
       td = @room.estate_number
@@ -96,7 +96,7 @@ table.table.table-hover.table-bordered
               = "備考：#{price.remarks}"
     tr
       th = Room.human_attribute_name(:control)
-      td = link_to @apart.control.name, @apart.control
+      td = link_to @room.apart.control.name, @room.apart.control
     tr
       th = Room.human_attribute_name(:remarks)
       td = simple_format(@room.remarks)
