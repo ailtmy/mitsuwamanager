@@ -11,7 +11,7 @@ class ProjectCustomer < ApplicationRecord
   end
 
   def self.position_select
-    %w[買主 売主 融資先 融資先担当者 抹消先 抹消先担当者 リハウス 他仲介 司法書士 土地家屋調査士]
+    %w[買主 売主 融資先 融資先担当者 抹消先 抹消先担当者 リハウス 他仲介 司法書士]
   end
 
   def self.lf_position_select
@@ -191,5 +191,15 @@ class ProjectCustomer < ApplicationRecord
       end
     end
     mediators
+  end
+
+  def self.intermediator_select(project)
+    intermediators = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "他仲介"
+        intermediators << {:name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    intermediators
   end
 end

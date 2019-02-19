@@ -104,6 +104,7 @@ ja:
         erasure_confirm: 抹消確認
         user: 担当
         report: R報告
+        image: ファイル
         created_at: 登録日
         updated_at: 更新日
       casefile:

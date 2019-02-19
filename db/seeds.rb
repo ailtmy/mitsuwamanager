@@ -14,3 +14,10 @@
     :next_application => "#{Date.today() >> n}"
   )
 end
+
+User.create(
+  name: "高瀬",
+  email: "takase@mitsuwa-odd.jp",
+  password: "password",
+  admin: true
+)

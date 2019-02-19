@@ -13,6 +13,7 @@ class Customer < ApplicationRecord
   has_many :identifies, dependent: :destroy
   has_many :branches, foreign_key: :customer_id
   has_many :gifts
+  has_many :destinates
   has_many :project_customers
   has_many :rehouses, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :landfs, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers

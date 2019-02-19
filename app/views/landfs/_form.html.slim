@@ -66,12 +66,25 @@
       = f.date_field :complete_date, class: 'form-control'
   #certificates.mb-4
     = f.fields_for :certificates do |certificate|
-      = render 'certificate_fields', f: certificates
+      = render 'certificate_fields', f: certificate
     .links
       = link_to_add_association '謄本追加', f, :certificates, class: 'btn btn-primary'
   .form-group
     = f.label :remarks, '備考'
     = f.text_area :remarks, class: 'form-control'
+  #destinates.mb-4
+    = f.fields_for :destinates do |destinate|
+      = render 'destinate_fields', f: destinate
+    .links
+      = link_to_add_association '書類送付追加', f, :destinates, class: 'btn btn-primary'
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
+  .form-group
+    p = '現在登録されているファイル（削除するものはチェックしてください）'
+    - landf.images.each do |image|
+      = f.check_box :image_ids, {:multiple => true, class: 'form-check-label'}, image.id, false
+      span.mr-3 =  image.filename
   = f.submit '登録する', class: 'btn btn-primary m-3'
   
 
