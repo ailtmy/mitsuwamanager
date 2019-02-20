@@ -1,4 +1,4 @@
-- @page_title = "Ｌ＆Ｆ案件詳細"
+- @page_title = "Ｌ＆Ｆ案件詳細（更新日：#{@landf.updated_at.try(:strftime, "%Y/%m/%d")})"
 .pb-2.d-print-none
   .row
     | 事件簿
@@ -264,7 +264,7 @@ h3.pb-3.mt-3.d-print-none
       .col-sm-6.p-4.border-left.border-bottom.border-dark
         .row.pb-4.p-2
           = "住所"
-        .row.pt-4.p-w
+        .row.pt-4.p-2
           = "ＴＥＬ"
       .col-sm-2.p-4.border-left.border-right.border-bottom.border-dark
         .row.pt-4.pb-4.p-2

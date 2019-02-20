@@ -17,6 +17,8 @@ class Customer < ApplicationRecord
   has_many :project_customers
   has_many :rehouses, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :landfs, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :inherits, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :commons, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :projects, through: :project_customers
   accepts_nested_attributes_for :project_customers
   has_many :tels, :as => :telable, dependent: :destroy

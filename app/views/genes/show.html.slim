@@ -1,35 +1,35 @@
-- @page_title = "リハウス案件詳細（更新日：#{@rehouse.updated_at.try(:strftime, "%Y/%m/%d")})"
+- @page_title = "一般売買案件詳細（更新日：#{@gene.updated_at.try(:strftime, "%Y/%m/%d")})"
 .pb-2.d-print-none
   .row.mb-2
     | 事件簿
   .row.mb-2
-    - if @rehouse.casefiles.blank?
+    - if @gene.casefiles.blank?
       .col-sm-12.bg-danger.text-white
         = "事件簿を入力してください！！"
     - else
-      - @rehouse.casefiles.each do |casefile|
+      - @gene.casefiles.each do |casefile|
         .col-sm-3
           = link_to casefile.event_title, casefile
   .row.mb-2
     | 当事者一覧リンク
   .row.mb-2
-    - @rehouse.project_customers.each do |customer|
+    - @gene.project_customers.each do |customer|
       = link_to "「#{customer.position}：#{customer.customer.name}」", customer.customer
   .row.mb-2
     | 登録ファイル
   .row.mb-2
-    - if @rehouse.images.attached?
-      - @rehouse.images.each do |image|
+    - if @gene.images.attached?
+      - @gene.images.each do |image|
           span.mr-5
             = link_to image.filename, image,:target => "_blank" 
   h3.mb-3.mt-3.d-print-none 
     = @page_title
-
+  
   .nav.justify-content-end.m-3.d-print-none
-    = link_to '編集', edit_rehouse_path, class: 'btn btn-primary mb-3'
+    = link_to '編集', edit_gene_path, class: 'btn btn-primary mb-3'
     - if current_user.admin?
-      = link_to '削除', :rehouse, method: :delete, data: {confirm: "#{@rehouse.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
-    = link_to 'リハウス案件一覧', rehouses_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+      = link_to '削除', :gene, method: :delete, data: {confirm: "#{@gene.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+    = link_to '一般売買案件一覧', genes_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '事件簿ＴＯＰ', casefiles_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -38,59 +38,57 @@
   .row
     .col-sm-1.p-2.border.border-dark
       | ID：
-      = @rehouse.id
-    .col-sm-4.p-2.border-top.border-right.border-bottom.border-dark
+      = @gene.id
+    .col-sm-5.p-2.border-top.border-right.border-bottom.border-dark
       |　案件名：
-      = @rehouse.name
-    .col-sm-3.p-2.border-top.border-bottom.border-dark
+      = @gene.name
+    .col-sm-4.p-2.border-top.border-bottom.border-dark
       | 進捗状況：
-      = @rehouse.status
+      = @gene.status
     .col-sm-2.p-2.border.border-dark
       | 事務所担当: 
-      = @rehouse.user.name
-    .col-sm-2.p-2.border-top.border-bottom.border-right.border-dark
-      | Ｒ報告：
-      = @rehouse.report? ? "あり" : "なし"
-
+      = @gene.user.name
+  
   .row.border-right.border-left.border-dark
     .col-sm-2.p-4
       | 不動産の表示
     .col-sm-10.p-2
       .row
-        - @rehouse.project_estates.each do |estate|
+        - @gene.project_estates.each do |estate|
           .col-sm-8.p-1
             = link_to "#{estate.estate.view_estate_select}", estate.estate
           .col-sm-4.p-1
             = "管轄：#{ProjectEstate.control_name(estate)}"
           br
-
+  
   .row.border.border-dark
+    .col-sm-2.p-3
+      | 嘱託人
     .col-sm-4.p-3
-      | 三井不動産リアルティ
-    .col-sm-4.p-3
-      - ProjectCustomer.rehouse_staff_select(@rehouse).each do |branch|
+      - ProjectCustomer.commissioner_staff_select(@gene).each do |branch|
         - if branch.present?
+          = branch.branch.company.name
           = branch.branch.branch_name
           = branch.title
           br
-    .col-sm-4.p-3
-      - ProjectCustomer.rehouse_select(@rehouse).each do |customer|
+    .col-sm-5.p-3
+      - ProjectCustomer.commissioner_select(@gene).each do |customer|
         | 担当者：  
         = customer[:name]
         br
-
+  
   .row
     .col-sm-4.p-3.border-left.border-bottom.border-dark
       | 立会日時：
-      = @rehouse.place_date.try(:strftime, "%Y/%m/%d-%H:%M(%a)")
+      = @gene.place_date.try(:strftime, "%Y/%m/%d-%H:%M(%a)")
     .col-sm-8.p-3.border-left.border-right.border-bottom.border-dark
       | 立会場所：
-      = link_to @rehouse.place, "https://www.google.co.jp/search?q=#{@rehouse.place}", target: :_blank if @rehouse.place != nil
+      = link_to @gene.place, "https://www.google.co.jp/search?q=#{@gene.place}", target: :_blank if @gene.place != nil
   h4.row.mb-0
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 買主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.buyer_select(@rehouse).each do |customer|
+      - ProjectCustomer.buyer_select(@gene).each do |customer|
         .p-2
           = customer[:equity]
           |　
@@ -99,77 +97,79 @@
   .row
     .col-sm-2.p-2.border-top.border-left.border-bottom.border-dark
       | 減税有無：
-      = @rehouse.tax_reduction? ? "あり" : "なし"
+      = @gene.tax_reduction? ? "あり" : "なし"
     .col-sm-10.p-2.border-top.border-right.border-bottom.border-dark
       | 減税書類：
-      = @rehouse.tax_document
+      = @gene.tax_document
   .row
     .col-sm-12.p-2.border-left.border-right.border-dark
       | 融資先
   .row
     .col-sm-5.p-2.border-left.border-dark
-      - ProjectCustomer.loan_select(@rehouse).each do |customer|
+      - ProjectCustomer.loan_select(@gene).each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2.border-dark
-      - ProjectCustomer.loan_branch_select(@rehouse).each do |branch|
-        = branch.branch.branch_name
-        = branch.title
-        br
+      - ProjectCustomer.loan_branch_select(@gene).each do |branch|
+        - if branch.present?
+          = branch.branch.branch_name
+          = branch.title
+          br
     .col-sm-4.p-2.border-right.border-dark
       | 担当者：
-      - ProjectCustomer.loan_staff_select(@rehouse).each do |customer|
+      - ProjectCustomer.loan_staff_select(@gene).each do |customer|
         = customer[:name]
         br
   .row
     .col-sm-2.p-2.border-left.border-bottom.border-dark
       | 融資有無：
-      = @rehouse.loan? ? "あり" : "なし"
+      = @gene.loan? ? "あり" : "なし"
     .col-sm-3.p-2.border-bottom.border-dark
       | 融資金額：
-      = "#{@rehouse.loan_price}万円"
+      = "#{@gene.loan_price}万円"
     .col-sm-3.p-2.border-bottom.border-dark
       | 金消日：
-      = @rehouse.loan_agree.try(:strftime, "%Y/%m/%d(%a)")
+      = @gene.loan_agree.try(:strftime, "%Y/%m/%d(%a)")
     .col-sm-4.p-2.border-bottom.border-right.border-dark
       | 設定書類の受領：
-      = @rehouse.loan_document? ? "受領済" : "未受領"
+      = @gene.loan_document? ? "受領済" : "未受領"
+
   h4.row.mb-0
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 売主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.seller_select(@rehouse).each do |customer|
+      - ProjectCustomer.seller_select(@gene).each do |customer|
         .p-2
           = customer[:name]
           br
   .row
     .col-sm-2.p-2.border-left.border-top.border-dark
       | 名変：
-      = @rehouse.change_name? ? "あり" : "なし"
+      = @gene.change_name? ? "あり" : "なし"
     .col-sm-4.p-2.border-right.border-top.border-dark
       | 名変書類：
-      = @rehouse.change_name_doc
+      = @gene.change_name_doc
     .col-sm-2.p-2.border-top.border-dark
       | 抹消：
-      = @rehouse.erasure? ? "あり" : "なし"
+      = @gene.erasure? ? "あり" : "なし"
     .col-sm-4.p-2.border-top.border-right.border-dark
       | 抹消確認：
-      = @rehouse.erasure_confirm? ? "確認済" : "未確認"
+      = @gene.erasure_confirm? ? "確認済" : "未確認"
   .row.border.border-dark
     .col-sm-2.p-2
       | 抹消先
     .col-sm-4.p-2
-      - ProjectCustomer.erase_select(@rehouse).each do |customer|
+      - ProjectCustomer.erase_select(@gene).each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_branch_select(@rehouse).each do |branch|
+      - ProjectCustomer.eraser_branch_select(@gene).each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_staff_select(@rehouse).each do |customer|
+      - ProjectCustomer.eraser_staff_select(@gene).each do |customer|
         | 担当者：
         = customer[:name]
         br
@@ -177,28 +177,28 @@
     .col-sm-2.p-2.border-left.border-dark
       | 司法書士：
     .col-sm-4.p-2
-      - ProjectCustomer.scrivener_select(@rehouse).each do |customer|
+      - ProjectCustomer.scrivener_select(@gene).each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-2.border-left.border-dark
       | 他仲介：
     .col-sm-4.p-2.border-right.border-dark
-      - ProjectCustomer.intermediator_select(@rehouse).each do |customer|
+      - ProjectCustomer.intermediator_select(@gene).each do |customer|
         = customer[:name]
         br
   .row.border.border-dark
     .col-sm-1.p-1
       | 申請日：
     .col-sm-2.p-1
-      = @rehouse.application_date.try(:strftime, "%Y/%m/%d(%a)")
+      = @gene.application_date.try(:strftime, "%Y/%m/%d(%a)")
     .col-sm-1.p-1
       | 補正日：
     .col-sm-2.p-1
-      = @rehouse.complete_date.try(:strftime, "%Y/%m/%d(%a)")
+      = @gene.complete_date.try(:strftime, "%Y/%m/%d(%a)")
     .col-sm-1.p-1
       | 謄本：
     .col-sm-3.p-1
-      - @rehouse.certificates.each do |cert|
+      - @gene.certificates.each do |cert|
         = cert.cert_kind
         = " #{cert.number_sheet} 通　"
         = cert.window? ? "窓口受取" : "オンライン"
@@ -208,13 +208,13 @@
     .col-sm-2.p-2
       | 備考：
     .col-sm-10.p-2
-      = simple_format(@rehouse.remarks)
+      = simple_format(@gene.remarks)
 
   .row.p-2.border-left.border-right.border-bottom.border-dark
     | 完了書類送付
-  - if @rehouse.destinates.present?
+  - if @gene.destinates.present?
 
-    - @rehouse.destinates.each do |destinate|
+    - @gene.destinates.each do |destinate|
       .row
         .col-sm-6.p-2.border-left.border-dark
           | 氏名：　
@@ -336,6 +336,5 @@
   . style="page-break-before: always;"
   = "本人確認記録"  
     
-= render 'shared/title_back', rehouse: @rehouse 
-
-
+= render 'shared/title_back', gene: @gene 
+    

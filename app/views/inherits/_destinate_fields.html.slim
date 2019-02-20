@@ -1,0 +1,23 @@
+.nested-fields.well.well-compact.mb-4
+  .form-group.mb-4
+    = f.hidden_field :id 
+  .form-group.mb-2
+    = f.label :customer_id, '顧客氏名'
+    = f.collection_select(:customer_id, f.object.selectable_customers, :id, :view_name_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
+  .form-group.mb-2
+    = f.label :send_method, '手渡'
+    = f.check_box :send_method, class: 'form-check-input m-2'
+  .form-group.mb-2
+    = f.label :send_addr, '送付先／手渡先'
+    = f.text_field :send_addr, class: 'form-control'
+  .form-group.mb-2
+    = f.label :send_date, '送付／手渡日'
+    = f.date_field :send_date, class: 'form-control'
+  .form-group.mb-2
+    = f.label :send_number, '書留等番号'
+    = f.text_field :send_number, class: 'form-control'
+  .form-group.mb-2
+    = f.label :receive_doc, '受領書返送'
+    = f.check_box :receive_doc, class: 'form-check-input m-2'
+  .form-group.mb-2
+    = link_to_remove_association '削除', f, class: 'btn btn-danger'

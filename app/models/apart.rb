@@ -1,8 +1,9 @@
 class Apart < Estate
   belongs_to :control
-  has_many :apart_rooms, foreign_key: :apart_id, inverse_of: :apart, dependent: :destroy
+  has_many :apart_rooms, foreign_key: :apart_id, dependent: :destroy
   has_many :rooms, through: :apart_rooms, source: :room, dependent: :destroy
   accepts_nested_attributes_for :apart_rooms, allow_destroy: true
+  accepts_nested_attributes_for :rooms, allow_destroy: true
 
 
   def self.csv_attributes

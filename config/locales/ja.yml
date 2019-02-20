@@ -27,7 +27,24 @@ ja:
       apart: 一棟の建物
       room: 専有部分の建物
       site: 敷地権
+      unit: 附属建物
       price: 評価
+      landf: Ｌ＆Ｆ案件
+      rehouse: リハウス案件
+      inherit: 相続案件
+      gene: 一般売買案件
+      common: 一般案件
+      project_customer: 案件顧客関連
+      project_estate: 案件不動産関連
+      apart_room: 一棟専有部分関連
+      customer_agent: 顧客代理関連
+      customer_casefile: 顧客事件簿関連
+      destinate: 送付書類
+      estate_unit: 不動産附属建物関連
+      mail: メール
+      staff: スタッフ
+      tel: 電話
+
     attributes:
       user:
         name: ユーザー名

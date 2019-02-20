@@ -1,0 +1,9 @@
+.nested-fields.well.well-compact
+  .form-group.mb-2.row
+    = f.hidden_field :id 
+    .col-sm-1
+      = f.label :estate_id, '不動産'
+    .col-sm-10
+      = f.collection_select(:estate_id, Estate.all, :id, :view_estate_select, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
+    .col-sm-1
+      = link_to_remove_association '削除', f, class: 'btn btn-danger'

@@ -4,5 +4,4 @@ class Unit < Estate
   has_many :rooms, class_name: 'Estate', through: :estate_units, source: :room, dependent: :destroy
 
   accepts_nested_attributes_for :estate_units, allow_destroy: true
-  accepts_nested_attributes_for :units, allow_destroy: true
 end

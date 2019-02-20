@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
   
-  get 'landfs/index'
-  get 'landfs/show'
-  get 'landfs/new'
-  get 'landfs/edit'
   get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -17,6 +13,9 @@ Rails.application.routes.draw do
   resources :projects	
   resources :rehouses	
   resources :landfs
+  resources :inherits
+  resources :genes
+  resources :commons
 
   resources :estates, only: :index	
   resources :lands do 

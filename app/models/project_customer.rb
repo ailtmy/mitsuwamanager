@@ -14,8 +14,16 @@ class ProjectCustomer < ApplicationRecord
     %w[買主 売主 融資先 融資先担当者 抹消先 抹消先担当者 リハウス 他仲介 司法書士]
   end
 
+  def self.gene_position_select
+    %w[買主 売主 融資先 融資先担当者 抹消先 抹消先担当者 嘱託人 他仲介 司法書士]
+  end
+
   def self.lf_position_select
     %w[ＬＦ担当者 債務者 設定者 抹消先 抹消先担当者 司法書士 土地家屋調査士 関係者]
+  end
+
+  def self.inherit_position_select
+    %w[被相続人 相続人代表 相続人 嘱託人 関係者]
   end
 
   def self.buyer_select(project)
@@ -110,6 +118,29 @@ class ProjectCustomer < ApplicationRecord
     lfers
   end
 
+  def self.commissioner_select(project)
+    commissioners = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "嘱託人"
+        commissioners << {:name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    commissioners
+  end
+
+  def self.commissioner_staff_select(project)
+    branchs = Array.new
+    commissioners = self.commissioner_select(project)
+    commissioners.each do |commissioner|
+      branchs << BranchStaff.order("assigned_date desc").find_by(staff_id: commissioner[:id])
+    end
+    if branchs != nil
+      branchs
+    end
+  end
+
+  
+
   def self.lf_branch_select(project)
     branchs = Array.new
     lfers = self.lf_select(project)
@@ -201,5 +232,45 @@ class ProjectCustomer < ApplicationRecord
       end
     end
     intermediators
+  end
+
+  def self.decedent_select(project)
+    decedents = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "被相続人"
+        decedents << {:name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    decedents
+  end
+
+  def self.representative_select(project)
+    representatives = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "相続人代表"
+        representatives << {:name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    representatives
+  end
+
+  def self.heir_select(project)
+    heirs = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "相続人"
+        heirs << {:name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    heirs
+  end
+
+  def self.other_select(project)
+    others = Array.new
+    project.project_customers.map do |customer|
+      if customer.position != "嘱託人"
+        others << {:position => "#{customer.position}" , :name => "#{customer.customer.name}", :path => "#{customer.customer}", :id => "#{customer.customer_id}"}
+      end
+    end
+    others
   end
 end

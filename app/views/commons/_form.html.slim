@@ -1,0 +1,69 @@
+- if common.errors.present?
+  ul#error_explanation
+    - common.errors.full_messages.each do |message|
+      li = message
+= form_with model: common, local: true do |f|
+  .form-group
+    = f.label :name, '案件名'
+    = f.text_field :name, class: 'form-control'
+
+  .form-group.row
+    .col-sm-10
+      = f.label :status, '進捗状況'
+      = f.text_field :status, class: 'form-control'
+    .col-sm-2
+      = f.label :user_id, '事務所担当者'
+      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user}, {class: 'form-control'})
+
+  .form-group
+    = f.label :request_content, '依頼内容等'
+    = f.text_area :request_content, row: 10, class: 'form-control'
+
+  #project_estates.mb-4.mt-4
+    = f.fields_for :project_estates do |project_estate|
+      = render 'project_estate_fields', f: project_estate
+    .links
+      = link_to_add_association '不動産追加', f, :project_estates, class: 'btn btn-primary'
+    .estate-link.mt-4.mb-4
+      = link_to '不動産一覧へ', estates_path, target: "_blank", class: 'btn btn-primary'
+
+  #project_customers.mb-4.mt-4
+    = f.fields_for :project_customers do |project_customer|
+      = render 'project_customer_fields', f: project_customer
+    .links
+      = link_to_add_association '顧客追加', f, :project_customers, class: 'btn btn-primary'
+    .customer-link.mt-4.mb-4
+      = link_to '顧客一覧へ', customers_path, target: "_blank", class: 'btn btn-primary'
+  .form-group.row
+    .col-sm-6
+      = f.label :application_date, '申請日'
+      = f.date_field :application_date, class: 'form-control'
+    .col-sm-6
+      = f.label :complete_date, '完了日'
+      = f.date_field :complete_date, class: 'form-control'
+  #certificates.mb-4
+    = f.fields_for :certificates do |certificate|
+      = render 'certificate_fields', f: certificate
+    .links
+      = link_to_add_association '謄本追加', f, :certificates, class: 'btn btn-primary'
+  .form-group
+    = f.label :remarks, '備考'
+    = f.text_area :remarks, class: 'form-control'
+
+  #destinates.mb-4
+    = f.fields_for :destinates do |destinate|
+      = render 'destinate_fields', f: destinate
+    .links
+      = link_to_add_association '書類送付追加', f, :destinates, class: 'btn btn-primary'
+
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
+
+  .form-group
+    p = '現在登録されているファイル（削除するものはチェックしてください）'
+    - common.images.each do |image|
+      = f.check_box :image_ids, {:multiple => true, class: 'form-check-label'}, image.id, false
+      span.mr-3 =  image.filename
+  = f.submit '登録する', class: 'btn btn-primary m-3'
+

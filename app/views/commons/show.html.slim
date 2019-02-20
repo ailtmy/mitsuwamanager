@@ -1,0 +1,227 @@
+- @page_title = "一般案件詳細（更新日：#{@common.updated_at.try(:strftime, "%Y/%m/%d")})"
+.pb-2.d-print-none
+  .row.mb-2
+    | 事件簿
+  .row.mb-2
+    - if @common.casefiles.blank?
+      .col-sm-12.bg-danger.text-white
+        = "事件簿を入力してください！！"
+    - else
+      - @common.casefiles.each do |casefile|
+        .col-sm-3
+          = link_to casefile.event_title, casefile
+  .row.mb-2
+    | 当事者一覧リンク
+  .row.mb-2
+    - @common.project_customers.each do |customer|
+      = link_to "「#{customer.position}：#{customer.customer.name}」", customer.customer
+  .row.mb-2
+    | 登録ファイル
+  .row.mb-2
+    - if @common.images.attached?
+      - @common.images.each do |image|
+          span.mr-5
+            = link_to image.filename, image,:target => "_blank" 
+  h3.mb-3.mt-3.d-print-none 
+    = @page_title
+  
+  .nav.justify-content-end.m-3.d-print-none
+    = link_to '編集', edit_common_path, class: 'btn btn-primary mb-3'
+    - if current_user.admin?
+      = link_to '削除', :common, method: :delete, data: {confirm: "#{@common.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+    = link_to '一般案件一覧', commons_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '事件簿ＴＯＰ', casefiles_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+.text-align-center.m-2 style="font-size: 1.1rem;"
+  .row
+    .col-sm-1.p-2.border.border-dark
+      | ID：
+      = @common.id
+    .col-sm-5.p-2.border-top.border-right.border-bottom.border-dark
+      |　案件名：
+      = @common.name
+    .col-sm-4.p-2.border-top.border-bottom.border-dark
+      | 進捗状況：
+      = @common.status
+    .col-sm-2.p-2.border.border-dark
+      | 事務所担当: 
+      = @common.user.name
+
+  .row.border-right.border-left.border-dark
+    .col-sm-2.p-3
+      | 不動産の表示
+    .col-sm-10.p-2
+      .row
+        - @common.project_estates.each do |estate|
+          .col-sm-8.p-1
+            = link_to "#{estate.estate.view_estate_select}", estate.estate
+          .col-sm-4.p-1
+            = "管轄：#{ProjectEstate.control_name(estate)}"
+          br
+
+  .row.border.border-dark
+    .col-sm-2.p-3
+      | 嘱託人
+    .col-sm-5.p-3
+      - ProjectCustomer.commissioner_staff_select(@common).each do |branch|
+        - if branch.present?
+          = branch.branch.company.name
+          = branch.branch.branch_name
+          = branch.title
+          br
+    .col-sm-5.p-3
+      - ProjectCustomer.commissioner_select(@common).each do |customer|
+        | 担当者：  
+        = customer[:name]
+        br
+    
+  h4.row.mb-0
+    .col-sm-2.pl-4.p-4.border-left.border-dark
+      | 顧客：
+    .col-sm-10.pl-4.p-4.border-right.border-dark
+      - ProjectCustomer.other_select(@common).each do |customer|
+        .pb-3
+          = customer[:position]
+          |　：　
+          = customer[:name]
+          br
+  
+  .row.border-left.border-right.border-top.border-dark style="height: 200px;"
+    .col-sm-2.p-3
+      | 依頼内容：
+    .col-sm-10.p-3
+      = simple_format(@common.request_content)
+  
+  .row.border-left.border-right.border-top.border-dark
+    .col-sm-2.p-2
+      | 備考：
+    .col-sm-10.p-2
+      = simple_format(@common.remarks)
+  
+  .row.border.border-dark
+    .col-sm-1.p-1
+      | 申請日：
+    .col-sm-2.p-1
+      = @common.application_date.try(:strftime, "%Y/%m/%d(%a)")
+    .col-sm-1.p-1
+      | 補正日：
+    .col-sm-2.p-1
+      = @common.complete_date.try(:strftime, "%Y/%m/%d(%a)")
+    .col-sm-1.p-1
+      | 謄本：
+    .col-sm-3.p-1
+      - @common.certificates.each do |cert|
+        = cert.cert_kind
+        = " #{cert.number_sheet} 通　"
+        = cert.window? ? "窓口受取" : "オンライン"
+        br
+  .row.p-2.border-left.border-right.border-bottom.border-dark
+    | 完了書類送付
+  - if @common.destinates.present?
+
+    - @inherit.destinates.each do |destinate|
+      .row
+        .col-sm-6.p-2.border-left.border-dark
+          | 氏名：　
+          = destinate.customer.name
+        .col-sm-6.p-2.border-right.border-dark
+          | 送付先等：　
+          = destinate.send_addr
+      .row
+        .col-sm-3.p-2.border-left.border-bottom.border-dark
+          | 送付日：
+          = destinate.send_date.try(:strftime, "%Y/%m/%d(%a)")
+        .col-sm-1.p-2.border-bottom.border-dark
+          = destinate.send_method? ? "手渡" : "送付"
+        .col-sm-4.p-2.border-bottom.border-dark
+          | 書留等番号：　
+          = link_to destinate.send_number, "https://trackings.post.japanpost.jp/services/srv/search/?requestNo1=#{destinate.send_number}&search.x=74&search.y=14&startingUrlPatten=&locale=ja", target: :_blank if destinate.send_number != nil
+        .col-sm-4.p-2.border-bottom.border-right.border-dark
+          | 受領書返送：　
+          = destinate.receive_doc? ? "済" : "未"
+  - else
+    .row
+      .col-sm-4.p-2.border-left.border-bottom.border-dark
+        | 送付書類
+      .col-sm-6.p-2.border-left.border-bottom.border-dark
+        | 送付先
+      .col-sm-2.p-2.border-left.border-right.border-bottom.border-dark
+        | 処理
+    .row
+      .col-sm-4.p-4.border-left.border-bottom.border-dark
+        .row.pb-2
+          | 当事者
+        .row.pl-2
+          | 登記識別情報　　通　完了証　　通
+        .row.pl-2
+          | 登記事項証明書　通
+        .row.pl-2
+          | 請求書・領収書（未　・　済） 
+        .row.pb-4.pl-2
+          |　　
+        .row.pb-4.pl-2
+
+      .col-sm-6.p-4.border-left.border-bottom.border-dark
+        .row.pb-4.p-2
+          = "住所"
+        .row.pb-4.pl-2
+          |
+        .row.pb-4.pl-2
+          |
+        .row.pt-4.p-2
+          = "ＴＥＬ"
+
+      .col-sm-2.p-4.border-left.border-right.border-bottom.border-dark
+        .row.pb-2.p-2.text-right
+          = "　　　／"
+        .row.pb-2.p-2
+          = "　　照合済"
+        .row.pb-2.p-2
+          = "　　　／"
+        .row.p-2
+          = "お届・〒・手渡"
+    .row
+      .col-sm-4.p-4.border-left.border-bottom.border-dark
+        .row.pb-2
+          | 抹消先等
+        .row.pl-2
+          | 抹消書類一式
+        .row.pl-2
+          | 完了証
+        .row.pl-2
+          | 登記事項証明書（写し）
+
+      .col-sm-6.p-4.border-left.border-bottom.border-dark
+        .row.pb-4.p-2
+          = "名刺（有・無）　返信封筒（有・無）"
+        
+      .col-sm-2.p-4.border-left.border-right.border-bottom.border-dark
+        .row.pt-4.pb-4.p-2
+          = "　　　／"
+        .row.p-2
+          = "お届・〒・手渡"
+    .row
+      .col-sm-4.p-4.border-left.border-bottom.border-dark
+        .row.pb-2
+          | その他
+        .row.pb-4.pl-2
+      .col-sm-6.p-4.border-left.border-bottom.border-dark
+        .row.pb-4.p-2
+          
+        .row.pt-4.p-w
+    
+      .col-sm-2.p-4.border-left.border-right.border-bottom.border-dark
+        .row.pt-4.pb-4.p-2
+          = "　　　／"
+        .row.p-2
+          = "お届・〒・手渡"
+
+  . style="page-break-before: always;"
+  = "本人確認記録"  
+    
+= render 'shared/title_back', common: @common 
+  
+
+
