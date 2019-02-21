@@ -20,6 +20,12 @@
       = a.label :address_kind, '本店の種類'
       = a.text_field :address_kind, class: 'form-control'
       = a.hidden_field :address_closure, value: false, class: 'form-control'
+  #company_controls.mb-4.mt-4
+    = f.fields_for :company_controls do |company_control|
+      = render 'company_control_fields', f: company_control
+    .links
+      = link_to_add_association '管轄追加', f, :company_controls, class: 'btn btn-primary'
+    .estate-link.mt-4.mb-4
   .form-group
     = f.label :establishment, '設立年月日'
     = f.date_field :establishment, class: 'form-control'

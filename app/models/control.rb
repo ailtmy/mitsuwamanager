@@ -8,6 +8,10 @@ class Control < ApplicationRecord
   accepts_nested_attributes_for :mails
   has_many :lands
   has_many :buildings
+  has_many :rooms
+  has_many :company_controls, foreign_key: :control_id, dependent: :destroy
+  has_many :companies, through: :company_controls, source: :company
+  accepts_nested_attributes_for :company_controls, allow_destroy: true
 
   def self.csv_attributes
     ["id", "number", "name", "remark", "created_at", "updated_at"]

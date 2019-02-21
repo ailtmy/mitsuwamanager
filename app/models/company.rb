@@ -7,6 +7,11 @@ class Company < Customer
   accepts_nested_attributes_for :addresses
   has_many :identifies,  foreign_key: :customer_id, dependent: :destroy
   has_many :branches, foreign_key: :customer_id
+
+  has_many :company_controls, foreign_key: :company_id, inverse_of: :company, dependent: :destroy
+  has_many :controls, through: :company_controls, source: :control
+  accepts_nested_attributes_for :company_controls, allow_destroy: true
+
   has_many :tels, :as => :telable, dependent: :destroy
   accepts_nested_attributes_for :tels
   has_many :mails, :as => :mailable, dependent: :destroy

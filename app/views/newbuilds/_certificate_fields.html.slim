@@ -1,0 +1,14 @@
+.nested-fields.well.well-compact.mb-4
+  .form-group.mb-2
+    = f.hidden_field :id 
+  .form-group.mb-2
+    = f.label :cert_kind, '謄本等種類'
+    = f.select :cert_kind, ["土地", "建物", "商業", "印鑑証明", "その他"], {include_blank: true, prompt: "選択してください"}, class: 'form-control select2'
+  .form-group.mb-2
+    = f.label :number_sheet, "謄本等通数"
+    = f.number_field :number_sheet, class: 'form-control'
+  .form-group.mb-2
+    = f.label :window, "窓口受領"
+    = f.check_box :window, class: 'form-check-input m-2'
+  .form-group.mb-2
+    = link_to_remove_association '削除', f, class: 'btn btn-danger'

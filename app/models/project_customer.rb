@@ -1,10 +1,7 @@
 class ProjectCustomer < ApplicationRecord
 
   belongs_to :customer
-  # belongs_to :staff, class_name: 'Customer'
   belongs_to :project
-  # belongs_to :rehouse, :class_name => 'Project', inverse_of: :project_customers
-  # belongs_to :landf, :class_name => 'Project', foreign_key: :project_id, inverse_of: :project_customers
 
   def selectable_customers
     Customer.all
@@ -12,6 +9,10 @@ class ProjectCustomer < ApplicationRecord
 
   def self.position_select
     %w[買主 売主 融資先 融資先担当者 抹消先 抹消先担当者 リハウス 他仲介 司法書士]
+  end
+
+  def self.new_position_select
+    %w[事業主 事業主担当者 販売代理 販売担当者 融資先 融資先担当者 土地家屋調査士 司法書士]
   end
 
   def self.gene_position_select
@@ -273,4 +274,68 @@ class ProjectCustomer < ApplicationRecord
     end
     others
   end
+
+  def self.developer_select(project)
+    developers = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "事業主"
+        developers << customer
+      end
+    end
+    developers
+  end
+
+  def self.developer_staff_select(project)
+    developer_staffs = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "事業主担当者"
+        developer_staffs << customer 
+      end
+    end
+    developer_staffs
+  end
+
+  def self.developer_branch_select(project)
+    branchs = Array.new
+    branchstaffs = self.developer_staff_select(project)
+    branchstaffs.each do |branchstaff|
+      branchs << BranchStaff.order("assigned_date desc").find_by(staff_id: branchstaff[:customer_id])
+    end
+    if branchs != nil
+      branchs
+    end
+  end
+
+  def self.distributer_select(project)
+    distributers = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "販売代理"
+        distributers << customer
+      end
+    end
+    distributers
+  end
+
+  def self.distributer_staff_select(project)
+    distributer_staffs = Array.new
+    project.project_customers.map do |customer|
+      if customer.position == "販売担当者"
+        distributer_staffs << customer 
+      end
+    end
+    distributer_staffs
+  end
+
+  def self.distributer_branch_select(project)
+    branchs = Array.new
+    branchstaffs = self.distributer_staff_select(project)
+    branchstaffs.each do |branchstaff|
+      branchs << BranchStaff.order("assigned_date desc").find_by(staff_id: branchstaff[:customer_id])
+    end
+    if branchs != nil
+      branchs
+    end
+  end
+
+  
 end

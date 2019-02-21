@@ -1,0 +1,45 @@
+- @page_title = "商業案件一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
+    li.nav-item = link_to '商業案件新規作成', new_corp_path, class: 'nav-link  text-white'
+    li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link  text-white'
+
+fieldset.border.mb-3
+  legend.pl-3 = "検索"
+  = search_form_for @q, class: 'mb-5' do |f|
+    .form-group.row
+      = f.label :name_cont, '案件名', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :name_cont, class: 'form-control mt-2' 
+      .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'
+
+.mb-3
+  = paginate @corps
+  = page_entries_info @corps
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Corp.human_attribute_name(:id).upcase
+      th = Corp.human_attribute_name(:name)
+      th = Corp.human_attribute_name(:application_date)
+      th = Corp.human_attribute_name(:status)
+      th = Corp.human_attribute_name(:user)
+      th
+  tbody
+    - @corps.each do |corp|
+      tr
+        td = corp.id
+        td = link_to corp.name, corp
+        td = corp.application_date.try(:strftime, '%Y/%m/%d-%H:%M')
+        td = corp.status
+        td = corp.user.name
+        td
+          = link_to '編集', [:edit, corp], class: 'btn btn-primary m-1'
+          - if current_user.admin?
+            = link_to '削除', corp, method: :delete, data: { confirm: "#{corp.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'

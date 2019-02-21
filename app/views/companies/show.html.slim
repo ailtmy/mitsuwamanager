@@ -48,6 +48,13 @@ table.table.table-hover.table-bordered
                 .col-sm-1
                   = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
+      th = Company.human_attribute_name(:control)
+      td 
+        - @company.company_controls.each do |control|
+          = "#{control.control_kind}：　 #{control.control.name}"
+          br
+
+    tr
       th = Company.human_attribute_name(:establishment)
       td = @company.establishment.try(:strftime,'%Y/%m/%d')
     tr

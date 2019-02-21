@@ -1,0 +1,195 @@
+- @page_title = "新築案件詳細（更新日：#{@newbuild.updated_at.try(:strftime, "%Y/%m/%d")})"
+.pb-2.d-print-none
+  .row.mb-2
+    | 事件簿
+  .row.mb-2
+    - if @newbuild.casefiles.blank?
+      .col-sm-12.bg-danger.text-white
+        = "事件簿を入力してください！！"
+    - else
+      - @newbuild.casefiles.each do |casefile|
+        .col-sm-3
+          = link_to casefile.event_title, casefile
+  .row.mb-2
+    | 当事者一覧リンク
+  .row.mb-2
+    - @newbuild.project_customers.each do |customer|
+      = link_to "「#{customer.position}：#{customer.customer.name}」", customer.customer
+  .row.mb-2
+    | 登録ファイル
+  .row.mb-2
+    - if @newbuild.images.attached?
+      - @newbuild.images.each do |image|
+          span.mr-5
+            = link_to image.filename, image,:target => "_blank" 
+  h3.mb-3.mt-3.d-print-none 
+    = @page_title
+  
+  .nav.justify-content-end.m-3.d-print-none
+    = link_to '編集', edit_newbuild_path, class: 'btn btn-primary mb-3'
+    - if current_user.admin?
+      = link_to '削除', :common, method: :delete, data: {confirm: "#{@newbuild.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+    = link_to '新築案件一覧', newbuilds_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '事件簿ＴＯＰ', casefiles_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+.text-align-center.m-2 style="font-size: 1.1rem;"
+  .row
+    .col-sm-1.p-2.border.border-dark
+      | ID：
+      = @newbuild.id
+    .col-sm-5.p-2.border-top.border-right.border-bottom.border-dark
+      |　案件名：
+      = @newbuild.name
+    .col-sm-4.p-2.border-top.border-bottom.border-dark
+      | 進捗状況：
+      = @newbuild.status
+    .col-sm-2.p-2.border.border-dark
+      | 事務所担当: 
+      = @newbuild.user.name
+
+  .row.border-right.border-left.border-dark
+    .col-sm-2.p-3
+      | 不動産の表示
+    .col-sm-10.p-2
+      .row
+        - @newbuild.project_estates.each do |estate|
+          .col-sm-8.p-1
+            = link_to "#{estate.estate.view_estate_select}", estate.estate
+          .col-sm-4.p-1
+            = "管轄：#{ProjectEstate.control_name(estate)}"
+          br
+
+  .row.border.border-dark
+    .col-sm-2.p-3
+      | 事業主
+    .col-sm-4.p-3
+      - ProjectCustomer.developer_select(@newbuild).each do |customer|
+        - if customer.present?
+          = customer.customer.name
+          br
+    .col-sm-3.p-3
+      - ProjectCustomer.developer_branch_select(@newbuild).each do |branch|
+        - if branch.present?
+        = branch.branch.branch_name
+
+    .col-sm-3.p-3
+      - ProjectCustomer.developer_staff_select(@newbuild).each do |customer|
+        | 担当者：  
+        -if customer.present?
+          = customer.customer.name
+          br
+  .row.border-left.border-right.border-bottom.border-dark
+    .col-sm-2.p-3
+      | 販売
+    .col-sm-4.p-3
+      - ProjectCustomer.distributer_select(@newbuild).each do |customer|
+        - if customer.present?
+          = customer.customer.name
+          br
+    .col-sm-3.p-3
+      - ProjectCustomer.distributer_branch_select(@newbuild).each do |branch|
+        - if branch.present?
+          = branch.branch.branch_name
+
+    .col-sm-3.p-3
+      - ProjectCustomer.distributer_staff_select(@newbuild).each do |customer|
+        | 担当者：  
+        -if customer.present?
+          = customer.customer.name
+          br
+  .row
+    .col-sm-2.p-3.border-left.border-dark
+      | 融資先
+    .col-sm-4.p-3.border-dark
+      - ProjectCustomer.loan_select(@newbuild).each do |customer|
+        = customer[:name]
+        br
+    .col-sm-3.p-3.border-dark
+      - ProjectCustomer.loan_branch_select(@newbuild).each do |branch|
+        - if branch.present?
+          = branch.branch.branch_name
+          = branch.title
+          br
+    .col-sm-3.p-3.border-right.border-dark
+      | 担当者：
+      - ProjectCustomer.loan_staff_select(@newbuild).each do |customer|
+        = customer[:name]
+        br
+  .row
+    .col-sm-2.p-3.border-left.border-top.border-dark
+      | 司法書士：
+    .col-sm-10.p-3.border-top.border-right.border-dark
+      - ProjectCustomer.scrivener_select(@newbuild).each do |customer|
+        = customer[:name]
+        br
+  .row
+    .col-sm-2.p-3.border-left.border-top.border-dark
+      | 調査士：
+    .col-sm-10.p-3.border-top.border-right.border-dark
+      - ProjectCustomer.surveyor_select(@newbuild).each do |customer|
+        = customer[:name]
+        br
+  .row.border-left.border-right.border-top.border-dark style="height: 200px;"
+    .col-sm-2.p-3
+      | 依頼内容：
+    .col-sm-10.p-3
+      = simple_format(@newbuild.request_content)
+  
+  .row.border-left.border-right.border-top.border-dark
+    .col-sm-2.p-2
+      | 備考：
+    .col-sm-10.p-2
+      = simple_format(@newbuild.remarks)
+  
+  .row.border.border-dark
+    .col-sm-1.p-1
+      | 申請日：
+    .col-sm-2.p-1
+      = @newbuild.application_date.try(:strftime, "%Y/%m/%d(%a)")
+    .col-sm-1.p-1
+      | 補正日：
+    .col-sm-2.p-1
+      = @newbuild.complete_date.try(:strftime, "%Y/%m/%d(%a)")
+    .col-sm-1.p-1
+      | 謄本：
+    .col-sm-3.p-1
+      - @newbuild.certificates.each do |cert|
+        = cert.cert_kind
+        = " #{cert.number_sheet} 通　"
+        = cert.window? ? "窓口受取" : "オンライン"
+        br
+  .row.p-2.border-left.border-right.border-bottom.border-dark
+    | 完了書類送付
+  - if @newbuild.destinates.present?
+
+    - @newbuild.destinates.each do |destinate|
+      .row
+        .col-sm-6.p-2.border-left.border-dark
+          | 氏名：　
+          = destinate.customer.name
+        .col-sm-6.p-2.border-right.border-dark
+          | 送付先等：　
+          = destinate.send_addr
+      .row
+        .col-sm-3.p-2.border-left.border-bottom.border-dark
+          | 送付日：
+          = destinate.send_date.try(:strftime, "%Y/%m/%d(%a)")
+        .col-sm-1.p-2.border-bottom.border-dark
+          = destinate.send_method? ? "手渡" : "送付"
+        .col-sm-4.p-2.border-bottom.border-dark
+          | 書留等番号：　
+          = link_to destinate.send_number, "https://trackings.post.japanpost.jp/services/srv/search/?requestNo1=#{destinate.send_number}&search.x=74&search.y=14&startingUrlPatten=&locale=ja", target: :_blank if destinate.send_number != nil
+        .col-sm-4.p-2.border-bottom.border-right.border-dark
+          | 受領書返送：　
+          = destinate.receive_doc? ? "済" : "未"
+  - else
+    
+  . style="page-break-before: always;"
+  = "本人確認記録"  
+    
+= render 'shared/title_back', newbuild: @newbuild 
+  
+
+

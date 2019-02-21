@@ -1,0 +1,13 @@
+.nested-fields.well.well-compact
+  .form-group.mb-2
+    = f.hidden_field :id 
+
+    = f.label :control_id, '管轄法務局'
+    = f.collection_select(:control_id, Control.all, :id, :name, {include_blank: true, prompt: "選択してください"}, class: 'form-control select2')
+    .row.mt-4
+      .col-sm-3.mb-2.text-right
+        = f.label :control_kind, '本店・支店・本店移転先等'
+      .col-sm-4
+        = f.select :control_kind, ['本店管轄','支店管轄'], {include_blank: true, prompt: "選択してください"}, class: 'form-control'
+      .col-sm-4
+        = link_to_remove_association '削除', f, class: 'btn btn-danger'

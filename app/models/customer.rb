@@ -7,6 +7,9 @@ class Customer < ApplicationRecord
   has_many :customer_agents, foreign_key: 'agent_id'
   has_many :customer_agents, foreign_key: 'customer_id'
 
+  has_many :company_controls, foreign_key: :company_id, inverse_of: :company, dependent: :destroy
+  has_many :controls, through: :company_controls, source: :control
+
   has_many :agents,  class_name: 'Customer', through: :customer_agents
   has_many :customers, class_name: 'Customer', through: :customer_agents
   accepts_nested_attributes_for :customer_agents, allow_destroy: true
@@ -19,6 +22,9 @@ class Customer < ApplicationRecord
   has_many :landfs, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :inherits, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :commons, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :corps, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :newbuilds, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
+  has_many :destinates, class_name: 'Project', foreign_key: 'customer_id', source: :project, through: :project_customers
   has_many :projects, through: :project_customers
   accepts_nested_attributes_for :project_customers
   has_many :tels, :as => :telable, dependent: :destroy

@@ -9,7 +9,8 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '一般売買案件一覧', genes_path, class: 'nav-link text-white'
     li.nav-item = link_to '相続案件一覧', inherits_path, class: 'nav-link text-white'
     li.nav-item = link_to '一般案件一覧', commons_path, class: 'nav-link text-white'
-    
+    li.nav-item = link_to '商業案件一覧', corps_path, class: 'nav-link text-white'
+    li.nav-item = link_to '新築案件一覧', newbuilds_path, class: 'nav-link text-white'
     li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link  text-white'
 
 fieldset.border.mb-3
@@ -49,6 +50,6 @@ table.table.table-hover.table-bordered.text-center
         td = project.created_at.try(:strftime,'%Y/%m/%d')
         td = project.updated_at.try(:strftime,'%Y/%m/%d')
         td
-          = link_to '編集', edit_project_path(project), class: 'btn btn-primary mr-3'
+          = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
           - if current_user.admin?
-            = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+            = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'

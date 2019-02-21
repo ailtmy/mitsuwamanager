@@ -1,4 +1,5 @@
 class Branch < ApplicationRecord
+  belongs_to :customer
   belongs_to :company, foreign_key: :customer_id
   has_many :addresses, :as => :addressable, dependent: :destroy
   has_many :branch_staffs

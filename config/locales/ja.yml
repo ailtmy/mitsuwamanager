@@ -34,6 +34,8 @@ ja:
       inherit: 相続案件
       gene: 一般売買案件
       common: 一般案件
+      corp: 商業案件
+      newbuild: 新築案件
       project_customer: 案件顧客関連
       project_estate: 案件不動産関連
       apart_room: 一棟専有部分関連
@@ -44,7 +46,7 @@ ja:
       mail: メール
       staff: スタッフ
       tel: 電話
-
+      company_control: 法人登記管轄
     attributes:
       user:
         name: ユーザー名
@@ -95,6 +97,8 @@ ja:
         old_address: 旧本店
         tel: 電話番号
         mail: メールアドレス
+        control: 管轄
+        company_controls: 法人登記管轄
       agent:
         birthday: 生年月日
         title: 肩書

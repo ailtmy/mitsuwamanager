@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_19_004403) do
+ActiveRecord::Schema.define(version: 2019_02_21_042329) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -95,6 +95,14 @@ ActiveRecord::Schema.define(version: 2019_02_19_004403) do
     t.datetime "updated_at", null: false
     t.boolean "window", default: false
     t.index ["project_id"], name: "index_certificates_on_project_id"
+  end
+
+  create_table "company_controls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "control_id"
+    t.string "control_kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "controls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

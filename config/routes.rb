@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  get 'newbuilds/index'
+  get 'newbuilds/show'
+  get 'newbuilds/new'
+  get 'newbuilds/edit'
   get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -16,6 +20,8 @@ Rails.application.routes.draw do
   resources :inherits
   resources :genes
   resources :commons
+  resources :corps
+  resources :newbuilds
 
   resources :estates, only: :index	
   resources :lands do 

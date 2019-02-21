@@ -19,6 +19,7 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     @company.addresses.build
+    @company.company_controls.build
   end
 
   def edit
@@ -56,7 +57,7 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy])
+    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy], company_controls_attributes:[:id, :company_id, :control_id, :control_kind,  :_destroy])
   end
 
   def address_params
