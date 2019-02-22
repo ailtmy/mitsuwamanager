@@ -10,7 +10,9 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '代理人・代表者関連作成', new_customer_agent_path, class: 'nav-link  text-white'
 
 fieldset.border.mb-3
-  = render 'shared/search'
+  legend.pl-3 検索
+  .pl-1
+    = render 'shared/search'
 
 .mb-3
   = paginate @customers

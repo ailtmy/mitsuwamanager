@@ -12,4 +12,16 @@ class Gift < ApplicationRecord
   def self.selectable_gift_address
     %w[自宅 勤務先 その他]
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[gift_kind send_receive gift_year]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s }
+  end
+
+  def ransortable_attributes(auth_object = nil)
+    ransackable_attributes(auth_object)
+  end
 end

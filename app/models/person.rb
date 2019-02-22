@@ -10,9 +10,16 @@ class Person < Customer
   has_many :mails, :as => :mailable, dependent: :destroy
   accepts_nested_attributes_for :mails
 
-
   # validateに定義したメソッドを設定
   validate :birthday_cannot_be_in_the_future
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name kana birthday]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 
   def self.csv_attributes
     ["id", "name", "kana", "birthday", "type", "created_at", "updated_at"]

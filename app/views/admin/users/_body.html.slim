@@ -13,6 +13,20 @@ table.table.table-hover.table-bordered
       th = User.human_attribute_name(:admin)
       td = @user.admin? ? '〇' : 'ー'
     tr
+      th = User.human_attribute_name(:identify)
+      td
+        - @user.identifies.order("date_time desc").limit(10).each do |ident|
+          = link_to ident.date_time.try(:strftime, "%Y/%m/%d"), ident
+          |　：　
+          = link_to ident.customer.name, ident.customer
+          br
+    tr
+      th = User.human_attribute_name(:project)
+      td
+        - @user.projects.order("application_date desc").limit(10).each do |project|
+          = link_to project.name, project
+          br
+    tr
       th = User.human_attribute_name(:created_at)
       td = @user.created_at.try(:strftime,'%Y/%m/%d')
     tr

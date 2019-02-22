@@ -57,6 +57,8 @@ ja:
         password_confirmation: パスワード（確認）
         created_at: 登録日
         updated_at: 更新日
+        identify: 本人確認記録
+        project: 案件
       customer:
         name: 氏名・商号
         kana: フリガナ
@@ -69,6 +71,7 @@ ja:
         since_date: 本店を置いた日
         created_at: 登録日
         updated_at: 更新日
+        project: 案件
       person:
         name: 氏名
         birthday: 生年月日

@@ -1,11 +1,50 @@
 = search_form_for @q, class: 'mb-5' do |f|
   .form-group.row
-    = f.label :name_cont, '氏名・商号', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-2.text-right
+      = f.label :name_or_kana_cont, '氏名 or カナ', class: 'col-form-label'
     .col-sm-9
-      = f.search_field :name_cont, class: 'form-control mt-2'
+      = f.search_field :name_or_kana_cont, class: 'form-control mt-2'
   .form-group.row
-    = f.label :kana_cont, 'フリガナ', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-2.text-right
+      = f.label :addresses_address_cont, '住所', class: 'col-form-label'
     .col-sm-9
-      = f.search_field :kana_cont, class: 'form-control mt-2'
+      = f.search_field :addresses_address_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :tels_tel_number_or_mails_mail_address_cont, '電話／メール', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :tels_tel_number_or_mails_mail_address_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :gifts, '贈答品等'
+    .col-sm-9
+      = f.radio_button :gifts_gift_kind, :年賀状
+      br
+      = f.label :gifts_gift_kind, :年賀状, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :寒中見舞
+      br
+      = f.label :gifts_gift_kind, :寒中見舞, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :お中元
+      br
+      = f.label :gifts_gift_kind, :お中元, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :暑中見舞
+      br
+      = f.label :gifts_gift_kind, :暑中見舞, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :喪中
+      br
+      = f.label :gifts_gift_kind, :喪中, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :お歳暮
+      br
+      = f.label :gifts_gift_kind, :お歳暮, class: 'form-check-input'
+      br
+      = f.radio_button :gifts_gift_kind, :その他
+      br
+      = f.label :gifts_gift_kind, :その他, class: 'form-check-input'
+      
     .form-group
       = f.submit class: 'btn btn-outline-primary mt-2'

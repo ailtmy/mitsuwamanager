@@ -34,7 +34,7 @@ table.table.table-hover.table-bordered
         - if @person.addresses.present?
           - @person.addresses.order('since_date desc').each do |a|
             - if a.address_closure == false
-              card.row              
+              .row.p-2              
                 .col-sm-4
                   = "住定日(or確認日):  #{a.since_date.try(:strftime,'%Y/%m/%d')}"
                 .col-sm-5
@@ -43,11 +43,11 @@ table.table.table-hover.table-bordered
               .row.mb-2
                 .col-sm-2
                   = "〒#{a.zip}"
-                .col-sm-7
+                .col-sm-6
                   = a.address
-                .col-sm-1
+                .col-sm-2
                   = link_to "編集", [:edit, @customer, a], class: 'btn btn-primary pull-right'
-                .col-sm-1
+                .col-sm-2
                   = link_to "削除", [@customer, a], method: :delete, data: {confirm: "#{a.address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:tel)
@@ -58,9 +58,9 @@ table.table.table-hover.table-bordered
               = tel.tel_kind
             .col-sm-3
               = tel.tel_number
-            .col-sm-1
+            .col-sm-2
               = link_to "編集", [:edit, @customer, tel], class: 'btn btn-primary pull-right'
-            .col-sm-1
+            .col-sm-2
               = link_to "削除", [@customer, tel], method: :delete, data: {confirm: "#{tel.tel_number}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:mail)
@@ -71,9 +71,9 @@ table.table.table-hover.table-bordered
               = mail.mail_kind
             .col-sm-3
               = mail_to mail.mail_address
-            .col-sm-1
+            .col-sm-2
               = link_to "編集", [:edit, @customer, mail], class: 'btn btn-primary pull-right'
-            .col-sm-1
+            .col-sm-2
               = link_to "削除", [@customer, mail], method: :delete, data: {confirm: "#{mail.mail_address}を削除します。よろしいですか？"} ,class: 'btn btn-danger pull-right'
     tr
       th = Person.human_attribute_name(:branch)
@@ -114,6 +114,12 @@ table.table.table-hover.table-bordered
               = Person.human_attribute_name(:updated_at)
             .col-sm-4
               = customer.updated_at.try(:strftime,' %Y/%m/%d-%H:%M')
+    tr
+      th = Person.human_attribute_name(:project)
+      td
+        - @person.projects.order("application_date desc").limit(10).each do |project|
+          = link_to project.name, project
+          br
     tr
       th = Person.human_attribute_name(:identify)
       td
