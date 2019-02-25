@@ -5,7 +5,7 @@ class Casefile < ApplicationRecord
   accepts_nested_attributes_for :customer_casefiles, allow_destroy: true
 
   def self.csv_attributes
-    ["id", "year", "number", "date", "event_title", "event_number", "count", "project_id", "created_at", "updated_at"]
+    ["id", "year", "number", "date", "event_title", "event_number", "count", "kind", "project_id", "created_at", "updated_at"]
   end
 
   def self.generate_csv

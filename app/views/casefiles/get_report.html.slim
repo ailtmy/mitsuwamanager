@@ -1,0 +1,23 @@
+- @page_title = "業務報告書作成用カウント"
+h3.mb-3.mt-3.d-print-none = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary.d-print-none
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link text-white'
+    li.nav-item = link_to '戻る', :back, class: 'nav-link text-white'
+
+fieldset.border.mb-3.d-print-none
+  legend.pl-3 = "検索"
+  = search_form_for@q, url:get_report_casefiles_path, class: 'mb-2' do |f|
+    .form-group.row
+      = f.label :year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
+      .col-sm-9
+        = f.search_field :year_eq, class: 'form-control mt-2'
+      .form-group
+        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+
+
+.
+  - @casefile.count.each do |kind, count|
+    = "事件区分：#{kind[0]}： 別表件数#{kind[1]}件が、#{count}件"  
+    br

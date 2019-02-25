@@ -9,7 +9,7 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary.d-print-none
 
 fieldset.border.mb-3.d-print-none
   legend.pl-3 = "検索"
-  = search_form_for @q, class: 'mb-5' do |f|
+  = search_form_for @q, class: 'mb-2' do |f|
     .form-group.row
       = f.label :year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
       .col-sm-9
@@ -20,7 +20,10 @@ fieldset.border.mb-3.d-print-none
 .mb-3.d-print-none
   = paginate @casefiles
   = page_entries_info @casefiles
-
+  
+.div.d-print-none
+  = link_to '業務報告用事件数カウント', get_report_casefiles_path, class: 'btn btn-info'
+    
 .mb-3
 table.table.table-hover.table-bordered.text-center
   thead.table-default
@@ -35,6 +38,7 @@ table.table.table-hover.table-bordered.text-center
       th = Casefile.human_attribute_name(:customer)
       th = Casefile.human_attribute_name(:event_number)
       th = Casefile.human_attribute_name(:count)
+      th.d-print-none = Casefile.human_attribute_name(:kind)
       th.d-print-none = Casefile.human_attribute_name(:project)
       th.d-print-none
   tbody
@@ -58,6 +62,7 @@ table.table.table-hover.table-bordered.text-center
 
         td = casefile.event_number
         td = casefile.count
+        td.d-print-none = casefile.kind
         td.d-print-none = link_to casefile.project.name, casefile.project
         td.d-print-none
           = link_to '編集', edit_casefile_path(casefile), class: 'btn btn-primary m-2'

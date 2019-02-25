@@ -3,7 +3,7 @@ class LandfsController < ApplicationController
 
   def index
     @q = Landf.ransack(params[:q])
-    @landfs = @q.result.page(params[:page]).per(10)
+    @landfs = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

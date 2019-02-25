@@ -38,7 +38,7 @@ class Customer < ApplicationRecord
   validates :kana, format: { with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ"　"" "]]+\z/, message: 'は全角カタカナスペース無しで入力して下さい。'}, allow_blank: true
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[name kana tel_number]
+    %w[name kana]
     # column_names + _ransackers.keys
   end
 

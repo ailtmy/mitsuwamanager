@@ -12,6 +12,11 @@ class CasefilesController < ApplicationController
     end
   end
 
+  def get_report
+    @q = Casefile.ransack(params[:q])
+    @casefile = @q.result.group(:kind, :count)
+  end
+
   def show
   end
 
@@ -54,7 +59,7 @@ class CasefilesController < ApplicationController
   private
 
   def casefile_params
-    params.require(:casefile).permit(:year, :number, :date, :event_title, :event_number, :count, :project_id, customer_casefiles_attributes: [:id, :customer_id, :casefile_id, :applicant, :_destroy])
+    params.require(:casefile).permit(:year, :number, :date, :event_title, :event_number, :count, :kind, :project_id, customer_casefiles_attributes: [:id, :customer_id, :casefile_id, :applicant, :_destroy])
   end
 
   def set_casefile

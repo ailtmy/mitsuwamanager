@@ -6,12 +6,15 @@
   .form-group
     = f.label :year, '西暦（年）'
     = f.number_field :year, value: Time.current.year, max: 3000, class: 'form-control'
+  .form-group.mb-2
+    = f.label :kind, '事件区分'
+    = f.select :kind, ["不動産登記", "商業登記", "その他"], {prompt: "選択してください"}, class: 'form-control select2'
   .form-group
     = f.label :number, '受任番号'
     = f.number_field :number, class: 'form-control'
   .form-group
     = f.label :date, '受任年月日(委任状の日付）'
-    = f.date_field :date, value: Date.today, class: 'form-control'
+    = f.date_field :date, class: 'form-control'
   .form-group
     = f.label :event_title, '事件名・件名'
     = f.text_field :event_title ,class: 'form-control'

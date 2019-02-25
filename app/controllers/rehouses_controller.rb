@@ -3,7 +3,7 @@ class RehousesController < ApplicationController
 
   def index
     @q = Rehouse.ransack(params[:q])
-    @rehouses = @q.result.order("created_at desc").page(params[:page]).per(10)
+    @rehouses = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

@@ -3,7 +3,7 @@ class CommonsController < ApplicationController
 
   def index
     @q = Common.ransack(params[:q])
-    @commons = @q.result.order("created_at desc").page(params[:page]).per(10)
+    @commons = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

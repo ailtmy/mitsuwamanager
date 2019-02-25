@@ -32,12 +32,25 @@ $(document).on('turbolinks:load',function() {
       allowClear :true
     })
   });
-});
 
-// $(document).on('turbolinks:load',function() {
-//   $('form').on('cocoon:after-insert', function(){
-//     $('.select2').select2({
-//       allowClear :true
-//     })
-//   })
-// });
+  var radio = $('input[type="radio"]:checked').val();
+  $('input[type="radio"]').on('click', function(){
+      if ($(this).val() == radio) {
+          $(this).prop('checked', false);
+          radio = false;
+      } else {
+          radio = $(this).val();
+      }
+  });
+
+  $('#search-btn').click(function(){
+    if ($('#search-btn').text() == "検索非表示"){
+      $('#search').addClass('d-none');
+      $('#search-btn').text("検索表示");
+    } else {
+      $('#search').removeClass('d-none');
+      $('#search-btn').text("検索非表示");
+    }
+  });
+
+});

@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
   
-  get 'newbuilds/index'
-  get 'newbuilds/show'
-  get 'newbuilds/new'
-  get 'newbuilds/edit'
   get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -13,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :casefiles do
     post :import, on: :collection
+    get :get_report, on: :collection
   end
   resources :projects	
   resources :rehouses	

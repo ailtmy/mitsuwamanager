@@ -1,0 +1,60 @@
+= search_form_for @q, class: 'mb-3' do |f|
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :customers_name_or_customers_kana_cont, '氏名／カナ', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :customers_name_or_customers_kana_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :name_cont, '案件名', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :name_cont, class: 'form-control mt-2' 
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :status_cont, '進捗状況', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :status_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :request_content_cont, '依頼内容', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :request_content_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :application_date, '申請日', class: 'col-form-label'
+    .col-sm-4
+      = f.date_field :application_date_gteq, class: 'form-control mt-2'
+    .col-sm-1.p-3
+      |　～　
+    .col-sm-4
+      = f.date_field :application_date_lteq, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :complete_date, '補正日', class: 'col-form-label'
+    .col-sm-4
+      = f.date_field :complete_date_gteq, class: 'form-control mt-2'
+    .col-sm-1.p-3
+      |　～　
+    .col-sm-4
+      = f.date_field :complete_date_lteq, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :estates_estate_number_cont, '不動産番号', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :estates_estate_number_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :estates_address_cont, '不動産所在', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :estates_address_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :estates_number_cont, '地番／家屋番号', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :estates_number_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :estates_apart_name_cont, 'マンション名', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :estates_apart_name_cont, class: 'form-control mt-2'
+    = f.submit class: 'btn btn-outline-primary mt-2'

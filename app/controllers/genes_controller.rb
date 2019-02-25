@@ -3,7 +3,7 @@ class GenesController < ApplicationController
 
   def index
     @q = Gene.ransack(params[:q])
-    @genes = @q.result.order("created_at desc").page(params[:page]).per(10)  
+    @genes = @q.result.order("projects.created_at desc").page(params[:page]).per(10)  
   end
 
   def show

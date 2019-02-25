@@ -3,7 +3,7 @@ class CorpsController < ApplicationController
 
   def index
     @q = Corp.ransack(params[:q])
-    @corps = @q.result.order("created_at desc").page(params[:page]).per(10)
+    @corps = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

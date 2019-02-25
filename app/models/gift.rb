@@ -14,7 +14,7 @@ class Gift < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[gift_kind send_receive gift_year]
+    %w[gift_kind send_receive gift_year gift_address]
   end
 
   def self.ransackable_associations(auth_object = nil)

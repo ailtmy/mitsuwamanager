@@ -138,6 +138,7 @@ ja:
         event_title: 事件名・件名
         event_number:  事件番号
         count: 別表による件数
+        kind: 事件区分
         project: 案件
         customer: 依頼者の住所氏名
         created_at: 登録日

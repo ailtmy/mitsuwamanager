@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_042329) do
+ActiveRecord::Schema.define(version: 2019_02_25_084229) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_042329) do
     t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "kind"
     t.index ["project_id"], name: "index_casefiles_on_project_id"
   end
 
@@ -269,7 +270,7 @@ ActiveRecord::Schema.define(version: 2019_02_21_042329) do
 
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "application_date"
+    t.date "application_date"
     t.string "place"
     t.string "status"
     t.datetime "place_date"

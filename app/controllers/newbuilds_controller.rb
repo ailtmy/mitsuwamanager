@@ -3,7 +3,7 @@ class NewbuildsController < ApplicationController
 
   def index
     @q = Newbuild.ransack(params[:q])
-    @newbuilds = @q.result.order("created_at desc").page(params[:page]).per(10)
+    @newbuilds = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

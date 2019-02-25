@@ -9,7 +9,8 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '法人顧客新規作成', new_company_path, class: 'nav-link  text-white'
     li.nav-item = link_to '代理人・代表者関連作成', new_customer_agent_path, class: 'nav-link  text-white'
 
-fieldset.border.mb-3
+button#search-btn.btn-warning.m-2= "検索表示"
+fieldset#search.border.mb-3.d-none
   legend.pl-3 検索
   .pl-1
     = render 'shared/search'

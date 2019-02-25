@@ -3,7 +3,7 @@ class InheritsController < ApplicationController
 
   def index
     @q = Inherit.ransack(params[:q])
-    @inherits = @q.result.order("created_at desc").page(params[:page]).per(10)
+    @inherits = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
   def show

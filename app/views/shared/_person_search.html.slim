@@ -1,19 +1,59 @@
-= search_form_for @q, class: 'mb-5' do |f|
+= search_form_for @q, class: 'p-1 mb-1' do |f|
   .form-group.row
-    = f.label :name_cont, '氏名・商号', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-2.text-right
+      = f.label :name_or_kana_cont, '氏名 or カナ', class: 'col-form-label'
     .col-sm-9
-      = f.search_field :name_cont, class: 'form-control mt-2'
+      = f.search_field :name_or_kana_cont, class: 'form-control mt-2'
   .form-group.row
-    = f.label :kana_cont, 'フリガナ', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-2.text-right
+      = f.label :addresses_address_cont, '住所', class: 'col-form-label'
     .col-sm-9
-      = f.search_field :kana_cont, class: 'form-control mt-2'
+      = f.search_field :addresses_address_cont, class: 'form-control mt-2'
   .form-group.row
-    = f.label :birthday, '生年月日', class: 'col-sm-2 col-form-label mt-2 text-right'
+    .col-sm-2.text-right
+      = f.label :birthday, '生年月日', class: 'col-form-label'
     .col-sm-4
       = f.date_field :birthday_gteq, class: 'form-control mt-2'
     .col-sm-1.p-3
       |　～　
     .col-sm-4
       = f.date_field :birthday_lteq, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :tels_tel_number_or_mails_mail_address_cont, '電話／メール', class: 'col-form-label'
+    .col-sm-9
+      = f.search_field :tels_tel_number_or_mails_mail_address_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :gifts_gift_year_eq, '贈答品年'
+    .col-sm-9
+      = f.search_field :gifts_gift_year_eq, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :gifts, '贈答品種類'
+    .col-sm-9
+      = f.radio_button :gifts_gift_kind_eq, '年賀状', class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, '年賀状', class: 'mr-4 ml-4'
+      = f.radio_button :gifts_gift_kind_eq, :寒中見舞, class: 'form-check-inpu ml-1'
+      = f.label :gifts_gift_kind_eq, :寒中見舞, class: 'mr-4 ml-1'
+      = f.radio_button :gifts_gift_kind_eq, :お中元, class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, :お中元, class: 'mr-4 ml-4'
+      = f.radio_button :gifts_gift_kind_eq, :暑中見舞, class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, :暑中見舞, class: 'mr-4 ml-4'
+      = f.radio_button :gifts_gift_kind_eq, :喪中, class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, :喪中, class: 'mr-4 ml-4'
+      = f.radio_button :gifts_gift_kind_eq, :お歳暮, class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, :お歳暮, class: 'mr-4 ml-4'
+      = f.radio_button :gifts_gift_kind_eq, :その他, class: 'form-check-input ml-1'
+      = f.label :gifts_gift_kind_eq, :その他, class: 'mr-4 ml-4'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :gifts_send_receive, '贈答品送付／受領'
+    .col-sm-4
+      = f.radio_button :gifts_send_receive_eq, :送付, class: 'form-check_input mt-2'
+      = f.label :gifts_send_receive_eq, :送付, class: 'mr-4 ml-1'
+    .col-sm-4
+      = f.radio_button :gifts_send_receive_eq, :受領, class: 'form-check_input'
+      = f.label :gifts_send_receive_eq, :受領, class: 'mr-4 ml-1'
     .form-group
       = f.submit class: 'btn btn-outline-primary mt-2'
