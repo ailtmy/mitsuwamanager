@@ -58,6 +58,6 @@ class NewbuildsController < ApplicationController
   end
 
   def set_newbuild
-    @newbuild = Newbuild.find(params[:id])
+    @newbuild = Newbuild.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

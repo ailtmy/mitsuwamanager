@@ -57,6 +57,6 @@ class CorpsController < ApplicationController
   end
 
   def set_corp
-    @corp = Corp.find(params[:id])
+    @corp = Corp.includes({project_customers: [:customer]}, {customers: [:company_controls]}, {destinates: [:customer]}).find(params[:id])
   end
 end

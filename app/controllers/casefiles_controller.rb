@@ -2,8 +2,8 @@ class CasefilesController < ApplicationController
   before_action :set_casefile, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Casefile.ransack(params[:q])
-    @casefiles = @q.result.page(params[:page]).per(10)
+    @q = Casefile.includes({customer_casefiles: [:customer]}, :project).ransack(params[:q])
+    @casefiles = @q.result.order("casefiles.date desc").page(params[:page]).per(10)
     @casefile = @q.result
 
     respond_to do |format|
@@ -63,6 +63,6 @@ class CasefilesController < ApplicationController
   end
 
   def set_casefile
-    @casefile = Casefile.find(params[:id])
+    @casefile = Casefile.includes(customer_casefiles: [:customer]).find(params[:id])
   end
 end

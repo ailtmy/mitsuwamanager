@@ -3,7 +3,7 @@ class ControlsController < ApplicationController
   ]
   def index
     @q = Control.ransack(params[:q])
-    @controls = @q.result.page(params[:page]).per(10)
+    @controls = @q.result.order("controls.created_at asc").page(params[:page]).per(10)
     @ex_controls = @q.result(distinct: true)
 
     respond_to do |format|

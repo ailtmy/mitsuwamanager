@@ -7,15 +7,57 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary.d-print-none
     li.nav-item = link_to '事件簿新規作成', new_casefile_path, class: 'nav-link text-white'
     li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
 
-fieldset.border.mb-3.d-print-none
-  legend.pl-3 = "検索"
-  = search_form_for @q, class: 'mb-2' do |f|
-    .form-group.row
-      = f.label :year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.search_field :year_eq, class: 'form-control mt-2'
-      .form-group
-        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+button#search-btn.btn-warning.m-2.d-print-none= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-3' do |f|
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :customers_name_or_customers_kana_cont, '氏名 or カナ', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :customers_name_or_customers_kana_cont, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :year_eq, '西暦（年）', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :year_eq, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :kind, '事件区分', class: 'col-form-label'
+        .col-sm-5
+          = f.radio_button :kind_eq, :不動産登記, class: 'form-check-input ml-2 mt-3'
+          = f.label :kind_eq, :不動産登記, class: 'mt-2 ml-4 mr-4'
+          = f.radio_button :kind_eq, :商業登記, class: 'form-check-input ml-2 mt-3'
+          = f.label :kind_eq, :商業登記, class: 'mt-2 ml-4 mr-4'
+          = f.radio_button :kind_eq, :その他, class: 'form-check-input ml-2 mt-3'
+          = f.label :kind_eq, :その他, class: 'mt-2 ml-4 mr-4'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :date, '受任年月日', class: 'col-form-label'
+        .col-sm-4
+          = f.date_field :date_gteq, class: 'form-control mt-2'
+        .col-sm-1
+          |　～
+        .col-sm-4
+          = f.date_field :date_lteq, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :number, '受任番号', class: 'col-form-label'
+        .col-sm-4
+          = f.number_field :number_gteq, class: 'form-control mt-2'
+        .col-sm-1
+          |　～
+        .col-sm-4
+          = f.number_field :number_lteq, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :event_title_cont, '事件名・件名', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :event_title_cont, class: 'form-control mt-2'
+
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
 
 .mb-3.d-print-none
   = paginate @casefiles

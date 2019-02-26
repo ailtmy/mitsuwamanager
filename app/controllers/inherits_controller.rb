@@ -58,6 +58,6 @@ class InheritsController < ApplicationController
   end
 
   def set_inherit
-    @inherit = Inherit.find(params[:id])
+    @inherit = Inherit.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

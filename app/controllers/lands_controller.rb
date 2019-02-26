@@ -2,8 +2,8 @@ class LandsController < ApplicationController
   before_action :set_land, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Land.ransack(params[:q])
-    @lands = @q.result.page(params[:page]).per(10)
+    @q = Land.includes(:control).ransack(params[:q])
+    @lands = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
     @ex_land = @q.result(distinct: true)
 
     respond_to do |format|

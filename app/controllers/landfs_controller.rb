@@ -2,7 +2,7 @@ class LandfsController < ApplicationController
   before_action :set_landf, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Landf.ransack(params[:q])
+    @q = Landf.includes(:user).ransack(params[:q])
     @landfs = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
@@ -58,6 +58,6 @@ class LandfsController < ApplicationController
   end
 
   def set_landf
-    @landf = Landf.find(params[:id])
+    @landf = Landf.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

@@ -8,27 +8,63 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '法人顧客一覧', companies_path, class: 'nav-link text-white'
     li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link text-white'
     
-fieldset.border.mb-3
-  legend.pl-3 = "検索"
-  = search_form_for @q, class: 'mb-5' do |f|
-    .form-group.row
-      = f.label :gift_year_eq, '西暦（年）', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.search_field :gift_year_eq, class: 'form-control mt-2'
-    .form-group.row
-      = f.label :send_receive_eq, '送付・受領', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.select :send_receive_eq, Gift.selectable_send_receive, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
-    .form-group.row
-      = f.label :gift_kind_eq, '種別', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.select :gift_kind_eq, Gift.selectable_gift_kind, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
-    .form-group.row
-      = f.label :gift_address_eq, '送付先', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.select :gift_address_eq, Gift.selectable_gift_address, {prompt: true, include_blank: true}, {class: 'form-control mt-2'}
-      .form-group
-        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+fbutton#search-btn.btn-warning.m-2= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-2' do |f|
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :customer_name_or_customer_kana_cont, '氏名 or カナ', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :customer_name_or_customer_kana_cont, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :gift_year_eq, '西暦（年）', class: 'col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :gift_year_eq, class: 'form-control mt-2'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :gifts, '贈答品種類'
+        .col-sm-9
+          = f.radio_button :gift_kind_eq, '年賀状', class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, '年賀状', class: 'mr-4 ml-4'
+          = f.radio_button :gift_kind_eq, :寒中見舞, class: 'form-check-inpu ml-1'
+          = f.label :gift_kind_eq, :寒中見舞, class: 'mr-4 ml-1'
+          = f.radio_button :gift_kind_eq, :お中元, class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, :お中元, class: 'mr-4 ml-4'
+          = f.radio_button :gift_kind_eq, :暑中見舞, class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, :暑中見舞, class: 'mr-4 ml-4'
+          = f.radio_button :gift_kind_eq, :喪中, class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, :喪中, class: 'mr-4 ml-4'
+          = f.radio_button :gift_kind_eq, :お歳暮, class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, :お歳暮, class: 'mr-4 ml-4'
+          = f.radio_button :gift_kind_eq, :その他, class: 'form-check-input ml-1'
+          = f.label :gift_kind_eq, :その他, class: 'mr-4 ml-4'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :send_receive, '贈答品送付／受領'
+        .col-sm-4
+          = f.radio_button :send_receive_eq, :送付, class: 'form-check_input'
+          = f.label :send_receive_eq, :送付, class: 'mr-4 ml-1'
+        .col-sm-4
+          = f.radio_button :send_receive_eq, :受領, class: 'form-check_input'
+          = f.label :send_receive_eq, :受領, class: 'mr-4 ml-1'
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :gift_address_eq, '送付先'
+        .col-sm-3
+          = f.radio_button :gift_address_eq, :自宅, class: 'form-check_input'
+          = f.label :gift_address_eq, :自宅, class: 'mr-4 ml-1'
+        .col-sm-3
+          = f.radio_button :gift_address_eq, :勤務先, class: 'form-check_input'
+          = f.label :gift_address_eq, :勤務先, class: 'mr-4 ml-1'
+        .col-sm-3
+          = f.radio_button :gift_address_eq, :その他, class: 'form-check_input'
+          = f.label :gift_address_eq, :その他, class: 'mr-3 ml-1'
+
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
 .mb-3
   = paginate @gifts
   = page_entries_info @gifts

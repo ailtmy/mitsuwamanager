@@ -3,7 +3,7 @@ class GiftsController < ApplicationController
 
   def index
     @q = Gift.ransack(params[:q])
-    @gifts = @q.result.page(params[:page]).per(10)
+    @gifts = @q.result.order("gifts.created_at desc").page(params[:page]).per(10)
   end
 
   def show

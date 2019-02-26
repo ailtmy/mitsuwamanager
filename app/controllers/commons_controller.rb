@@ -58,6 +58,6 @@ class CommonsController < ApplicationController
   end
 
   def set_common
-    @common = Common.find(params[:id])
+    @common = Common.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

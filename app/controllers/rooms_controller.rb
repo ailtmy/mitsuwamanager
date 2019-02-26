@@ -2,8 +2,8 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Room.ransack(params[:q])
-    @rooms = @q.result.page(params[:page]).per(10)
+    @q = Room.includes(:apart).ransack(params[:q])
+    @rooms = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
     @ex_rooms = @q.result(distinct: true)
 
     respond_to do |format|

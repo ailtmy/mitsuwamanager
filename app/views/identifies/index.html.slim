@@ -9,15 +9,48 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '法人顧客新規作成', new_company_path, class: 'nav-link  text-white'
     li.nav-item = link_to '代理人・代表者関連作成', new_customer_agent_path, class: 'nav-link  text-white'
 
-fieldset.border.mb-3
-  legend.pl-3 = "検索"
-  = search_form_for @q, class: 'mb-5' do |f|
-    .from-group.row
-      = f.label :user_name_cont, 'ユーザー', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.search_field :user_name_cont, class: 'form-control mt-2'
-      .form-group
-        = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+button#search-btn.btn-warning.m-2= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-2' do |f|
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :customer_name_or_customer_kana_cont, '氏名 or カナ', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :customer_name_or_customer_kana_cont, class: 'form-control'
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :user_name_cont, 'ユーザー', class: 'col-form-label'
+        .col-sm-9
+          = f.collection_select(:user_name_cont, User.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :date_time, '本人確認日時', class: 'col-form-label'
+        .col-sm-4
+          = f.datetime_field :date_time_gteq, class: 'form-control'
+        .col-sm-1
+          |　～　
+        .col-sm-4
+          = f.datetime_field :date_time_lteq, class: 'form-control'
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :place_cont, '確認場所', class: 'col-form-label'
+        .col-sm-9
+          = f.search_field :place_cont, class: 'form-control'
+      
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :ident_method, '確認方法', class: 'col-form-label'
+        .col-sm-9
+          = f.radio_button :ident_method_eq, :対面, class: 'form-check-input ml-1 mt-3'
+          = f.label :ident_method_eq, :対面, class: 'mr-4 ml-4  mt-2'
+          = f.radio_button :ident_method_eq, :非対面, class: 'form-check-input ml-1  mt-3'
+          = f.label :ident_method_eq, :非対面, class: 'mr-4 ml-4  mt-2'
+
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+      
 
 .mb-3
   = paginate @identifies

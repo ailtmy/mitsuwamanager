@@ -2,7 +2,7 @@ class RehousesController < ApplicationController
   before_action :set_rehouse, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Rehouse.ransack(params[:q])
+    @q = Rehouse.includes(:user).ransack(params[:q])
     @rehouses = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
   end
 
@@ -58,6 +58,6 @@ class RehousesController < ApplicationController
   end
 
   def set_rehouse
-    @rehouse = Rehouse.find(params[:id])
+    @rehouse = Rehouse.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

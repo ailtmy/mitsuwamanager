@@ -5,6 +5,7 @@ h3.mb-3.mt-3 = @page_title
   = link_to '顧客詳細へ', person_path, class: 'nav-link btn btn-primary'
   = link_to '個人顧客一覧へ', people_path, class: 'nav-link btn btn-primary ml-3'
   = link_to '顧客一覧へ', customers_path, class: 'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary ml-3'
 
 = render 'edit_form', person: @person
 

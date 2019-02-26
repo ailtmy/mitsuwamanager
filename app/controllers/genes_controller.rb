@@ -58,6 +58,6 @@ class GenesController < ApplicationController
   end
 
   def set_gene
-    @gene = Gene.find(params[:id])
+    @gene = Gene.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
   end
 end

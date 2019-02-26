@@ -208,8 +208,8 @@ ja:
         type: 不動産の種類
         Land: 土地
         Building: 建物
-        apart: 一棟の建物
-        room: 専有部分の建物
+        Apart: 一棟の建物
+        Room: 専有部分の建物
         site: 敷地権
         price: 評価
         created_at: 登録日

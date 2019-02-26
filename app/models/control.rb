@@ -13,6 +13,14 @@ class Control < ApplicationRecord
   has_many :companies, through: :company_controls, source: :company
   accepts_nested_attributes_for :company_controls, allow_destroy: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s }
+  end
+
   def self.csv_attributes
     ["id", "number", "name", "remark", "created_at", "updated_at"]
   end

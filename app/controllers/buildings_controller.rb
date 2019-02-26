@@ -2,8 +2,8 @@ class BuildingsController < ApplicationController
   before_action :set_building, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Building.ransack(params[:q])
-    @buildings = @q.result.page(params[:page]).per(10)
+    @q = Building.includes(:control).ransack(params[:q])
+    @buildings = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
     @ex_building = @q.result(distinct: true)
 
     respond_to do |format|

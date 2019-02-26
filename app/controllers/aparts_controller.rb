@@ -2,8 +2,8 @@ class ApartsController < ApplicationController
   before_action :set_apart, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Apart.ransack(params[:q])
-    @aparts = @q.result.page(params[:page]).per(10)
+    @q = Apart.includes(:control).ransack(params[:q])
+    @aparts = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
     @ex_aparts = @q.result(distinct: true)
 
     respond_to do |format|

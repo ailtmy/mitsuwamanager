@@ -10,19 +10,12 @@ nav.navbar.navbar-expand-md.navbar-dark.bg-primary
     li.nav-item = link_to '一棟の建物一覧', aparts_path, class: 'nav-link text-white'
     li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link text-white'
     
-fieldset.border.mb-3
-  legend.pl-3 = "検索"
-  = search_form_for @q, class: 'mb-5' do |f|
-    .form-group.row
-      = f.label :number_cont, '家屋番号', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.search_field :number_cont, class: 'form-control mt-2'
-    .form-group.row
-      = f.label :apart_name_cont, '建物の名称', class: 'col-sm-2 col-form-label mt-2 text-right'
-      .col-sm-9
-        = f.search_field :apart_name_cont, class: 'form-control mt-2'
-      .form-group
-        = f.submit class: 'btn btn-outline-primary mt-2 ml-2'
+button#search-btn.btn-warning.m-2= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = render 'shared/room_search'
+
 .mb-3
   = paginate @rooms
   = page_entries_info @rooms

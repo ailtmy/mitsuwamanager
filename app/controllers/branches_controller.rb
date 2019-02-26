@@ -48,6 +48,6 @@ class BranchesController < ApplicationController
   end
 
   def set_branch
-    @branch = Branch.find(params[:id])
+    @branch = Branch.includes(branch_staffs: [:staff]).find(params[:id])
   end
 end

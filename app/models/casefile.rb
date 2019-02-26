@@ -2,7 +2,17 @@ class Casefile < ApplicationRecord
   belongs_to :project
   has_many :customer_casefiles, dependent: :destroy
   has_many :customers, through: :customer_casefiles
+
   accepts_nested_attributes_for :customer_casefiles, allow_destroy: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[year date kind number event_title]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s }
+  end
+
 
   def self.csv_attributes
     ["id", "year", "number", "date", "event_title", "event_number", "count", "kind", "project_id", "created_at", "updated_at"]

@@ -1,0 +1,29 @@
+= search_form_for @q, class: 'p-1 mb-1' do |f|
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :estate_number_cont, '不動産番号', class: 'col-form-label mt-2'
+    .col-sm-9
+      = f.search_field :estate_number_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :address_cont, '所在', class: 'col-form-label mt-2'
+    .col-sm-9
+      = f.search_field :address_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :number_cont, '地番／家屋番号', class: 'col-form-label mt-2'
+    .col-sm-9
+      = f.search_field :number_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :apart_name_cont, 'マンション名', class: 'col-form-label mt-2'
+    .col-sm-9
+      = f.search_field :apart_name_cont, class: 'form-control mt-2'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :control_name_eq, '管轄法務局', class: 'col-form-label mt-2'
+    .col-sm-9
+      = f.collection_select(:control_name_eq, Control.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
+
+    .form-group
+      = f.submit class: 'btn btn-outline-primary mt-2'

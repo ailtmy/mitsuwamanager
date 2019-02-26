@@ -2,8 +2,8 @@ class IdentifiesController < ApplicationController
   before_action :set_identify, only: [:show, :edit, :update, :destroy, :purge]
 
   def index
-    @q = Identify.ransack(params[:q])
-    @identifies = @q.result.page(params[:page]).per(10)
+    @q = Identify.includes(:user, :customer).ransack(params[:q])
+    @identifies = @q.result.order('identifies.date_time desc').page(params[:page]).per(10)
   end
 
   def show

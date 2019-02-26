@@ -8,23 +8,26 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
-      a.navbar-brand href="/" 
-        = image_tag  "logo_name.png", size: "350x60",  alt: "司法書士法人みつわ合同事務所"
+    nav.app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      .collapse.navbar-collapse#navbarNav3
+        a.navbar-brand href="/" 
+          = image_tag  "logo_name.png", size: "350x60",  alt: "司法書士法人みつわ合同事務所"
+        ul.navbar-nav.ml-auto
+          - if current_user
+            - if current_user.admin?
+              li.nav-item  = link_to 'ユーザー', admin_users_path, class: 'nav-link'
+            li.nav-item.dropdown = link_to '顧客', customers_path,  class: 'nav-link'
+            li.nav-item = link_to '案件', projects_path, class: 'nav-link'
+            li.nav-item = link_to '本人確認記録', identifies_path, class: 'nav-link'
+            li.nav-item = link_to '事件簿', casefiles_path, class: 'nav-link'
+            li.nav-item = link_to '不動産', estates_path, class: 'nav-link'
+            li.nav-item = link_to '登記所', controls_path, class: 'nav-link'
+            li.nav-item = link_to '贈答品等', gifts_path, class: 'nav-link'
+            li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
+            li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'
+          - else
+            li.nav-item = link_to 'ログイン', login_path, class: 'nav-link' 
 
-      ul.navbar-nav.ml-auto
-        - if current_user
-          - if current_user.admin?
-            li.nav-item = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
-          li.nav-item = link_to '顧客一覧', customers_path, class: 'nav-link'
-          li.nav-item = link_to '案件一覧', projects_path, class: 'nav-link'
-          li.nav-item = link_to '事件簿TOP', casefiles_path, class: 'nav-link'
-          li.nav-item = link_to '不動産一覧', estates_path, class: 'nav-link'
-          li.nav-item = link_to '贈答品等一覧', gifts_path, class: 'nav-link'
-          li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
-          li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'
-        - else
-          li.nav-item = link_to 'ログイン', login_path, class: 'nav-link'
     .container
       .d-print-none
         - if flash.notice.present?
