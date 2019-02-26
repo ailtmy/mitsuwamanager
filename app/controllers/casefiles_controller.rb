@@ -2,13 +2,13 @@ class CasefilesController < ApplicationController
   before_action :set_casefile, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Casefile.includes({customer_casefiles: [:customer]}, :project).ransack(params[:q])
-    @casefiles = @q.result.order("casefiles.date desc").page(params[:page]).per(10)
+    @q = Casefile.includes({ customer_casefiles: [:customer] }, :project).ransack(params[:q])
+    @casefiles = @q.result.order('casefiles.date desc').page(params[:page]).per(10)
     @casefile = @q.result
 
     respond_to do |format|
       format.html
-      format.csv { send_data @casefile.generate_csv, filename: "casefile-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @casefile.generate_csv, filename: "casefile-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
@@ -30,7 +30,7 @@ class CasefilesController < ApplicationController
 
   def create
     @casefile = Casefile.new(casefile_params)
-  
+
     if @casefile.save
       redirect_to casefile_path(@casefile), notice: "#{@casefile.id}を登録しました。"
     else

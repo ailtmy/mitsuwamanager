@@ -6,7 +6,6 @@ class AddressesController < ApplicationController
   end
 
   def show
-    
   end
 
   def new
@@ -21,7 +20,6 @@ class AddressesController < ApplicationController
   end
 
   def edit
-
   end
 
   def create

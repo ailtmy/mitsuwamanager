@@ -3,7 +3,7 @@ class LandfsController < ApplicationController
 
   def index
     @q = Landf.includes(:user).ransack(params[:q])
-    @landfs = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
+    @landfs = @q.result.order('projects.created_at desc').page(params[:page]).per(10)
   end
 
   def show
@@ -50,7 +50,7 @@ class LandfsController < ApplicationController
   private
 
   def landf_params
-    params.require(:landf).permit(:type, :name, :status, :application_date, :place, :place_date, :loan_price, :loan_agree, :loan_document, :change_name, :change_name_doc, :erasure, :erasure_confirm, :complete_date, :user_id, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy],project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy],destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
+    params.require(:landf).permit(:type, :name, :status, :application_date, :place, :place_date, :loan_price, :loan_agree, :loan_document, :change_name, :change_name_doc, :erasure, :erasure_confirm, :complete_date, :user_id, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
   end
 
   def project_customer_params
@@ -58,6 +58,6 @@ class LandfsController < ApplicationController
   end
 
   def set_landf
-    @landf = Landf.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
+    @landf = Landf.includes({ project_customers: [:customer] }, { project_estates: [estate: [:control]] }, destinates: [:customer]).find(params[:id])
   end
 end

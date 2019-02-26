@@ -3,21 +3,20 @@ class ApartsController < ApplicationController
 
   def index
     @q = Apart.includes(:control).ransack(params[:q])
-    @aparts = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
+    @aparts = @q.result.order('estates.created_at desc').page(params[:page]).per(10)
     @ex_aparts = @q.result(distinct: true)
 
     respond_to do |format|
       format.html
-      format.csv { send_data @ex_aparts.generate_csv, filename: "aparts-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @ex_aparts.generate_csv, filename: "aparts-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
   def show
-    
   end
 
   def new
-    @apart =  Apart.new
+    @apart = Apart.new
   end
 
   def edit

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   get 'customers', to: 'customers#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -11,8 +10,8 @@ Rails.application.routes.draw do
     post :import, on: :collection
     get :get_report, on: :collection
   end
-  resources :projects	
-  resources :rehouses	
+  resources :projects
+  resources :rehouses
   resources :landfs
   resources :inherits
   resources :genes
@@ -20,8 +19,8 @@ Rails.application.routes.draw do
   resources :corps
   resources :newbuilds
 
-  resources :estates, only: :index	
-  resources :lands do 
+  resources :estates, only: :index
+  resources :lands do
     post :import, on: :collection
   end
   resources :buildings do
@@ -87,8 +86,6 @@ Rails.application.routes.draw do
     resources :gifts
     resources :customer_agents
   end
-
-
 
   namespace :admin do
     resources :users

@@ -3,12 +3,12 @@ class LandsController < ApplicationController
 
   def index
     @q = Land.includes(:control).ransack(params[:q])
-    @lands = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
+    @lands = @q.result.order('estates.created_at desc').page(params[:page]).per(10)
     @ex_land = @q.result(distinct: true)
 
     respond_to do |format|
       format.html
-      format.csv { send_data @ex_land.generate_csv, filename: "lands-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @ex_land.generate_csv, filename: "lands-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
@@ -24,10 +24,10 @@ class LandsController < ApplicationController
   end
 
   def create
-    @land = Land.new(land_params) 
+    @land = Land.new(land_params)
 
     if @land.save
-      redirect_to land_path(@land), notice: "#{@land.address}#{@land. number}を登録しました。"      
+      redirect_to land_path(@land), notice: "#{@land.address}#{@land. number}を登録しました。"
     else
       render :new
     end

@@ -3,12 +3,12 @@ class BuildingsController < ApplicationController
 
   def index
     @q = Building.includes(:control).ransack(params[:q])
-    @buildings = @q.result.order("estates.created_at desc").page(params[:page]).per(10)
+    @buildings = @q.result.order('estates.created_at desc').page(params[:page]).per(10)
     @ex_building = @q.result(distinct: true)
 
     respond_to do |format|
       format.html
-      format.csv { send_data @ex_building.generate_csv, filename: "buildings-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @ex_building.generate_csv, filename: "buildings-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
@@ -22,14 +22,13 @@ class BuildingsController < ApplicationController
   end
 
   def edit
-    
   end
 
   def create
-    @building = Building.new(building_params) 
+    @building = Building.new(building_params)
 
     if @building.save
-      redirect_to building_path(@building), notice: "#{@building.address}#{@building. number}を登録しました。" 
+      redirect_to building_path(@building), notice: "#{@building.address}#{@building. number}を登録しました。"
     else
       render :new
     end
@@ -62,5 +61,4 @@ class BuildingsController < ApplicationController
   def set_building
     @building = Building.find(params[:id])
   end
-
 end

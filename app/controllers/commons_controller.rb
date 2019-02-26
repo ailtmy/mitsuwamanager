@@ -3,7 +3,7 @@ class CommonsController < ApplicationController
 
   def index
     @q = Common.ransack(params[:q])
-    @commons = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
+    @commons = @q.result.order('projects.created_at desc').page(params[:page]).per(10)
   end
 
   def show
@@ -50,7 +50,7 @@ class CommonsController < ApplicationController
   private
 
   def common_params
-    params.require(:common).permit(:type, :name, :status, :application_date, :complete_date, :user_id, :request_content, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy],project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy],destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
+    params.require(:common).permit(:type, :name, :status, :application_date, :complete_date, :user_id, :request_content, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
   end
 
   def project_customer_params
@@ -58,6 +58,6 @@ class CommonsController < ApplicationController
   end
 
   def set_common
-    @common = Common.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
+    @common = Common.includes({ project_customers: [:customer] }, { project_estates: [estate: [:control]] }, destinates: [:customer]).find(params[:id])
   end
 end

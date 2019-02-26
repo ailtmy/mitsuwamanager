@@ -15,7 +15,7 @@ class CreateEstates < ActiveRecord::Migration[5.2]
       t.string :land_kind
       t.string :land_percent
       t.text :remarks
-      
+
       t.index :type
       t.timestamps
     end

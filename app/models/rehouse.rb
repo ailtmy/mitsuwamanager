@@ -13,6 +13,4 @@ class Rehouse < Project
   has_many :destinates, foreign_key: :project_id, dependent: :destroy
   accepts_nested_attributes_for :destinates, allow_destroy: true
   belongs_to :user
-
-  
 end

@@ -5,16 +5,15 @@ class Apart < Estate
   accepts_nested_attributes_for :apart_rooms, allow_destroy: true
   accepts_nested_attributes_for :rooms, allow_destroy: true
 
-
   def self.csv_attributes
-    ["id", "address", "apart_name", "apart_structure", "apart_area", "control_id", "type", "remarks", "created_at", "updated_at"]
+    %w(id address apart_name apart_structure apart_area control_id type remarks created_at updated_at)
   end
 
   def self.generate_csv
     CSV.generate(headers: true) do |csv|
       csv << csv_attributes
       all.each do |apart|
-        csv << csv_attributes.map{|attr| apart.send(attr)}
+        csv << csv_attributes.map { |attr| apart.send(attr) }
       end
     end
   end

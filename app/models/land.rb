@@ -1,6 +1,6 @@
 class Land < Estate
   belongs_to :control
-  has_many :prices,  foreign_key: :estate_id, dependent: :destroy
+  has_many :prices, foreign_key: :estate_id, dependent: :destroy
   accepts_nested_attributes_for :prices, allow_destroy: true
 
   has_many :sites, dependent: :destroy
@@ -8,14 +8,14 @@ class Land < Estate
   accepts_nested_attributes_for :sites, allow_destroy: true
 
   def self.csv_attributes
-    ["id", "estate_number", "address", "number", "estate_kind", "area", "remarks", "control_id", "type", "created_at", "updated_at"]
+    %w(id estate_number address number estate_kind area remarks control_id type created_at updated_at)
   end
 
   def self.generate_csv
     CSV.generate(headers: true) do |csv|
       csv << csv_attributes
       all.each do |land|
-        csv << csv_attributes.map{|attr| land.send(attr)}
+        csv << csv_attributes.map { |attr| land.send(attr) }
       end
     end
   end
@@ -29,6 +29,6 @@ class Land < Estate
   end
 
   def view_name_select
-    self.address + self.number
+    address + number
   end
 end

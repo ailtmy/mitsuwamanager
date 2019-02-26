@@ -3,7 +3,7 @@ class GenesController < ApplicationController
 
   def index
     @q = Gene.ransack(params[:q])
-    @genes = @q.result.order("projects.created_at desc").page(params[:page]).per(10)  
+    @genes = @q.result.order('projects.created_at desc').page(params[:page]).per(10)
   end
 
   def show
@@ -23,7 +23,7 @@ class GenesController < ApplicationController
 
     if @gene.save
       redirect_to gene_path(@gene), notice: "#{@gene.name}を登録しました。"
-    else 
+    else
       render :new
     end
   end
@@ -50,7 +50,7 @@ class GenesController < ApplicationController
   private
 
   def gene_params
-    params.require(:gene).permit(:type, :name, :status, :application_date, :place, :place_date, :change_name, :change_name_doc, :erasure, :erasure_confirm, :complete_date, :remarks, :tax_reduction, :tax_document, :loan, :loan_price, :loan_agree, :loan_document, :user_id, :remarks, :images, project_customers_attributes: [:id, :customer_id, :rehouse_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy],destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
+    params.require(:gene).permit(:type, :name, :status, :application_date, :place, :place_date, :change_name, :change_name_doc, :erasure, :erasure_confirm, :complete_date, :remarks, :tax_reduction, :tax_document, :loan, :loan_price, :loan_agree, :loan_document, :user_id, :remarks, :images, project_customers_attributes: [:id, :customer_id, :rehouse_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
   end
 
   def project_customer_params
@@ -58,6 +58,6 @@ class GenesController < ApplicationController
   end
 
   def set_gene
-    @gene = Gene.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
+    @gene = Gene.includes({ project_customers: [:customer] }, { project_estates: [estate: [:control]] }, destinates: [:customer]).find(params[:id])
   end
 end

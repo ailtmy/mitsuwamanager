@@ -3,7 +3,7 @@ class NewbuildsController < ApplicationController
 
   def index
     @q = Newbuild.ransack(params[:q])
-    @newbuilds = @q.result.order("projects.created_at desc").page(params[:page]).per(10)
+    @newbuilds = @q.result.order('projects.created_at desc').page(params[:page]).per(10)
   end
 
   def show
@@ -50,7 +50,7 @@ class NewbuildsController < ApplicationController
   private
 
   def newbuild_params
-    params.require(:newbuild).permit(:type, :name, :status, :application_date, :complete_date, :user_id, :request_content, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy],project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
+    params.require(:newbuild).permit(:type, :name, :status, :application_date, :complete_date, :user_id, :request_content, :remarks, :images, project_customers_attributes: [:id, :customer_id, :project_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
   end
 
   def project_customer_params
@@ -58,6 +58,6 @@ class NewbuildsController < ApplicationController
   end
 
   def set_newbuild
-    @newbuild = Newbuild.includes({project_customers: [:customer]}, {project_estates: [estate: [:control]]}, {destinates: [:customer]}).find(params[:id])
+    @newbuild = Newbuild.includes({ project_customers: [:customer] }, { project_estates: [estate: [:control]] }, { destinates: [:customer] }).find(params[:id])
   end
 end

@@ -13,7 +13,6 @@ class MailsController < ApplicationController
   end
 
   def edit
-
   end
 
   def create
@@ -48,6 +47,4 @@ class MailsController < ApplicationController
   def set_mail
     @mail = Mail.find(params[:id])
   end
-
-
 end

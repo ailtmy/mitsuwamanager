@@ -17,10 +17,10 @@ class AccountsController < ApplicationController
     else
       render :edit
     end
-
   end
 
   private
+
   def account_params
     params.require(:user).permit(:name, :email, :current_password, :password, :password_confirmation)
   end

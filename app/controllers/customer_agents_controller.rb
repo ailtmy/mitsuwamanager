@@ -17,7 +17,7 @@ class CustomerAgentsController < ApplicationController
 
   def create
     @customeragent = CustomerAgent.new(customeragent_params)
-  
+
     if @customeragent.save
       redirect_to @customeragent.customer, notice: "#{@customeragent.customer.name}の代理人を登録しました。"
     else

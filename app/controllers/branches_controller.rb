@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   before_action :set_branch, only: [:show, :edit, :update, :destroy]
-  
+
   def show
   end
 
@@ -31,7 +31,7 @@ class BranchesController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @branch.destroy
     redirect_to company_path(@branch.company), notice: "#{@branch.branch_name}を削除しました。"
@@ -40,7 +40,7 @@ class BranchesController < ApplicationController
   private
 
   def branch_params
-    params.require(:branch).permit(:customer_id,:branch_name)
+    params.require(:branch).permit(:customer_id, :branch_name)
   end
 
   def address_params

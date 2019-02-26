@@ -3,12 +3,12 @@ class ControlsController < ApplicationController
   ]
   def index
     @q = Control.ransack(params[:q])
-    @controls = @q.result.order("controls.created_at asc").page(params[:page]).per(10)
+    @controls = @q.result.order('controls.created_at asc').page(params[:page]).per(10)
     @ex_controls = @q.result(distinct: true)
 
     respond_to do |format|
       format.html
-      format.csv { send_data @ex_controls.generate_csv, filename: "control-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @ex_controls.generate_csv, filename: "control-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
@@ -53,7 +53,7 @@ class ControlsController < ApplicationController
   end
 
   def control_params
-    params.require(:control).permit(:number, :name, :remark, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy])
+    params.require(:control).permit(:number, :name, :remark, tels_attributes: [:id, :tel_kind, :tel_number, :_destroy], mails_attributes: [:id, :mail_kind, :mail_address, :_destroy])
   end
 
   def address_params

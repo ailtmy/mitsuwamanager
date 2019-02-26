@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  
+
   def index
     @q = Company.ransack(params[:q])
     @companies = @q.result.page(params[:page]).per(10)
@@ -8,12 +8,12 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data @companys.generate_csv, filename: "companies-#{Time.zone.now.strftime('%Y%m%d%S')}.csv"}
+      format.csv { send_data @companys.generate_csv, filename: "companies-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
     end
   end
 
   def show
-    @agents = CustomerAgent.where(agent_id: params[:id]).order("updated_at desc")
+    @agents = CustomerAgent.where(agent_id: params[:id]).order('updated_at desc')
   end
 
   def new
@@ -43,7 +43,7 @@ class CompaniesController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @company.destroy
     redirect_to companies_path, notice: "#{@company.name}を削除しました。"
@@ -57,7 +57,7 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application, tels_attributes:[:id, :tel_kind, :tel_number, :_destroy], mails_attributes:[:id, :mail_kind, :mail_address, :_destroy], company_controls_attributes:[:id, :company_id, :control_id, :control_kind,  :_destroy])
+    params.require(:company).permit(:name, :kana, :type, :establishment, :company_number, :fiscal_year, :next_application, tels_attributes: [:id, :tel_kind, :tel_number, :_destroy], mails_attributes: [:id, :mail_kind, :mail_address, :_destroy], company_controls_attributes: [:id, :company_id, :control_id, :control_kind, :_destroy])
   end
 
   def address_params
