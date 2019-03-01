@@ -24,7 +24,7 @@ html
             li.nav-item = link_to '登記所', controls_path, class: 'nav-link'
             li.nav-item = link_to '贈答品等', gifts_path, class: 'nav-link'
             li.nav-item = link_to '資料室', mitsuwa_docs_path, class: 'nav-link'
-            li.nav-item = link_to '登記照会', "#", class: 'nav-link'
+            li.nav-item = link_to '登記照会', judges_path, class: 'nav-link'
             li.nav-item = link_to 'ミストラブル', mistakes_path, class: 'nav-link'
             li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
             li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'

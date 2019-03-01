@@ -4,7 +4,7 @@ h3.mb-3.mt-3 = @page_title
 nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
   ul.navbar-nav.mr-auto
     li.nav-item = link_to '新規資料作成', new_mitsuwa_doc_path, class: 'nav-link text-white'
-    li.nav-item = link_to '登記照会', "#", class: 'nav-link text-white'
+    li.nav-item = link_to '登記照会', judges_path, class: 'nav-link text-white'
 
 button#search-btn.btn-warning.m-2.d-print-none= "検索表示"
 fieldset#search.border.mb-3.d-none

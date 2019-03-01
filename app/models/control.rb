@@ -11,6 +11,7 @@ class Control < ApplicationRecord
   has_many :company_controls, foreign_key: :control_id, dependent: :destroy
   has_many :companies, through: :company_controls, source: :company
   accepts_nested_attributes_for :company_controls, allow_destroy: true
+  has_many :judges, dependent: :destroy
 
   def self.ransackable_attributes(_auth_object = nil)
     %w(name)

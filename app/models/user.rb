@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :identifies
   has_many :mistakes
   has_many :mitsuwa_docs
+  has_many :judges
 
   attr_accessor :current_password
 

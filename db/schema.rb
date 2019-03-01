@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_073420) do
+ActiveRecord::Schema.define(version: 2019_03_01_105806) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -238,6 +238,29 @@ ActiveRecord::Schema.define(version: 2019_03_01_073420) do
     t.index ["user_id"], name: "index_identifies_on_user_id"
   end
 
+  create_table "judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.string "category"
+    t.bigint "control_id"
+    t.datetime "datetime"
+    t.bigint "user_id"
+    t.integer "estate_id"
+    t.text "content"
+    t.text "document"
+    t.text "opinion"
+    t.text "answer"
+    t.string "answer_control"
+    t.string "answer_number"
+    t.string "event"
+    t.string "cause_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "project_id"
+    t.index ["control_id"], name: "index_judges_on_control_id"
+    t.index ["user_id"], name: "index_judges_on_user_id"
+  end
+
   create_table "mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "mailable_type"
     t.bigint "mailable_id"
@@ -375,6 +398,8 @@ ActiveRecord::Schema.define(version: 2019_03_01_073420) do
   add_foreign_key "gifts", "customers"
   add_foreign_key "identifies", "customers"
   add_foreign_key "identifies", "users"
+  add_foreign_key "judges", "controls"
+  add_foreign_key "judges", "users"
   add_foreign_key "mistakes", "users"
   add_foreign_key "mitsuwa_docs", "users"
   add_foreign_key "prices", "estates"

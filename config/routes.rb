@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :newbuilds
   resources :mitsuwa_docs
   resources :mistakes
+  resources :judges
 
   resources :estates, only: :index
   resources :lands do
