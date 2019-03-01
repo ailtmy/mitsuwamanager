@@ -29,6 +29,8 @@
     = link_to '編集', edit_corp_path, class: 'btn btn-primary mb-3'
     - if current_user.admin?
       = link_to '削除', :corp, method: :delete, data: {confirm: "#{@corp.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+    = link_to '経費登録', new_project_cost_path(@corp), class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '経費明細', project_costs_path(@corp), class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '商業案件一覧', corps_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '事件簿ＴＯＰ', casefiles_path, class: 'nav-link btn btn-primary mb-3 ml-3'
@@ -121,7 +123,7 @@
     | 完了書類送付
   - if @corp.destinates.present?
 
-    - @inherit.destinates.each do |destinate|
+    - @corp.destinates.each do |destinate|
       .row
         .col-sm-6.p-2.border-left.border-dark
           | 氏名：　

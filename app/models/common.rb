@@ -12,5 +12,7 @@ class Common < Project
   accepts_nested_attributes_for :certificates, allow_destroy: true
   has_many :destinates, foreign_key: :project_id, dependent: :destroy
   accepts_nested_attributes_for :destinates, allow_destroy: true
+  has_many :costs, foreign_key: :project_id, dependent: :destroy
+  accepts_nested_attributes_for :costs
   belongs_to :user
 end

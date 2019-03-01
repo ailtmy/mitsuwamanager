@@ -1,0 +1,10 @@
+- @page_title = '資料編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '資料詳細へ', mitsuwa_doc_path, class:'nav-link btn btn-primary'
+  = link_to '資料室ＴＯＰ', mitsuwa_docs_path, class:'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class:'nav-link btn btn-primary ml-3'
+
+= render 'edit_form', mitsuwa_doc: @mitsuwa_doc
+  

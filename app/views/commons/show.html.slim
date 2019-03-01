@@ -29,6 +29,8 @@
     = link_to '編集', edit_common_path, class: 'btn btn-primary mb-3'
     - if current_user.admin?
       = link_to '削除', :common, method: :delete, data: {confirm: "#{@common.name}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+    = link_to '経費登録', new_project_cost_path(@common), class: 'nav-link btn btn-primary mb-3 ml-3'
+    = link_to '経費明細', project_costs_path(@common), class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '一般案件一覧', commons_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '案件一覧', projects_path, class: 'nav-link btn btn-primary mb-3 ml-3'
     = link_to '事件簿ＴＯＰ', casefiles_path, class: 'nav-link btn btn-primary mb-3 ml-3'

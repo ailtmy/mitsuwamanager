@@ -21,9 +21,9 @@ fieldset#search.border.mb-3.d-none
           = f.search_field :customer_name_or_customer_kana_cont, class: 'form-control'
       .from-group.row.mb-4
         .col-sm-2.text-right
-          = f.label :user_name_cont, 'ユーザー', class: 'col-form-label'
+          = f.label :user_name_eq, 'ユーザー', class: 'col-form-label'
         .col-sm-9
-          = f.collection_select(:user_name_cont, User.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
+          = f.collection_select(:user_name_eq, User.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
       .form-group.row.mb-4
         .col-sm-2.text-right
           = f.label :date_time, '本人確認日時', class: 'col-form-label'

@@ -1,0 +1,83 @@
+- @page_title = "資料室"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '新規資料作成', new_mitsuwa_doc_path, class: 'nav-link text-white'
+    li.nav-item = link_to '登記照会', "#", class: 'nav-link text-white'
+
+button#search-btn.btn-warning.m-2.d-print-none= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-5' do |f|
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :category_eq, '大分類', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.select :category_eq, ["不動産登記", "商業登記", "裁判関係", "税金関係", "その他"], {prompt: true}, {class: 'form-control mt-2'}
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :kind_cont, '小分類', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :kind_cont, class: 'form-control mt-2'
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :title_cont, 'タイトル', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :title_cont, class: 'form-control mt-2'
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :content_cont, '内容', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :content_cont, class: 'form-control mt-2'
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :user_name_eq, 'ユーザー', class: 'col-form-label'
+        .col-sm-9
+          = f.collection_select(:user_name_eq, User.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :date, '投稿日', class: 'col-form-label'
+        .col-sm-4
+          = f.date_field :date_gteq, class: 'form-control mt-2'
+        .col-sm-1.p-3
+          |　～　
+        .col-sm-4
+          = f.date_field :date_lteq, class: 'form-control mt-2'
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+
+.mb-3
+  = paginate @mitsuwa_docs
+  = page_entries_info @mitsuwa_docs
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = MitsuwaDoc.human_attribute_name(:id).upcase
+      th = sort_link(@q, :date)
+      th = MitsuwaDoc.human_attribute_name(:title)
+      th = MitsuwaDoc.human_attribute_name(:content)
+      th = MitsuwaDoc.human_attribute_name(:category)
+      th = MitsuwaDoc.human_attribute_name(:kind)
+      th = MitsuwaDoc.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @mitsuwa_docs.each do | mitsuwa_doc |
+      tr
+        td = mitsuwa_doc.id
+        td = mitsuwa_doc.date.try(:strftime, "%Y/%m/%d")
+        td = link_to mitsuwa_doc.title, mitsuwa_doc_path(mitsuwa_doc)
+        td = mitsuwa_doc.content.truncate(10)
+        td = mitsuwa_doc.category
+        td = mitsuwa_doc.kind
+        td = mitsuwa_doc.updated_at.try(:strftime,'%Y/%m/%d')
+        td 
+          = link_to '編集', edit_mitsuwa_doc_path(mitsuwa_doc), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', mitsuwa_doc, method: :delete, data: { confirm: "#{mitsuwa_doc.title}を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+
+

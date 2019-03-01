@@ -1,2 +1,37 @@
 @import "select2";
 @import "bootstrap";
+
+.aside {
+  background-color: rgba(0,0,0,0.7);
+  width: 250px;
+  height: 100%;
+  top:  0;
+  right: -250px;
+  position: fixed;
+}
+
+.aside ul {
+  margin: 0;
+  padding: 0;
+  top: 50px;
+  right: 114px;
+  position: absolute;
+}
+
+.aside li {
+  margin: 0 0 20px;
+  list-style: none;
+}
+
+.aside button {
+  background-color: rgba(0,0,0,0.7);
+  display: block;
+  position: absolute;
+  top: 150px;
+  right: 250px;
+  width: 45px;
+  height: 132px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}

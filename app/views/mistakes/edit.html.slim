@@ -1,0 +1,10 @@
+- @page_title = 'ミストラブル編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to 'ミストラブル詳細へ', mistake_path, class:'nav-link btn btn-primary'
+  = link_to 'ミストラブルＴＯＰ', mistakes_path, class:'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class:'nav-link btn btn-primary ml-3'
+
+= render 'edit_form', mistake: @mistake
+  

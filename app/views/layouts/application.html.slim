@@ -11,18 +11,21 @@ html
     nav.app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .collapse.navbar-collapse#navbarNav3
         a.navbar-brand href="/" 
-          = image_tag  "logo_name.png", size: "350x60",  alt: "司法書士法人みつわ合同事務所"
+          = image_tag  "logo_name.png", size: "250x50",  alt: "司法書士法人みつわ合同事務所"
         ul.navbar-nav.ml-auto
           - if current_user
             - if current_user.admin?
               li.nav-item  = link_to 'ユーザー', admin_users_path, class: 'nav-link'
             li.nav-item.dropdown = link_to '顧客', customers_path,  class: 'nav-link'
             li.nav-item = link_to '案件', projects_path, class: 'nav-link'
-            li.nav-item = link_to '本人確認記録', identifies_path, class: 'nav-link'
+            li.nav-item = link_to '本人確認', identifies_path, class: 'nav-link'
             li.nav-item = link_to '事件簿', casefiles_path, class: 'nav-link'
             li.nav-item = link_to '不動産', estates_path, class: 'nav-link'
             li.nav-item = link_to '登記所', controls_path, class: 'nav-link'
             li.nav-item = link_to '贈答品等', gifts_path, class: 'nav-link'
+            li.nav-item = link_to '資料室', mitsuwa_docs_path, class: 'nav-link'
+            li.nav-item = link_to '登記照会', "#", class: 'nav-link'
+            li.nav-item = link_to 'ミストラブル', mistakes_path, class: 'nav-link'
             li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
             li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'
           - else
@@ -33,3 +36,23 @@ html
         - if flash.notice.present?
           .alert.alert-success = flash.notice
       = yield
+
+    aside.aside.m-0.p-0.d-print-none
+      h6.m-0.p-2.text-white = "個別リンク一覧"
+      ul.m-0.p-0
+        li.mb-1 = link_to '個人顧客', people_path, class: 'text-white'
+        li.mb-1 = link_to '法人顧客', companies_path, class: 'text-white'
+        li.mb-1 = link_to 'リハウス案件', rehouses_path, class: 'text-white'
+        li.mb-1 = link_to 'Ｌ＆Ｆ案件', landfs_path, class: 'text-white'
+        li.mb-1 = link_to '一般売買案件', genes_path, class: 'text-white'
+        li.mb-1 = link_to '相続案件', inherits_path, class: 'text-white'
+        li.mb-1 = link_to '共通案件', commons_path, class: 'text-white'
+        li.mb-1 = link_to '商業案件', corps_path, class: 'text-white'
+        li.mb-1 = link_to '新築案件', newbuilds_path, class: 'text-white'
+        li.mb-1 = link_to '土地一覧', lands_path, class: 'text-white'
+        li.mb-1 = link_to '建物一覧', buildings_path, class: 'text-white'
+        li.mb-1 = link_to '一棟建物', buildings_path, class: 'text-white'
+        li.mb-1 = link_to '専有建物', buildings_path, class: 'text-white'
+      button.btn-info 
+        span = 'OPEN'
+

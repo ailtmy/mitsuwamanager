@@ -1,0 +1,44 @@
+- @page_title = "#{@project.name}経費一覧"
+h3.mb-3.mt-3 = link_to @page_title, @project
+
+h5.row.p-2.border-bottom.border-dark
+  .col-sm-2.text-right
+    = "経費合計：" 
+  .col-sm-10
+    = number_to_currency(@costs.sum(:pay), :delimiter => ",")
+h6.row.p-2.border-bottom.border-dark
+  .col-sm-2.text-right
+    = "内訳："
+  .col-sm-10
+    - @costs.group(:category).sum(:pay).each do| cat, pay |
+      = "#{cat}："
+      = number_to_currency(pay, :delimiter => ",")
+      br
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Cost.human_attribute_name(:id).upcase
+      th = Cost.human_attribute_name(:pay)
+      th = Cost.human_attribute_name(:date)
+      th = Cost.human_attribute_name(:category)
+      th = Cost.human_attribute_name(:pay_org)
+      th = Cost.human_attribute_name(:created_at)
+      th = Cost.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @costs.each do |cost|
+      tr
+        td = cost.id
+        td = number_to_currency(cost.pay, :delimiter => ",")
+        td = cost.date.try(:strftime, '%Y/%m/%d(%a)')
+        td = cost.category
+        td = cost.pay_org
+        td = cost.created_at.try(:strftime, '%Y/%m/%d')
+        td = cost.updated_at.try(:strftime, '%Y/%m/%d')
+        td
+          = link_to '編集', edit_cost_path(cost), class: 'btn btn-primary mr-3'
+          = link_to '削除', cost, method: :delete, data: {confirm: "#{cost.project.name}の経費を削除します。よろしいですか？"}, class: 'btn btn-danger'
+
+

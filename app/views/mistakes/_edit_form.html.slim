@@ -1,0 +1,49 @@
+- if mistake.errors.present?
+   ul#error_explanation
+    - mistake.errors.full_messages.each do |message|
+      li = message
+.mb-3
+- if mistake.errors.present?
+= form_with(model: mistake, local: true) do |f|
+  .form-group.row
+    - if current_user.admin?
+      .col-sm-1.text-right
+        = f.label :user_id, '編集者'
+      .col-sm-11
+        = f.collection_select(:user_id, User.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+    - else
+      = f.hidden_field :user_id, value: current_user.id
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :date, '発生日'
+    .col-sm-11
+      = f.date_field :date, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :category, '分類'
+    .col-sm-11
+      = f.select :category, ["補正", "その他申請関係", "取引先関係", "顧客関係", "その他"], {}, {class: 'form-control'}
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :project_id, '案件'
+    .col-sm-11
+      = f.collection_select(:project_id, Project.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :title, 'タイトル'
+    .col-sm-11
+      = f.text_field :title, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :content, '内容'
+    .col-sm-11
+      = f.text_area :content, rows: 10, class: 'form-control'
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
+  .form-group
+    p = '現在登録されているファイル（削除するものはチェックしてください）'
+    - mistake.images.each do |image|
+      = f.check_box :image_ids, {:multiple => true, class: 'form-check-label'}, image.id, false
+      span.mr-3 =  image.filename
+  = f.submit '登録する', class: 'btn btn-primary m-3'

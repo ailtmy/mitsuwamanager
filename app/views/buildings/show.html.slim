@@ -59,7 +59,7 @@ table.table.table-hover.table-bordered
             .col-sm-4
               = "評価年度：#{price.year}年度"
             .col-sm-4
-              = "価格：#{price.price}円"
+              = "価格：#{number_to_currency(price.price, :delimiter => ",")}"
             .col-sm-4
               = "評価地目：#{price.price_kind}"
           .row.mb-3

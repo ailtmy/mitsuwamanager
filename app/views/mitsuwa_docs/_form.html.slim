@@ -1,0 +1,43 @@
+- if mitsuwa_doc.errors.present?
+   ul#error_explanation
+    - mitsuwa_doc.errors.full_messages.each do |message|
+      li = message
+.mb-3
+= form_with(model: mitsuwa_doc, local: true) do |f|
+  .form-group.row
+    - if current_user.admin?
+      .col-sm-1.text-right
+        = f.label :user_id, '投稿者'
+      .col-sm-11
+        = f.collection_select(:user_id, User.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+    - else
+      = f.hidden_field :user_id, value: current_user.id
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :date, '投稿日'
+    .col-sm-11
+      = f.date_field :date, value: Date.today(), class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :category, '大分類'
+    .col-sm-11
+      = f.select :category, ["不動産登記", "商業登記", "裁判関係", "税金関係", "その他"], {prompt: true}, {class: 'form-control'}
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :kind, '小分類'
+    .col-sm-11
+      = f.text_field :kind, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :title, 'タイトル'
+    .col-sm-11
+      = f.text_field :title, class: 'form-control'
+  .form-group.row
+    .col-sm-1.text-right
+      = f.label :content, '備考'
+    .col-sm-11
+      = f.text_area :content, rows: 10, class: 'form-control'
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-3'

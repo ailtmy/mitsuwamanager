@@ -1,0 +1,47 @@
+- @page_title = "ミストラブル詳細"
+h3.mb-3mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_mistake_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to "削除(編集者：#{@mistake.user.name})", :mistake, method: :delete, data: {confirm: "#{@mistake.title}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to 'ミストラブルTOP', mistakes_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = Mistake.human_attribute_name(:id).upcase
+      td = @mistake.id
+    tr
+      th = Mistake.human_attribute_name(:category)
+      td = @mistake.category
+    tr
+      th = Mistake.human_attribute_name(:date)
+      td = @mistake.date.try(:strftime, "%Y/%m/%d")
+    tr
+      th = Mistake.human_attribute_name(:project)
+      td = @mistake.project.name if @mistake.project.present?
+    tr
+      th = Mistake.human_attribute_name(:title)
+      td = @mistake.title
+    tr
+      th = Mistake.human_attribute_name(:content)
+      td = simple_format(@mistake.content)
+    tr
+      th = Mistake.human_attribute_name(:image)
+      td
+        - if @mistake.images.attached?
+          - @mistake.images.each do |image|
+            span.mr-5
+              = link_to image.filename, image,:target => "_blank"
+    tr
+      th = Mistake.human_attribute_name(:created_at)
+      td = @mistake.created_at.try(:strftime, "%Y/%m/%d")
+    tr
+      th = Mistake.human_attribute_name(:updated_at)
+      td = @mistake.updated_at.try(:strftime, "%Y/%m/%d")
+
+   
+
+  

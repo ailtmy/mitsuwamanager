@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_084229) do
+ActiveRecord::Schema.define(version: 2019_03_01_073420) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -112,6 +112,17 @@ ActiveRecord::Schema.define(version: 2019_02_25_084229) do
     t.text "remark"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "project_id"
+    t.date "date"
+    t.string "category"
+    t.string "pay_org"
+    t.string "pay"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_costs_on_project_id"
   end
 
   create_table "customer_agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -237,6 +248,30 @@ ActiveRecord::Schema.define(version: 2019_02_25_084229) do
     t.index ["mailable_type", "mailable_id"], name: "index_mails_on_mailable_type_and_mailable_id"
   end
 
+  create_table "mistakes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "category"
+    t.integer "project_id"
+    t.string "title"
+    t.text "content"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mistakes_on_user_id"
+  end
+
+  create_table "mitsuwa_docs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.string "category"
+    t.string "kind"
+    t.text "content"
+    t.bigint "user_id"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mitsuwa_docs_on_user_id"
+  end
+
   create_table "prices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "year"
     t.integer "price"
@@ -332,6 +367,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_084229) do
   add_foreign_key "branches", "customers"
   add_foreign_key "casefiles", "projects"
   add_foreign_key "certificates", "projects"
+  add_foreign_key "costs", "projects"
   add_foreign_key "customer_casefiles", "casefiles"
   add_foreign_key "customer_casefiles", "customers"
   add_foreign_key "destinates", "projects"
@@ -339,6 +375,8 @@ ActiveRecord::Schema.define(version: 2019_02_25_084229) do
   add_foreign_key "gifts", "customers"
   add_foreign_key "identifies", "customers"
   add_foreign_key "identifies", "users"
+  add_foreign_key "mistakes", "users"
+  add_foreign_key "mitsuwa_docs", "users"
   add_foreign_key "prices", "estates"
   add_foreign_key "project_customers", "customers"
   add_foreign_key "project_customers", "projects"

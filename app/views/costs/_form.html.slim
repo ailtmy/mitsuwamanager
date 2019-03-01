@@ -1,0 +1,20 @@
+- if cost.errors.present?
+  ul#error_explanation
+    - cost.errors.full_messages.each do |message|
+      li = message
+= form_with model: cost, local: true do |f|
+  .form-group
+    = f.hidden_field :project_id, class: 'form-control' 
+  .form-group
+    = f.label :date, '支払日'
+    = f.date_field :date, class: 'form-control'
+  .form-group
+    = f.label :category, '支払内容'
+    = f.text_field :category, class: 'form-control'
+  .form-group
+    = f.label :pay_org, '支払先'
+    = f.text_field :pay_org, class: 'form-control'
+  .form-group
+    = f.label :pay, '支払金額(円）'
+    = f.number_field :pay, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary mt-3'

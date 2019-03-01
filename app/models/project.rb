@@ -1,9 +1,10 @@
 class Project < ApplicationRecord
-  has_many :casefiles
-  has_many :project_customers
+  has_many :casefiles, dependent: :destroy
+  has_many :project_customers, dependent: :destroy
+  has_many :mistakes, dependent: :destroy
   has_many :project_estates, foreign_key: :project_id, inverse_of: :project, dependent: :destroy
-  has_many :estates, through: :project_estates
-  has_many :customers, through: :project_customers
+  has_many :estates, through: :project_estates, dependent: :destroy
+  has_many :customers, through: :project_customers, dependent: :destroy
   accepts_nested_attributes_for :project_customers
 
   def view_project_select

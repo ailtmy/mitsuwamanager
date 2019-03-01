@@ -47,6 +47,9 @@ ja:
       staff: スタッフ
       tel: 電話
       company_control: 法人登記管轄
+      cost: 経費
+      mitsuwa_doc: 資料室
+      mistake: ミストラブル
     attributes:
       user:
         name: ユーザー名
@@ -226,8 +229,34 @@ ja:
         price: 評価
         site: 敷地権
       site:
-
-
+      cost:
+        project: 案件
+        pay: 支払金額
+        pay_org: 支払先
+        date: 支払日
+        category: 支払内容
+        created_at: 登録日時
+        updated_at: 更新日時
+      mitsuwa_doc:
+        title: タイトル
+        category: 大分類
+        kind: 小分類
+        content: 内容
+        date: 投稿日
+        image: 参考ファイル
+        user: 投稿ユーザー
+        created_at: 登録日時
+        updated_at: 更新日時
+      mistake:
+        title: タイトル
+        category: 分類
+        content: 内容
+        date: 発生日
+        image: 参考ファイル
+        user: 担当者
+        project: 案件
+        created_at: 登録日時
+        updated_at: 更新日時
   date:
     abbr_day_names:
     - 日

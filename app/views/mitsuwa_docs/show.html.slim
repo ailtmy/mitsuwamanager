@@ -1,0 +1,47 @@
+- @page_title = "資料詳細"
+h3.mb-3mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '編集', edit_mitsuwa_doc_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to "削除(編集者：#{@mitsuwa_doc.user.name})", :mitsuwa_doc, method: :delete, data: {confirm: "#{@mitsuwa_doc.title}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '資料室ＴＯＰ', mitsuwa_docs_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+table.table.table-hover.table-bordered
+  tbody
+    tr
+      th.w-25 = MitsuwaDoc.human_attribute_name(:id).upcase
+      td = @mitsuwa_doc.id
+    tr
+      th = MitsuwaDoc.human_attribute_name(:date)
+      td = @mitsuwa_doc.date.try(:strftime, "%Y/%m/%d")
+    tr
+      th = MitsuwaDoc.human_attribute_name(:title)
+      td = @mitsuwa_doc.title
+    tr
+      th = MitsuwaDoc.human_attribute_name(:content)
+      td = simple_format(@mitsuwa_doc.content)
+    tr
+      th = MitsuwaDoc.human_attribute_name(:category)
+      td = @mitsuwa_doc.category
+    tr
+      th = MitsuwaDoc.human_attribute_name(:kind)
+      td = @mitsuwa_doc.kind
+    tr
+      th = MitsuwaDoc.human_attribute_name(:image)
+      td
+        - if @mitsuwa_doc.images.attached?
+          - @mitsuwa_doc.images.each do |image|
+            span.mr-5
+              = link_to image.filename, image,:target => "_blank"
+    tr
+      th = MitsuwaDoc.human_attribute_name(:created_at)
+      td = @mitsuwa_doc.created_at.try(:strftime, "%Y/%m/%d")
+    tr
+      th = MitsuwaDoc.human_attribute_name(:updated_at)
+      td = @mitsuwa_doc.updated_at.try(:strftime, "%Y/%m/%d")
+
+   
+
+  

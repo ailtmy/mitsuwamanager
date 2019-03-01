@@ -1,0 +1,77 @@
+- @page_title = "ミストラブル一覧"
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to 'ミストラブル新規作成', new_mistake_path, class: 'nav-link text-white'
+
+button#search-btn.btn-warning.m-2.d-print-none= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-5' do |f|
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :category_eq, '分類', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.select :category_eq, ["補正", "その他申請関係", "取引先関係", "顧客関係", "その他"], {prompt: true}, {class: 'form-control mt-2'}
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :title_cont, 'タイトル', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :title_cont, class: 'form-control mt-2'
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :content_cont, '内容', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :content_cont, class: 'form-control mt-2'
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :user_name_eq, 'ユーザー', class: 'col-form-label'
+        .col-sm-9
+          = f.collection_select(:user_name_eq, User.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :date, '発生日', class: 'col-form-label'
+        .col-sm-4
+          = f.date_field :date_gteq, class: 'form-control mt-2'
+        .col-sm-1.p-3
+          |　～　
+        .col-sm-4
+          = f.date_field :date_lteq, class: 'form-control mt-2'
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+
+.mb-3
+  = paginate @mistakes
+  = page_entries_info @mistakes
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Mistake.human_attribute_name(:id).upcase
+      th = sort_link(@q, :date)
+      th = Mistake.human_attribute_name(:title)
+      th = Mistake.human_attribute_name(:content)
+      th = Mistake.human_attribute_name(:project)
+      th = Mistake.human_attribute_name(:category)
+      th = Mistake.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @mistakes.each do | mistake |
+      tr
+        td = mistake.id
+        td = mistake.date.try(:strftime, "%Y/%m/%d")
+        td = link_to mistake.title, mistake_path(mistake)
+        td = mistake.content.truncate(10)
+        td = link_to mistake.project.name, mistake.project if mistake.project.present?
+        td = mistake.category
+        td = mistake.updated_at.try(:strftime,'%Y/%m/%d')
+        td 
+          = link_to '編集', edit_mistake_path(mistake), class: 'btn btn-primary mr-3'
+          -if current_user.admin?
+            = link_to '削除', mistake, method: :delete, data: { confirm: "#{mistake.title}を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+
+

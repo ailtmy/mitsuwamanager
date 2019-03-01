@@ -2,7 +2,7 @@ class CorpsController < ApplicationController
   before_action :set_corp, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Corp.ransack(params[:q])
+    @q = Corp.includes(:user).ransack(params[:q])
     @corps = @q.result.order('projects.created_at desc').page(params[:page]).per(10)
   end
 
