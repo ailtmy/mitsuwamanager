@@ -14,5 +14,6 @@ class Landf < Project
   accepts_nested_attributes_for :destinates, allow_destroy: true
   has_many :costs, foreign_key: :project_id, dependent: :destroy
   accepts_nested_attributes_for :costs
+  has_many :judges, foreign_key: :project_id, dependent: :destroy
   belongs_to :user
 end

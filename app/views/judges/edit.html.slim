@@ -1,2 +1,10 @@
-h1 Judges#edit
-p Find me in app/views/judges/edit.html.slim
+- @page_title = '登記照会編集'
+h3.mb-3.mt-3 = @page_title
+
+.nav.justify-content-end
+  = link_to '登記照会詳細', judge_path, class:'nav-link btn btn-primary'
+  = link_to '登記照会ＴＯＰ', judges_path, class:'nav-link btn btn-primary ml-3'
+  = link_to '戻る', :back, class:'nav-link btn btn-primary ml-3'
+
+= render 'edit_form', judge: @judge
+  

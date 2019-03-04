@@ -29,7 +29,7 @@ fieldset#search.border.mb-3.d-none
         .col-sm-2.text-right
           = f.label :user_name_eq, 'ユーザー', class: 'col-form-label'
         .col-sm-9
-          = f.collection_select(:user_name_eq, User.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+          = f.collection_select(:user_name_eq, User.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
       .form-group.row
         .col-sm-2.text-right
           = f.label :date, '発生日', class: 'col-form-label'

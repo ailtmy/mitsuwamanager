@@ -1,2 +1,101 @@
-h1 Judges#show
-p Find me in app/views/judges/show.html.slim
+- @page_title = "登記照会詳細(最終更新日：#{@judge.updated_at.try(:strftime, "%Y/%m/%d")}）"
+h3.mb-3.mt-3.d-print-none = @page_title
+
+.nav.justify-content-end.d-print-none
+  = link_to '編集', edit_judge_path, class: 'btn btn-primary mb-3'
+  - if current_user.admin?
+    = link_to "削除", :mistake, method: :delete, data: {confirm: "#{@judge.title}を削除してよろしいですか？" }, class: 'btn btn-danger mb-3 ml-3'
+  = link_to '登記照会TOP', judges_path, class: 'nav-link btn btn-primary mb-3 ml-3'
+  = link_to '戻る', :back, class: 'nav-link btn btn-primary mb-3 ml-3'
+
+h3.mb-4.d-print-none
+  | 回答結果
+  = simple_format(@judge.answer)
+h5.row.d-print-none
+  .col-sm-3
+    | 分類：
+    = @judge.category
+  .col-sm-3
+    | タイトル：
+    = @judge.title
+  .col-sm-2
+    | 進捗：
+    = @judge.status
+  .col-sm-4
+    | 案件：
+    = link_to @judge.project.name, @judge.project if @judge.project
+h6.row.p-3.d-print-none
+  | ファイル：
+  - @judge.images.each do |image|
+    = link_to "　#{image.filename}　", image, target: "_blank"
+  
+.container.m-0
+  .title.text-center.m-4
+    h1 = "相　談　票" 
+  .
+    h3 = "#{@judge.control.name}御中"
+  .row.clearfix.m-0
+    .col-sm-6.m-0
+    h5.col-sm-3.answer_number.float-right.m-0.border-right.border-top.border-left.border-dark.p-3
+      = "　整 理 番 号　" 
+    h5.col-sm-3.border-top.border-right.border-dark.float-right.p-3.m-0
+      = "　#{@judge.answer_number}　" 
+  .row.m-0
+    h5.col-sm-3.border-left.border-top.border-right.border-dark.m-0.p-3.text-center
+      = "相談年月日"
+    h5.col-sm-9.border-top.border-right.border-dark.m-0.p-3
+      = @judge.datetime.try(:strftime, "%Y年%m月%d日　%H時%M分")
+  .row.m-0
+    h5.col-sm-3.border-left.border-top.border-right.border-dark.m-0.p-3.text-center
+      = "相談者"
+    h5.col-sm-9.border-top.border-right.border-dark.m-0.p-3
+      |　司法書士法人みつわ合同事務所
+      br/
+      |　担当司法書士：　
+      = @judge.user.name
+      br/
+      |　TEL：06-6222-7744　／　FAX：06-6222-7745
+  .row.m-0
+    h5.col-sm-3.border-left.border-top.border-right.border-dark.m-0.p-3.text-center
+      = "不動産の表示"
+    h5.col-sm-9.border-top.border-right.border-dark.m-0.p-3
+      - @judge.estates.each do |estate|
+        = estate.address
+        - if estate.number
+          |(地番／家屋番号)：
+
+        = estate.number
+        = "(" +I18n.t("activerecord.attributes.judge.#{estate.type}") + ")"
+        br
+  .row.m-0
+    h5.col-sm-3.border-left.border-top.border-right.border-dark.m-0.p-3.text-center
+      = "登記の目的"
+    h5.col-sm-9.border-top.border-right.border-dark.m-0.p-3
+      = @judge.event
+      br
+      = @judge.cause_date
+      |　申請予定
+  h5.row.m-0.border-left.border-top.border-right.border-dark.p-3
+    .col-sm-12.p-3
+      | 相談用紙
+    .col-sm-12
+      = simple_format(@judge.content)
+  h5.row.m-0.border-left.border-top.border-right.border-dark.p-3
+    .col-sm-12.p-3
+      | 参考資料
+    .col-sm-12
+      = simple_format(@judge.document)
+  h5.row.m-0.border-left.border-top.border-right.border-dark.p-3
+    .col-sm-12.p-3
+      | 相談者意見
+    .col-sm-12
+      = simple_format(@judge.opinion)
+  .row.m-0.mb-4
+    h5.col-sm-3.border-left.border-top.border-right.border-bottom.border-dark.m-0.p-3.text-center
+      = "担当者"
+    h5.col-sm-9.border-top.border-right.border-bottom.border-dark.m-0.p-3
+      = @judge.answer_control
+      br
+  
+
+

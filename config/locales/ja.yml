@@ -50,6 +50,7 @@ ja:
       cost: 経費
       mitsuwa_doc: 資料室
       mistake: ミストラブル
+      judge: 登記照会
     attributes:
       user:
         name: ユーザー名
@@ -75,6 +76,7 @@ ja:
         created_at: 登録日
         updated_at: 更新日
         project: 案件
+        judge: 登記照会
       person:
         name: 氏名
         birthday: 生年月日
@@ -255,6 +257,24 @@ ja:
         image: 参考ファイル
         user: 担当者
         project: 案件
+        created_at: 登録日時
+        updated_at: 更新日時
+      judge:
+        Land: 土地
+        Building: 建物
+        Room: 区分建物
+        Apart: 一棟の建物
+        Site: 敷地権
+        Unit: 附属建物
+        datetime: 相談日時
+        title: タイトル
+        content: 相談内容
+        status: 進捗
+        control: 登記所
+        project: 案件
+        category: 分類
+        user: ユーザー
+        image: ファイル
         created_at: 登録日時
         updated_at: 更新日時
   date:

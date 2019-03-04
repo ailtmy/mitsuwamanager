@@ -2,7 +2,9 @@ class Estate < ApplicationRecord
   belongs_to :control
   has_many :prices, foreign_key: :estate_id, dependent: :destroy
   accepts_nested_attributes_for :prices, allow_destroy: true
-  has_many :judges, dependent: :destroy
+  has_many :judge_estates, dependent: :destroy
+  has_many :estates, through: :judge_estates
+  accepts_nested_attributes_for :judge_estates, allow_destroy: true
 
   def view_estate_select
     address.to_s + number.to_s

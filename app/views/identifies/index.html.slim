@@ -71,7 +71,7 @@ table.table.table-hpver.table-bordered.text-center
       tr
         td = identify.id
         td = identify.user.name
-        td = identify.customer.name
+        td = link_to identify.customer.name, identify
         td = identify.ident_method
         td = identify.date_time.try(:strftime, '%Y/%m/%d-%H:%M')
         td

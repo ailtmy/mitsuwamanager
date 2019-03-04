@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_105806) do
+ActiveRecord::Schema.define(version: 2019_03_04_010458) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -238,13 +238,21 @@ ActiveRecord::Schema.define(version: 2019_03_01_105806) do
     t.index ["user_id"], name: "index_identifies_on_user_id"
   end
 
+  create_table "judge_estates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "judge_id"
+    t.bigint "estate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estate_id"], name: "index_judge_estates_on_estate_id"
+    t.index ["judge_id"], name: "index_judge_estates_on_judge_id"
+  end
+
   create_table "judges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.string "category"
     t.bigint "control_id"
     t.datetime "datetime"
     t.bigint "user_id"
-    t.integer "estate_id"
     t.text "content"
     t.text "document"
     t.text "opinion"
@@ -398,6 +406,8 @@ ActiveRecord::Schema.define(version: 2019_03_01_105806) do
   add_foreign_key "gifts", "customers"
   add_foreign_key "identifies", "customers"
   add_foreign_key "identifies", "users"
+  add_foreign_key "judge_estates", "estates"
+  add_foreign_key "judge_estates", "judges"
   add_foreign_key "judges", "controls"
   add_foreign_key "judges", "users"
   add_foreign_key "mistakes", "users"

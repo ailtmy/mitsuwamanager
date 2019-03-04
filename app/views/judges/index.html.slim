@@ -1,2 +1,83 @@
-h1 Judges#index
-p Find me in app/views/judges/index.html.slim
+- @page_title = "登記照会一覧 "
+h3.mb-3.mt-3 = @page_title
+
+nav.navbar.navbar-expand-md.navbar-dark.bg-primary 
+  ul.navbar-nav.mr-auto
+    li.nav-item = link_to '登記照会新規作成', new_judge_path, class: 'nav-link text-white'
+
+button#search-btn.btn-warning.m-2.d-print-none= "検索表示"
+fieldset#search.border.mb-3.d-none
+  legend.pl-3 検索
+  .pl-1
+    = search_form_for @q, class: 'mb-5' do |f|
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :user_name_eq, 'ユーザー', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.collection_select(:user_name_eq, User.all, :name, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2'})
+      .from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :category_eq, '分類', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.select :category_eq, ["不動産申請手続", "不動産登録免許税", "不動産誤字俗字", "不動産その他", "商業登記", 'その他'], {prompt: true}, {class: 'form-control mt-2'}
+      from-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :status_eq, '進捗', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.select :status_eq, ["照会準備", "照会中", "済"], { prompt: true, include_blank: true }, {class: 'form-control mt-2'}
+      .form-group.row
+        .col-sm-2.text-right
+          = f.label :control_name_cont, '登記所', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.text_field :control_name_cont, class: 'form-control mt-2'
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :title_cont, 'タイトル', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :title_cont, class: 'form-control mt-2'
+      .form-group.row.mb-4
+        .col-sm-2.text-right
+          = f.label :content_cont, '内容', class: ' col-form-label mt-2'
+        .col-sm-9
+          = f.search_field :content_cont, class: 'form-control mt-2'
+        .form-group
+          = f.submit class: 'btn btn-outline-primary mt-2 ml-2' 
+      
+
+.mb-3
+  = paginate @judges
+  = page_entries_info @judges
+
+.mb-3
+table.table.table-hover.table-bordered.text-center
+  thead.table-default
+    tr
+      th = Judge.human_attribute_name(:id).upcase
+      th = sort_link(@q, :datetime)
+      th = Judge.human_attribute_name(:title)
+      th = Judge.human_attribute_name(:content)
+      th = Judge.human_attribute_name(:status)
+      th = Judge.human_attribute_name(:control)
+      th = Judge.human_attribute_name(:project)
+      th = Judge.human_attribute_name(:category)
+      th = Judge.human_attribute_name(:user)
+      th
+  tbody
+    - @judges.each do | judge |
+      tr
+        td = judge.id
+        td = judge.datetime.try(:strftime, "%Y/%m/%d")
+        td = link_to judge.title, judge_path(judge)
+        td = judge.content.truncate(10)
+        td = judge.status
+        td = link_to judge.control.name, judge.control
+        td = link_to judge.project.name, judge.project if judge.project.present?
+        td = judge.category
+        td = judge.user.name
+        td 
+          = link_to '編集', edit_judge_path(judge), class: 'btn btn-primary m-2'
+          -if current_user.admin?
+            = link_to '削除', judge, method: :delete, data: { confirm: "#{judge.title}を削除します。よろしいですか？" }, class: 'btn btn-danger m-2'
+
+
+

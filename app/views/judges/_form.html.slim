@@ -1,0 +1,90 @@
+- if judge.errors.present?
+   ul#error_explanation
+- if judge.errors.present?
+    - judge.errors.full_messages.each do |message|
+      li = message
+.mb-3
+- if judge.errors.present?
+= form_with(model: judge, local: true) do |f|
+  .form-group.row
+    = f.hidden_field :user_id, value: current_user.id
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :title, 'タイトル'
+    .col-sm-10
+      = f.text_field :title, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :control_id, '登記所'
+    .col-sm-10
+      = f.collection_select(:control_id, Control.all, :id, :name, {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :project_id, '案件'
+    .col-sm-10
+      = f.collection_select(:project_id, Project.all, :id, :name,  {prompt: "選択してください", include_blank: true}, {class: 'form-control mt-2 select2'})
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :category, '分類'
+    .col-sm-10
+      = f.select :category, ["不動産申請手続", "不動産登録免許税", "不動産誤字俗字", "不動産その他", "商業登記", 'その他'], { prompt: true }, {class: 'form-control'}
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :status, '進捗'
+    .col-sm-10
+      = f.select :status, ["照会準備", "照会中", "済"], { prompt: true }, {class: 'form-control'}
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :datetime, '相談日時'
+    .col-sm-10
+      = f.datetime_select :datetime, default: Time.now, class: 'form-control'
+  #judge_estates.mb-4
+    = f.fields_for :judge_estates do |judge_estate|
+      = render 'judge_estate_fields', f: judge_estate
+    .links
+      = link_to_add_association '不動産追加', f, :judge_estates, class: 'btn btn-primary'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :event, '登記の目的'
+    .col-sm-10
+      = f.text_field :event, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :cause_date, '原因及び日付'
+    .col-sm-10
+      = f.text_field :cause_date, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :content, '内容'
+    .col-sm-10
+      = f.text_area :content, rows: 5, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :document, '参考資料'
+    .col-sm-10
+      = f.text_area :document, rows: 2, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :opinion, '相談者意見'
+    .col-sm-10
+      = f.text_area :opinion, rows: 5, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :answer, '回答'
+    .col-sm-10
+      = f.text_area :answer, class: 'form-control'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :answer_control, '登記所担当'
+    .col-sm-10
+      = f.text_field :answer_control, class: 'form-cotrol'
+  .form-group.row
+    .col-sm-2.text-right
+      = f.label :answer_number, '相談番号'
+    .col-sm-10
+      = f.text_field :answer_number, class: 'form-control'
+  .form-group
+    = f.label :image
+    = f.file_field :images, multipre: true, class: 'form-control'
+
+  = f.submit '登録する', class: 'btn btn-primary m-3'

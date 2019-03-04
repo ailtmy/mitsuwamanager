@@ -1,8 +1,8 @@
 - @page_title = "Ｌ＆Ｆ案件詳細（更新日：#{@landf.updated_at.try(:strftime, "%Y/%m/%d")})"
 .pb-2.d-print-none
-  .row
+  .row.mb-2
     | 事件簿
-  .row
+  .row.mb-2
     - if @landf.casefiles.blank?
       .col-sm-12.bg-danger.text-white
         = "事件簿を入力してください！！"
@@ -10,18 +10,24 @@
       - @landf.casefiles.each do |casefile|
         .col-sm-3
           = link_to casefile.event_title, casefile
-  .row
+  .row.mb-2
     | 当事者一覧リンク
-  .row
+  .row.mb-2
     - @landf.project_customers.each do |customer|
       = link_to "「#{customer.position}：#{customer.customer.name}」", customer.customer
-  .row
+  .row.mb-2
     | 登録ファイル
-  .row
+  .row.mb-2
     - if @landf.images.attached?
       - @landf.images.each do |image|
           span.mr-5
             = link_to image.filename, image,:target => "_blank" 
+  .row.mb-2
+    | 登記照会
+  .row.mb-2
+    - if @landf.judges.present?
+      - @landf.judges.each do |judge|
+        = link_to judge.title, judge
 h3.pb-3.mt-3.d-print-none 
   = @page_title
 

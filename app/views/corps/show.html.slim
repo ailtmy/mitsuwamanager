@@ -22,6 +22,12 @@
       - @corp.images.each do |image|
           span.mr-5
             = link_to image.filename, image,:target => "_blank" 
+  .row.mb-2
+    | 登記照会
+  .row.mb-2
+    - if @corp.judges.present?
+      - @corp.judges.each do |judge|
+        = link_to judge.title, judge
   h3.mb-3.mt-3.d-print-none 
     = @page_title
   
