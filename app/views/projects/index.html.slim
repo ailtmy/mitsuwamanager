@@ -110,6 +110,6 @@ table.table.table-hover.table-bordered.text-center
         td = project.created_at.try(:strftime,'%Y/%m/%d')
         td = project.updated_at.try(:strftime,'%Y/%m/%d')
         td
-          = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
-          - if current_user.admin?
-            = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'
+	  - if current_user.admin?
+	    = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
+	    = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'
