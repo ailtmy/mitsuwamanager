@@ -39,7 +39,7 @@ class Casefile < ApplicationRecord
     returnadd = []
     casefile.customer_casefiles.each do |customer|
       customer.customer.addresses.order('since_date desc').each do |addr|
-        if !addr.since_date.nil? && addr.since_date <= casefile.date
+        if !addr.since_date.nil? && addr.since_date <= casefile.date ||= Date.today()
           returnadd << { address: addr.address.to_s }
           break
         end
