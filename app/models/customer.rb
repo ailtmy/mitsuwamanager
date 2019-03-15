@@ -50,6 +50,6 @@ class Customer < ApplicationRecord
   end
 
   def view_name_select
-    name + '(ID:' + id.to_s + ')'
+    name +  "( ID:" + id.to_s + ")"
   end
 end

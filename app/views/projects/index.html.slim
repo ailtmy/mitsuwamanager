@@ -96,7 +96,6 @@ table.table.table-hover.table-bordered.text-center
       th = sort_link(@q, :application_date)
       th = Project.human_attribute_name(:place)
       th = Project.human_attribute_name(:status)
-      th = Project.human_attribute_name(:created_at)
       th = Project.human_attribute_name(:updated_at)
       th
   tbody
@@ -104,12 +103,11 @@ table.table.table-hover.table-bordered.text-center
       tr
         td = project.id
         td = link_to project.name, project
-        td = project.application_date.try(:strftime, '%Y/%m/%d-%H:%M')
+        td = project.application_date.try(:strftime, '%Y/%m/%d')
         td = project.place
         td = project.status
-        td = project.created_at.try(:strftime,'%Y/%m/%d')
         td = project.updated_at.try(:strftime,'%Y/%m/%d')
         td
-          = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
           - if current_user.admin?
+            = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
             = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'

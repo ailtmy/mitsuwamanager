@@ -86,13 +86,13 @@ h3.pb-3.mt-3.d-print-none
   h4.row.border-left.border-right.border-dark.mb-0
     .col-sm-2.p-3
       | 債務者:
-    .col-sm-5.p-3
+    .col-sm-4.p-3
       - ProjectCustomer.debtor_select(@landf).each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-3
       | 設定者:
-    .col-sm-5.p-3
+    .col-sm-4.p-3
       - ProjectCustomer.mortgagor_select(@landf).each do |customer|
         = customer[:name]
         br

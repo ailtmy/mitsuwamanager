@@ -8,7 +8,7 @@
       .col-sm-3.mb-2.text-right
         = f.label :position, '買主・売主・融資先・抹消先'
       .col-sm-2
-        = f.select :position, ProjectCustomer.position_select, {}, {class: 'form-control'}
+        = f.select :position, ProjectCustomer.position_select, {prompt: true, include_blank: true}, {class: 'form-control'}
       .col-sm-1.text-right
         = f.label :equity, "持分"
       .col-sm-2

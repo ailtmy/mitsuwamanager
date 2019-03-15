@@ -9,7 +9,7 @@ class Company < Customer
 
   has_many :company_controls, foreign_key: :company_id, inverse_of: :company, dependent: :destroy
   has_many :controls, through: :company_controls, source: :control
-  accepts_nested_attributes_for :company_controls, allow_destroy: true
+  accepts_nested_attributes_for :company_controls,  reject_if: :all_blank, allow_destroy: true
 
   has_many :tels, as: :telable, dependent: :destroy
   accepts_nested_attributes_for :tels

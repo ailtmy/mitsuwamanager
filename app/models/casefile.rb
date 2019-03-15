@@ -3,7 +3,7 @@ class Casefile < ApplicationRecord
   has_many :customer_casefiles, dependent: :destroy
   has_many :customers, through: :customer_casefiles
 
-  accepts_nested_attributes_for :customer_casefiles, allow_destroy: true
+  accepts_nested_attributes_for :customer_casefiles, reject_if: :all_blank, allow_destroy: true
 
   def self.ransackable_attributes(_auth_object = nil)
     %w(year date kind number event_title)
@@ -14,7 +14,11 @@ class Casefile < ApplicationRecord
   end
 
   def self.csv_attributes
-    %w(id year number date event_title event_number count kind project_id created_at updated_at)
+    %w(id year number date event_title event_number count kind project_id)
+  end
+
+  def self.customer_casefile_csv_attributes
+    %w(customer_id applicant)
   end
 
   def self.generate_csv
@@ -30,7 +34,8 @@ class Casefile < ApplicationRecord
     CSV.foreach(file.path, headers: true) do |row|
       casefile = new
       casefile.attributes = row.to_hash.slice(*csv_attributes)
-      casefile.save!
+      casefile.customer_casefiles.build.attributes = row.to_hash.slice(*customer_casefile_csv_attributes)      
+      casefile.save
     end
   end
 
@@ -39,7 +44,7 @@ class Casefile < ApplicationRecord
     returnadd = []
     casefile.customer_casefiles.each do |customer|
       customer.customer.addresses.order('since_date desc').each do |addr|
-        if !addr.since_date.nil? && addr.since_date <= casefile.date
+        if !addr.since_date.nil? && addr.since_date <= casefile.date ||= Date.today()
           returnadd << { address: addr.address.to_s }
           break
         end

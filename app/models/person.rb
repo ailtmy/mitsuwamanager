@@ -22,7 +22,11 @@ class Person < Customer
   end
 
   def self.csv_attributes
-    %w(id name kana birthday type created_at updated_at)
+    %w(id name kana birthday type created_at updated_at)  
+  end
+
+  def self.address_csv_attributes
+    %w(zip address since_date address_kind)
   end
 
   def self.generate_csv
@@ -37,14 +41,17 @@ class Person < Customer
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       person = new
+      address = person.addresses.build
       person.attributes = row.to_hash.slice(*csv_attributes)
+      address.attributes = row.to_hash.slice(*address_csv_attributes)
+      address.address_closure = false
       person.save!
     end
+    
   end
-
-  def view_name_select
-    name + '(ID:' + id.to_s + ')'
-  end
+  # def view_name_select
+  #   name + '(ID:' + id.to_s + ')'
+  # end
 
   private
 

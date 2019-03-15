@@ -1,5 +1,5 @@
 class Estate < ApplicationRecord
-  belongs_to :control
+  belongs_to :control, optional: true
   has_many :prices, foreign_key: :estate_id, dependent: :destroy
   accepts_nested_attributes_for :prices, allow_destroy: true
   has_many :judge_estates, dependent: :destroy

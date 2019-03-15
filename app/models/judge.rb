@@ -3,7 +3,7 @@ class Judge < ApplicationRecord
   belongs_to :user
   has_many :judge_estates, dependent: :destroy
   has_many :estates, through: :judge_estates
-  accepts_nested_attributes_for :judge_estates, allow_destroy: true
+  accepts_nested_attributes_for :judge_estates,  reject_if: :all_blank, allow_destroy: true
   belongs_to :project, optional: true
 
   has_many_attached :images

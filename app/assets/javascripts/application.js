@@ -55,20 +55,23 @@ $(document).on('turbolinks:load',function() {
 
   var duration = 300;
   var $aside = $('.aside');
-  var $asideButton = $aside.find('button').on('click', function(){
-      $aside.toggleClass('open');
-      if($aside.hasClass('open')){
-        $aside.stop(true).animate({
-          right: '-70px'
-        }, duration);
-        $asideButton.find('span').text('close');
-      } else {
-        $aside.stop(true).animate({
-          right: '-250px'
-        }, duration);
-        $asideButton.find('span').text('open');
-      };
-    });
-
+  if ($('a').hasClass('logout')){
+    var $asideButton = $aside.find('button').on('click', function(){
+        $aside.toggleClass('open');
+        if($aside.hasClass('open')){
+          $aside.stop(true).animate({
+            right: '-70px'
+          }, duration);
+          $asideButton.find('span').text('close');
+        } else {
+          $aside.stop(true).animate({
+            right: '-250px'
+          }, duration);
+          $asideButton.find('span').text('open');
+        };
+      });
+  } else {
+    $aside.hide();
+  }
 
 });

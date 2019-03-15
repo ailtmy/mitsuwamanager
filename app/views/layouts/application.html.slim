@@ -27,9 +27,9 @@ html
             li.nav-item = link_to '登記照会', judges_path, class: 'nav-link'
             li.nav-item = link_to 'ミストラブル', mistakes_path, class: 'nav-link'
             li.nav-item = link_to current_user.name + 'さん', account_path, class: 'nav-link'
-            li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link'
+            li.nav-item = link_to 'ログアウト', logout_path, method: :delete, data: {confirm: "ログアウトしますか？" }, class: 'nav-link logout'
           - else
-            li.nav-item = link_to 'ログイン', login_path, class: 'nav-link' 
+            li.nav-item = link_to 'ログイン', login_path, class: 'nav-link login' 
 
     .container
       .d-print-none

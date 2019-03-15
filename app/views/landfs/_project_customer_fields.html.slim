@@ -8,6 +8,6 @@
       .col-sm-3.mb-2.text-right
         = f.label :position, '担当者・債務者・設定者等'
       .col-sm-4
-        = f.select :position, ProjectCustomer.lf_position_select, {}, {class: 'form-control'}
+        = f.select :position, ProjectCustomer.lf_position_select, {prompt: true, include_blank: true}, {class: 'form-control'}
       .col-sm-4
         = link_to_remove_association '削除', f, class: 'btn btn-danger'

@@ -13,7 +13,7 @@
       .col-sm-3.text-right
         = f.label :position, '顧客・事業主等'
       .col-sm-4
-        = f.select :position, ProjectCustomer.new_position_select, {}, {class: 'form-control'}
+        = f.select :position, ProjectCustomer.new_position_select, {prompt: true, include_blank: true}, {class: 'form-control'}
       
       .col-sm-4
         = link_to_remove_association '削除', f, class: 'btn btn-danger'

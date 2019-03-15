@@ -8,7 +8,7 @@
     .col-sm-1.text-right
       = f.label :user_id, '確認者'
     .col-sm-11
-      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user}, {class: 'form-control'})
+      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true}, {class: 'form-control'})
   .form-group.row
     .col-sm-1.text-right
      
