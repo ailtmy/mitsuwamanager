@@ -95,14 +95,14 @@ table.table.table-hover.table-bordered.text-center
       th = Project.human_attribute_name(:name)
       th = sort_link(@q, :application_date)
       th = Project.human_attribute_name(:place)
-      th = Project.human_attribute_name(:status)
+      th = Project.human_attribute_name(:status) 
       th = Project.human_attribute_name(:updated_at)
       th
   tbody
     - @projects.each do |project|
       tr
         td = project.id
-        td = link_to project.name, project
+        td = link_to project.name.truncate(10), project
         td = project.application_date.try(:strftime, '%Y/%m/%d')
         td = project.place
         td = project.status
@@ -110,4 +110,5 @@ table.table.table-hover.table-bordered.text-center
         td
           - if current_user.admin?
             = link_to '編集', edit_project_path(project), class: 'btn btn-primary m-1'
-            = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？"}, class: 'btn btn-danger m-1'
+            = link_to '削除', project, method: :delete, data: { confirm: "#{project.name}を削除します。よろしいですか？" }, class: 'btn btn-danger m-1' 
+	

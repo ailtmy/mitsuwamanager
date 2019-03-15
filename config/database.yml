@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: password
+  password: 5tgbnhy6
   host: localhost
 
 development:
@@ -50,5 +50,6 @@ test:
 production:
   <<: *default
   database: mitsuwamanage_production
-  username: mitsuwamanage
-  password: <%= ENV['MITSUWAMANAGE_DATABASE_PASSWORD'] %>
+  username: <%= ENV['MITSUWAMANAGE_DATABASE_USER'] %> 
+  password: 5tgbnhy6
+#  password: <%= ENV['MITSUWAMANAGE_DATABASE_PASSWORD'] %>

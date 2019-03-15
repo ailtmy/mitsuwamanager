@@ -56,7 +56,7 @@ table.table.table-hover.table-bordered
           .row.mb-2
             .col-sm-3
               = tel.tel_kind
-            .col-sm-3
+            .col-sm-5
               = tel.tel_number
             .col-sm-2
               = link_to "編集", [:edit, @customer, tel], class: 'btn btn-primary pull-right'
@@ -69,7 +69,7 @@ table.table.table-hover.table-bordered
           .row.mb-2
             .col-sm-3
               = mail.mail_kind
-            .col-sm-3
+            .col-sm-5
               = mail_to mail.mail_address
             .col-sm-2
               = link_to "編集", [:edit, @customer, mail], class: 'btn btn-primary pull-right'

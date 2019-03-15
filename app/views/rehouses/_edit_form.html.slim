@@ -18,7 +18,7 @@
       = f.text_field :place, class: 'form-control'
     .col-sm-3
       = f.label :user_id, '事務所担当者'
-      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true, selected: current_user.id}, {class: 'form-control'} )
+      = f.collection_select(:user_id, User.all, :id, :name, {prompt: true}, {class: 'form-control'} )
   .form-group.row
     .col-sm-1
       = f.label :tax_reduction, '減税有'
