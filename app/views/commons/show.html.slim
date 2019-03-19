@@ -73,14 +73,14 @@
     .col-sm-2.p-3
       | 嘱託人
     .col-sm-5.p-3
-      - ProjectCustomer.commissioner_staff_select(@common).each do |branch|
+      - ProjectCustomer.branch_select(@common, "担当者").each do |branch|
         - if branch.present?
           = branch.branch.company.name
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-5.p-3
-      - ProjectCustomer.commissioner_select(@common).each do |customer|
+      - ProjectCustomer.customer_select(@common, "担当者").each do |customer|
         | 担当者：  
         = customer[:name]
         br
@@ -89,7 +89,7 @@
     .col-sm-2.pl-4.p-4.border-left.border-dark
       | 顧客：
     .col-sm-10.pl-4.p-4.border-right.border-dark
-      - ProjectCustomer.other_select(@common).each do |customer|
+      - ProjectCustomer.not_customer_select(@common, "嘱託人","担当者").each do |customer|
         .pb-3
           = customer[:position]
           |　：　

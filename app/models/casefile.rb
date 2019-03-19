@@ -34,8 +34,23 @@ class Casefile < ApplicationRecord
     CSV.foreach(file.path, headers: true) do |row|
       casefile = new
       casefile.attributes = row.to_hash.slice(*csv_attributes)
-      casefile.customer_casefiles.build.attributes = row.to_hash.slice(*customer_casefile_csv_attributes)      
-      casefile.save
+      casefile.customer_casefiles.build.attributes = row.to_hash.slice(*customer_casefile_csv_attributes)
+      if row['customer_id2'] != nil
+        casefile.customer_casefiles.build
+        casefile.customer_casefiles[1][:customer_id] = row['customer_id2']
+        casefile.customer_casefiles[1][:applicant] = row['applicant2']
+      end
+      if row['customer_id3'] != nil
+        casefile.customer_casefiles.build
+        casefile.customer_casefiles[2][:customer_id] = row['customer_id3']
+        casefile.customer_casefiles[2][:applicant] = row['applicant3']
+      end
+      if row['customer_id4'] != nil
+        casefile.customer_casefiles.build
+        casefile.customer_casefiles[3][:customer_id] = row['customer_id4']
+        casefile.customer_casefiles[3][:applicant] = row['applicant4']
+      end
+      casefile.save!
     end
   end
 

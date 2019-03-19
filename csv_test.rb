@@ -1,10 +1,11 @@
 require 'csv'
-
+ha = Hash.new{|hash, key | hash[key] = []}
 CSV.foreach('./casefile.csv', headers: true) do |row|
-  cys = row.to_hash.slice('customer_id', 'applicant', 'customer_id2', 'applicant2')
-  ar = cys.flatten.to
-  p ar1 = ar.slice(0..3)
-  p ar2 = ar.slice(4..7)
-
-  
+  ha['customer_id'] << row['customer_id']
+  ha['customer_id'] << row['customer_id2']
+  ha['applicant'] << row['applicant']
+  ha['applicant'] << row['applicant2']
+end
+ha.each do |h|
+  puts h
 end

@@ -73,70 +73,70 @@
     .col-sm-2.p-3
       | 事業主
     .col-sm-4.p-3
-      - ProjectCustomer.developer_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "事業主").each do |customer|
         - if customer.present?
-          = customer.customer.name
+          = customer[:name]
           br
     .col-sm-3.p-3
-      - ProjectCustomer.developer_branch_select(@newbuild).each do |branch|
+      - ProjectCustomer.branch_select(@newbuild, "事業主担当者").each do |branch|
         - if branch.present?
         = branch.branch.branch_name
 
     .col-sm-3.p-3
-      - ProjectCustomer.developer_staff_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "事業主担当者").each do |customer|
         | 担当者：  
         -if customer.present?
-          = customer.customer.name
+          = customer[:name]
           br
   .row.border-left.border-right.border-bottom.border-dark
     .col-sm-2.p-3
       | 販売
     .col-sm-4.p-3
-      - ProjectCustomer.distributer_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "販売代理").each do |customer|
         - if customer.present?
-          = customer.customer.name
+          = customer[:name]
           br
     .col-sm-3.p-3
-      - ProjectCustomer.distributer_branch_select(@newbuild).each do |branch|
+      - ProjectCustomer.branch_select(@newbuild, "販売担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
 
     .col-sm-3.p-3
-      - ProjectCustomer.distributer_staff_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "販売担当者").each do |customer|
         | 担当者：  
         -if customer.present?
-          = customer.customer.name
+          = customer[:name]
           br
   .row
     .col-sm-2.p-3.border-left.border-dark
       | 融資先
     .col-sm-4.p-3.border-dark
-      - ProjectCustomer.loan_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "融資先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-3.border-dark
-      - ProjectCustomer.loan_branch_select(@newbuild).each do |branch|
+      - ProjectCustomer.branch_select(@newbuild, "融資先担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-3.p-3.border-right.border-dark
       | 担当者：
-      - ProjectCustomer.loan_staff_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "融資先担当者").each do |customer|
         = customer[:name]
         br
   .row
     .col-sm-2.p-3.border-left.border-top.border-dark
       | 司法書士：
     .col-sm-10.p-3.border-top.border-right.border-dark
-      - ProjectCustomer.scrivener_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "司法書士").each do |customer|
         = customer[:name]
         br
   .row
     .col-sm-2.p-3.border-left.border-top.border-dark
       | 調査士：
     .col-sm-10.p-3.border-top.border-right.border-dark
-      - ProjectCustomer.surveyor_select(@newbuild).each do |customer|
+      - ProjectCustomer.customer_select(@newbuild, "土地家屋調査士").each do |customer|
         = customer[:name]
         br
   .row.border-left.border-right.border-top.border-dark style="height: 200px;"

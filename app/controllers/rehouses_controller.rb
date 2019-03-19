@@ -50,7 +50,16 @@ class RehousesController < ApplicationController
   private
 
   def rehouse_params
-    params.require(:rehouse).permit(:type, :name, :status, :application_date, :place, :place_date, :change_name, :change_name_doc, :erasure, :erasure_confirm, :complete_date, :report, :remarks, :tax_reduction, :tax_document, :loan, :loan_price, :loan_agree, :loan_document, :user_id, :remarks, :images, project_customers_attributes: [:id, :customer_id, :rehouse_id, :position, :equity, :_destroy], project_estates_attributes: [:id, :project_id, :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, :customer_id, :send_method, :send_addr, :send_date, :send_number, :receive_doc, :_destroy])
+    params.require(:rehouse).permit(:type, :name, :status, :application_date, :place, 
+      :place_date, :change_name, :change_name_doc, :erasure, :erasure_confirm, 
+      :complete_date, :report, :remarks, :tax_reduction, :tax_document, :loan, 
+      :loan_price, :loan_agree, :loan_document, :user_id, :remarks, :images, 
+      project_customers_attributes: [:id, :customer_id, :rehouse_id, :position, 
+        :equity, :_destroy], project_estates_attributes: [:id, :project_id, 
+          :estate_id, :_destroy], certificates_attributes: [:id, :project_id, :cert_kind, 
+            :number_sheet, :window, :_destroy], destinates_attributes: [:id, :project_id, 
+              :customer_id, :send_method, :send_addr, :send_date, :send_number, 
+              :receive_doc, :_destroy])
   end
 
   def project_customer_params
@@ -58,6 +67,7 @@ class RehousesController < ApplicationController
   end
 
   def set_rehouse
-    @rehouse = Rehouse.includes({ project_customers: [:customer] }, { project_estates: [estate: [:control]] }, destinates: [:customer]).find(params[:id])
+    @rehouse = Rehouse.includes({ project_customers: [:customer] }, 
+      { project_estates: [estate: [:control]] }, destinates: [:customer]).find(params[:id])
   end
 end

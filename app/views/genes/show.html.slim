@@ -74,14 +74,14 @@
     .col-sm-2.p-3
       | 嘱託人
     .col-sm-4.p-3
-      - ProjectCustomer.commissioner_staff_select(@gene).each do |branch|
+      - ProjectCustomer.branch_select(@gene, "嘱託人").each do |branch|
         - if branch.present?
           = branch.branch.company.name
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-5.p-3
-      - ProjectCustomer.commissioner_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "嘱託人").each do |customer|
         | 担当者：  
         = customer[:name]
         br
@@ -97,7 +97,7 @@
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 買主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.buyer_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "買主").each do |customer|
         .p-2
           = customer[:equity]
           |　
@@ -115,18 +115,18 @@
       | 融資先
   .row
     .col-sm-5.p-2.border-left.border-dark
-      - ProjectCustomer.loan_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "融資先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2.border-dark
-      - ProjectCustomer.loan_branch_select(@gene).each do |branch|
+      - ProjectCustomer.branch_select(@gene, "融資先担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-4.p-2.border-right.border-dark
       | 担当者：
-      - ProjectCustomer.loan_staff_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "融資先担当者").each do |customer|
         = customer[:name]
         br
   .row
@@ -147,7 +147,7 @@
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 売主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.seller_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "売主").each do |customer|
         .p-2
           = customer[:name]
           br
@@ -168,17 +168,17 @@
     .col-sm-2.p-2
       | 抹消先
     .col-sm-4.p-2
-      - ProjectCustomer.erase_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "抹消先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_branch_select(@gene).each do |branch|
+      - ProjectCustomer.branch_select(@gene, "抹消先担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_staff_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "抹消先担当者").each do |customer|
         | 担当者：
         = customer[:name]
         br
@@ -186,13 +186,13 @@
     .col-sm-2.p-2.border-left.border-dark
       | 司法書士：
     .col-sm-4.p-2
-      - ProjectCustomer.scrivener_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "司法書士").each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-2.border-left.border-dark
       | 他仲介：
     .col-sm-4.p-2.border-right.border-dark
-      - ProjectCustomer.intermediator_select(@gene).each do |customer|
+      - ProjectCustomer.customer_select(@gene, "他仲介").each do |customer|
         = customer[:name]
         br
   .row.border.border-dark

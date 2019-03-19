@@ -73,13 +73,13 @@ h3.pb-3.mt-3.d-print-none
     .col-sm-5.p-2
       | 三井住友トラスト・ローン＆ファイナンス
     .col-sm-3.p-2
-      - ProjectCustomer.lf_branch_select(@landf).each do |branch|
+      - ProjectCustomer.branch_select(@landf, "ＬＦ担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-4.p-2
-      - ProjectCustomer.lf_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "ＬＦ担当者").each do |customer|
         | ＬＦ担当者：
         = customer[:name]
         br
@@ -87,13 +87,13 @@ h3.pb-3.mt-3.d-print-none
     .col-sm-2.p-3
       | 債務者:
     .col-sm-4.p-3
-      - ProjectCustomer.debtor_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "債務者").each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-3
       | 設定者:
     .col-sm-4.p-3
-      - ProjectCustomer.mortgagor_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "設定者").each do |customer|
         = customer[:name]
         br
 
@@ -134,16 +134,16 @@ h3.pb-3.mt-3.d-print-none
     .col-sm-2.p-2
       | 抹消先
     .col-sm-4.p-2
-      - ProjectCustomer.erase_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "抹消先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_branch_select(@landf).each do |branch|
+      - ProjectCustomer.branch_select(@landf, "抹消先担当者").each do |branch|
         = branch.branch.branch_name
         = branch.title
         br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_staff_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "抹消先担当者").each do |customer|
         | 担当者：
         = customer[:name]
         br
@@ -152,19 +152,19 @@ h3.pb-3.mt-3.d-print-none
     .col-sm-2.p-2.border-left.border-dark
       | 司法書士：
     .col-sm-2.p-2
-      - ProjectCustomer.scrivener_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "司法書士").each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-2.border-left.border-dark
       | 調査士：
-    .col-sm-2
-      - ProjectCustomer.surveyor_select(@landf).each do |customer|
+    .col-sm-2.p-2
+      - ProjectCustomer.customer_select(@landf, "土地家屋調査士").each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-2.border-left.border-dark
       | 関係者：
     .col-sm-2.p-2.border-right.border-dark
-      - ProjectCustomer.mediator_select(@landf).each do |customer|
+      - ProjectCustomer.customer_select(@landf, "関係者").each do |customer|
         = customer[:name]
         br
 

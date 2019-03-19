@@ -3,25 +3,14 @@ FactoryBot.define do
     name { '試験顧客' }
     kana { 'テストコキャク' }
     birthday { '2019-01-01' }
-
-    trait :with_address do
-      association :address, factory: :address
-      address
-    end
-
-    trait :with_tel do
-      association :tel, factory: :tel
-      tel
-    end
-
-    trait :with_mail do
-      association :mail, factory: :mail
-      mail
+    after(:build) do |person|
+      person.addresses << FactoryBot.build(:address)
+      person.save!
     end
   end
 
   factory :address, class: Address do
-    zip { '123456' }
+    zip { '1234567' }
     address { 'テスト住所' }
     since_date { '2019-02-01' }
     address_kind { '住所' }

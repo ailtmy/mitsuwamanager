@@ -1,6 +1,6 @@
-﻿id,year,number,date,event_title,event_number,count,kind,project_id,customer_id,applicant,customer_id2,applicant2
+﻿id,year,number,date,event_title,event_number,count,kind,project_id,customer_id,applicant,customer_id2,applicant2,customer_id3,applicant3,customer_id4,applicant4
 ,2019,,2019-03-14,所有権保存,,2,不動産登記,22,635,所有者,,
-,2019,,2019-03-14,所有権保存,,2,不動産登記,22,600,所有者,451,所有者
+,2019,,2019-03-14,所有権保存,,2,不動産登記,22,600,所有者,634,所有者
 ,2019,,2019-03-14,所有権保存,,2,不動産登記,22,412,所有者,,
 ,2019,,2019-03-14,所有権保存,,2,不動産登記,22,375,所有者,,
-,2019,,2019-03-14,抵当権設定,,2,不動産登記,22,370,設定者,812,抵当権者
+,2019,,2019-03-14,抵当権設定,,2,不動産登記,22,370,設定者,812,抵当権者,636,設定者,637,設定者

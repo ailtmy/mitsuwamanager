@@ -12,9 +12,9 @@ describe 'アカウント情報の編集機能', type: :system do
       click_button 'ログインする'
     end
 
-    shared_examples_for 'マイアカウントが表示される' do
-      it { expect(page).to have_content 'マイアカウント' }
-    end
+    # shared_examples_for 'マイアカウントが表示される' do
+      # it { expect(page).to have_content 'マイアカウント' }
+    # end
 
     context '管理ユーザーAがログインしているとき' do
       let(:login_user) { user_a }
@@ -23,7 +23,8 @@ describe 'アカウント情報の編集機能', type: :system do
         visit account_path
       end
 
-      it_behaves_like 'マイアカウントが表示される'
+      # it_behaves_like 'マイアカウントが表示される'
+      it { expect(page).to have_content 'マイアカウント' }
 
       describe 'アカウント情報の編集' do
         before do
@@ -40,7 +41,8 @@ describe 'アカウント情報の編集機能', type: :system do
             click_button '変更する'
           end
 
-          it_behaves_like 'マイアカウントが表示される'
+          # it_behaves_like 'マイアカウントが表示される'
+          it { expect(page).to have_content 'マイアカウント' }
         end
       end
     end
@@ -52,7 +54,8 @@ describe 'アカウント情報の編集機能', type: :system do
         visit account_path
       end
 
-      it_behaves_like 'マイアカウントが表示される'
+      # it_behaves_like 'マイアカウントが表示される'
+      it { expect(page).to have_content 'マイアカウント' }
     end
   end
 end

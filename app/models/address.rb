@@ -1,6 +1,9 @@
 class Address < ApplicationRecord
   belongs_to :addressable, polymorphic: true
 
+  validates :zip, numericality: { only_integer: true, message: 'はハイフン無の半角数字で入力してください。' },
+   length: { is: 7 }, allow_blank: true
+   
   def self.ransackable_attributes(_auth_object = nil)
     %w(address)
   end

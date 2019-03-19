@@ -76,13 +76,13 @@
     .col-sm-4.p-3
       | 三井不動産リアルティ
     .col-sm-4.p-3
-      - ProjectCustomer.rehouse_staff_select(@rehouse).each do |branch|
+      - ProjectCustomer.branch_select(@rehouse, "リハウス").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-4.p-3
-      - ProjectCustomer.rehouse_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "リハウス").each do |customer|
         | 担当者：  
         = customer[:name]
         br
@@ -98,7 +98,7 @@
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 買主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.buyer_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "買主").each do |customer|
         .p-2
           = customer[:equity]
           |　
@@ -116,17 +116,17 @@
       | 融資先
   .row
     .col-sm-5.p-2.border-left.border-dark
-      - ProjectCustomer.loan_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "融資先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2.border-dark
-      - ProjectCustomer.loan_branch_select(@rehouse).each do |branch|
+      - ProjectCustomer.branch_select(@rehouse, "融資先担当者").each do |branch|
         = branch.branch.branch_name
         = branch.title
         br
     .col-sm-4.p-2.border-right.border-dark
       | 担当者：
-      - ProjectCustomer.loan_staff_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "融資先担当者").each do |customer|
         = customer[:name]
         br
   .row
@@ -146,7 +146,7 @@
     .col-sm-1.pl-2.p-1.border-left.border-dark
       | 売主
     .col-sm-11.pl-4.p-1.border-right.border-dark
-      - ProjectCustomer.seller_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "売主").each do |customer|
         .p-2
           = customer[:name]
           br
@@ -167,17 +167,17 @@
     .col-sm-2.p-2
       | 抹消先
     .col-sm-4.p-2
-      - ProjectCustomer.erase_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "抹消先").each do |customer|
         = customer[:name]
         br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_branch_select(@rehouse).each do |branch|
+      - ProjectCustomer.branch_select(@rehouse, "抹消先担当者").each do |branch|
         - if branch.present?
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-3.p-2
-      - ProjectCustomer.eraser_staff_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "抹消先担当者").each do |customer|
         | 担当者：
         = customer[:name]
         br
@@ -185,13 +185,13 @@
     .col-sm-2.p-2.border-left.border-dark
       | 司法書士：
     .col-sm-4.p-2
-      - ProjectCustomer.scrivener_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "司法書士").each do |customer|
         = customer[:name]
         br
     .col-sm-2.p-2.border-left.border-dark
       | 他仲介：
     .col-sm-4.p-2.border-right.border-dark
-      - ProjectCustomer.intermediator_select(@rehouse).each do |customer|
+      - ProjectCustomer.customer_select(@rehouse, "他仲介").each do |customer|
         = customer[:name]
         br
   .row.border.border-dark

@@ -73,14 +73,14 @@
     .col-sm-1.p-3
       | 嘱託人
     .col-sm-6.p-3
-      - ProjectCustomer.commissioner_staff_select(@inherit).each do |branch|
+      - ProjectCustomer.branch_select(@inherit, "嘱託人").each do |branch|
         - if branch.present?
           = branch.branch.company.name
           = branch.branch.branch_name
           = branch.title
           br
     .col-sm-5.p-3
-      - ProjectCustomer.commissioner_select(@inherit).each do |customer|
+      - ProjectCustomer.customer_select(@inherit, "嘱託人").each do |customer|
         | 担当者：  
         = customer[:name]
         br
@@ -89,7 +89,7 @@
     .col-sm-3.pl-4.p-4.border-left.border-dark
       | 被相続人：
     .col-sm-9.pl-4.p-4.border-right.border-dark
-      - ProjectCustomer.decedent_select(@inherit).each do |customer|
+      - ProjectCustomer.customer_select(@inherit, "被相続人").each do |customer|
         = customer[:name]
         br
 
@@ -97,7 +97,7 @@
     .col-sm-3.pl-4.p-4.border-left.border-top.border-dark
       | 相続人代表：
     .col-sm-9.pl-4.p-4.border-right.border-top.border-dark
-      - ProjectCustomer.representative_select(@inherit).each do |customer|
+      - ProjectCustomer.customer_select(@inherit, "相続人代表").each do |customer|
         = customer[:name]
         br
   
@@ -105,7 +105,7 @@
     .col-sm-3.pl-4.p-4.border-left.border-dark
       | 相　続　人：
     .col-sm-9.pl-4.p-4.border-right.border-dark
-      - ProjectCustomer.heir_select(@inherit).each do |customer|
+      - ProjectCustomer.customer_select(@inherit, "相続人").each do |customer|
         .pb-3
           = customer[:name]
           br

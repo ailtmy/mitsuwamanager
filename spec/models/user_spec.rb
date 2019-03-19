@@ -25,7 +25,7 @@ describe User, type: :model do
 
   describe '#password' do
     context 'nil' do
-      # it { expect(user).to validate_presence_of(:password)}
+       it { expect(user).to be_valid}
     end
   end
 end
